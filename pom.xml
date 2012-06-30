@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.raptoz</groupId>
 	<artifactId>raptoz</artifactId>
-	<version>0.0.1</version>
+	<version>1.0.0.M1</version>
 	<packaging>war</packaging>
 	<name>raptoz</name>
 
