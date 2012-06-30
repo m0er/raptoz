@@ -2,7 +2,7 @@ package com.raptoz.persistence;
 
 import org.apache.ibatis.annotations.*;
 
-public interface TestMapper {
+public interface TestMapper extends CrudRepository<Object, Long> {
 	
 	@Select("select now()")
 	String getTime();
