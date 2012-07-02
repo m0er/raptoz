@@ -8,7 +8,9 @@ import com.raptoz.persistence.*;
 
 public interface TozTagMapper extends CrudRepository<Tag, Long> {
 	
-	@Insert("insert into toz_tag(toz_id, value) values(#{ownerId}, #{value})")
+	@Insert({"insert",
+			 "into toz_tag(toz_id, value)",
+			 "values(#{ownerId}, #{value})"})
 	@Options(useGeneratedKeys=true, keyProperty="id")
 	void save(Tag tag);
 	
