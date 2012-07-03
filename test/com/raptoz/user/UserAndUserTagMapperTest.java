@@ -11,6 +11,8 @@ import org.junit.*;
 import org.junit.runner.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.*;
+import org.springframework.core.io.*;
 import org.springframework.test.context.*;
 import org.springframework.test.context.junit4.*;
 
@@ -22,6 +24,7 @@ import com.raptoz.tag.*;
 public class UserAndUserTagMapperTest {
 	@Autowired UserMapper userMapper;
 	@Autowired UserTagMapper userTagMapper;
+	@Autowired ApplicationContext context;
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -30,10 +33,9 @@ public class UserAndUserTagMapperTest {
 	
 	@Before
 	public void setUp() throws IOException {
-		File dummyImage = new File("C:/Developer/workspace.raptoz/raptoz/web/image/50x50.gif");
-		InputStream fis = new BufferedInputStream(new FileInputStream(dummyImage));
+		Resource resource = context.getResource("file:web/image/50x50.gif");
 		byte[] buffer = new byte[4096];
-		int result = fis.read(buffer);
+		int result = resource.getInputStream().read(buffer);
 		logger.info("read: " + result);
 		
 		String encodeDummyImage = Base64.encode(buffer);
