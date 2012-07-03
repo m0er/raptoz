@@ -8,7 +8,9 @@ import com.raptoz.persistence.*;
 
 public interface UserMapper extends CrudRepository<User, Long> {
 	
-	@Insert("INSERT INTO user(email, nickname, password, encode_profile_image) VALUES(#{email}, #{nickname}, #{password}, #{encodeProfileImage})")
+	@Insert({"INSERT INTO"
+			,"user(email, nickname, password, encode_profile_image)" 
+			,"VALUES(#{email}, #{nickname}, #{password}, #{encodeProfileImage})"})
 	@Options(useGeneratedKeys=true, keyProperty="id")
 	void save(User user);
 	
