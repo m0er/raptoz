@@ -34,10 +34,10 @@ public class MainController {
 		return "main/list";
 	}
 	
-	@RequestMapping("/list/{term}")
-	public String search(@PathVariable String term, Model model) {
-		Search reuslt = searchService.search(term);
-		model.addAttribute("result", reuslt);
-		return "main/list";
-	}
+//	@RequestMapping("/list/{term}")
+//	public String search(@PathVariable String term, Model model) {
+//		Search reuslt = searchService.search(term);
+//		model.addAttribute("result", reuslt);
+//		return "main/list";
+//	}
 }

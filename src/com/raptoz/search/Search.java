@@ -2,12 +2,12 @@ package com.raptoz.search;
 
 import java.util.*;
 
-import com.raptoz.toz.*;
+import com.raptoz.post.*;
 import com.raptoz.user.*;
 
 public class Search {
 	private List<User> userList;
-	private List<Toz> tozList;
+	private List<Post> postList;
 	
 	public List<User> getUserList() {
 		return userList;
@@ -17,16 +17,16 @@ public class Search {
 		this.userList = userList;
 	}
 
-	public List<Toz> getTozList() {
-		return tozList;
+	public List<Post> getPostList() {
+		return postList;
 	}
 
-	public void setTozList(List<Toz> tozList) {
-		this.tozList = tozList;
+	public void setPostList(List<Post> postList) {
+		this.postList = postList;
 	}
 
 	@Override
 	public String toString() {
-		return "Search [userList=" + userList + ", tozList=" + tozList + "]";
+		return "Search [userList=" + userList + ", postList=" + postList + "]";
 	}
 }

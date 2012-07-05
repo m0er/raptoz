@@ -1,8 +1,9 @@
 package com.raptoz.tag;
 
+import org.bson.types.ObjectId;
+
 public class Tag {
-	private Long id;
-	private Long ownerId;
+	private ObjectId id;
 	private String value;
 	
 	public Tag() {
@@ -12,27 +13,14 @@ public class Tag {
 		this.value = value;
 	}
 
-	public Tag(Long ownerId, String value) {
-		this(value);
-		this.ownerId = ownerId;
-	}
-
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 	
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 	
-	public Long getOwnerId() {
-		return ownerId;
-	}
-
-	public void setOwnerId(Long ownerId) {
-		this.ownerId = ownerId;
-	}
-
 	public String getValue() {
 		return value;
 	}
@@ -43,7 +31,6 @@ public class Tag {
 
 	@Override
 	public String toString() {
-		return "Tag [id=" + id + ", ownerId=" + ownerId + ", value=" + value
-				+ "]";
+		return "Tag [id=" + id + ", value=" + value + "]";
 	}
 }

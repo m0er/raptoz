@@ -1,19 +1,20 @@
 package com.raptoz.user;
 
-import java.util.*;
+import java.util.List;
 
-import com.raptoz.tag.*;
-import com.raptoz.toz.*;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.raptoz.tag.Tag;
 
 public class User {
-	private Long id;
+	private ObjectId id;
 	private String email;
 	private String password;
 	private String nickname;
 	private String encodeProfileImage;
-	private List<Tag> userTagList;
-	private List<Toz> recentParticipantTozList;
+	
+	private List<Tag> tagList;
 	
 	public User() {
 	}
@@ -25,11 +26,11 @@ public class User {
 		this.encodeProfileImage = encodeProfileImage;
 	}
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -65,29 +66,19 @@ public class User {
 		this.encodeProfileImage = encodeProfileImage;
 	}
 
-	public List<Tag> getUserTagList() {
-		return userTagList;
+	public List<Tag> getTagList() {
+		return tagList;
 	}
 
-	public void setUserTagList(List<Tag> userTagList) {
-		this.userTagList = userTagList;
-	}
-
-	public List<Toz> getRecentParticipantTozList() {
-		return recentParticipantTozList;
-	}
-
-	public void setRecentParticipantTozList(List<Toz> recentParticipantTozList) {
-		this.recentParticipantTozList = recentParticipantTozList;
+	public void setTagList(List<Tag> tagList) {
+		this.tagList = tagList;
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", password=" + password
 				+ ", nickname=" + nickname + ", encodeProfileImage="
-				+ encodeProfileImage + ", userTagList=" + userTagList
-				+ ", recentParticipantTozList=" + recentParticipantTozList
-				+ "]";
+				+ encodeProfileImage + ", tagList=" + tagList + "]";
 	}
 	
 }

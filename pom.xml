@@ -11,8 +11,6 @@
 		<spring.version>3.1.1.RELEASE</spring.version>
 		<default.encoding>UTF-8</default.encoding>
 		<mysql.jdbc.driver.version>5.1.16</mysql.jdbc.driver.version>
-		<raptoz.properties.location>src/com/raptoz/config/raptoz.properties</raptoz.properties.location>
-		<carbon5.migration.location>src/com/raptoz/config/migrations/</carbon5.migration.location>
 		<tomcat.library.version>7.0.23</tomcat.library.version>
 	</properties>
 	
@@ -123,29 +121,35 @@
 			</exclusions>
 		</dependency>
 		
-		<!-- Spring Framework for MyBatis -->
+		<!-- MongoDB -->
 		<dependency>
-		    <groupId>org.mybatis</groupId>
-		    <artifactId>mybatis-spring</artifactId>
-		    <version>1.1.1</version>
-		    <exclusions>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+		
+		<!-- Spring Data MongoDB -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>1.0.2.RELEASE</version>
+			<exclusions>
 				<exclusion>
-					<artifactId>spring-context</artifactId>
-					<groupId>org.springframework</groupId>
+					<groupId>org.mongodb</groupId>
+					<artifactId>mongo-java-driver</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>org.springframework</groupId>
-  					<artifactId>spring-tx</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-  					<artifactId>spring-jdbc</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-  					<artifactId>spring-core</artifactId>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<!-- CGLib -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>2.2.2</version>
 		</dependency>
 		
 		<!-- Servlet API -->
@@ -222,16 +226,16 @@
 		
 		<!-- Logging -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.6.4</version>
-		</dependency>
-		<dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.6.4</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.0.0</version>
+		</dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -256,26 +260,13 @@
 		    </exclusions>
 		</dependency>
 		
-		<!-- MySQL Connector -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.16</version>
-		</dependency>
-		
-		<!-- MyBatis Framework -->
-		<dependency>
-		    <groupId>org.mybatis</groupId>
-		    <artifactId>mybatis</artifactId>
-		    <version>3.1.1</version>
-		</dependency>
-		
 		<!-- File Upload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -307,10 +298,6 @@
 	        	<enabled>true</enabled>
 	      	</releases>
     	</pluginRepository>
-    	<pluginRepository>
-			<id>c5-public-repository</id>
-			<url>http://mvn.carbonfive.com/public/</url>
-		</pluginRepository>
 	</pluginRepositories>
 	
 	<build>
@@ -381,137 +368,6 @@
 					<encoding>${default.encoding}</encoding>
 				</configuration>
 			</plugin>
-        	<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>properties-maven-plugin</artifactId>
-				<version>1.0-alpha-2</version>
-				<executions>
-					<execution>
-						<phase>initialize</phase>
-						<goals>
-							<goal>read-project-properties</goal>
-						</goals>
-						<configuration>
-							<files>
-								<file>${raptoz.properties.location}</file>
-							</files>
-						</configuration>
-					</execution>
-				</executions>
-				<configuration>
-					<files>
-						<file>${raptoz.properties.location}</file>
-					</files>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.carbonfive.db-support</groupId>
-				<artifactId>db-migration-maven-plugin</artifactId>
-				<version>0.9.8</version>
-				<dependencies>
-					<dependency>
-						<groupId>mysql</groupId>
-						<artifactId>mysql-connector-java</artifactId>
-						<version>${mysql.jdbc.driver.version}</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<url>${jdbc.url}</url>
-					<username>${jdbc.username}</username>
-					<password>${jdbc.password}</password>
-					<driver>${jdbc.driver}</driver>
-					<migrationsPath>${carbon5.migration.location}</migrationsPath>
-				</configuration>
-				<executions>
-					<execution>
-						<id>dev_migrate-db-schema</id>
-						<phase>process-test-resources</phase>
-						<goals>
-							<goal>migrate</goal>
-							<goal>validate</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
-
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.codehaus.mojo
-										</groupId>
-										<artifactId>
-											properties-maven-plugin
-										</artifactId>
-										<versionRange>
-											[1.0-alpha-2,)
-										</versionRange>
-										<goals>
-											<goal>
-												read-project-properties
-											</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											com.carbonfive.db-support
-										</groupId>
-										<artifactId>
-											db-migration-maven-plugin
-										</artifactId>
-										<versionRange>
-											[0.9.8,)
-										</versionRange>
-										<goals>
-											<goal>migrate</goal>
-											<goal>validate</goal>
-											<goal>check</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											com.carbonfive
-										</groupId>
-										<artifactId>
-											db-migration-maven-plugin
-										</artifactId>
-										<versionRange>
-											[0.9.7,)
-										</versionRange>
-										<goals>
-											<goal>migrate</goal>
-											<goal>validate</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 </project>
