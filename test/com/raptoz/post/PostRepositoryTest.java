@@ -85,7 +85,7 @@ public class PostRepositoryTest {
 		assertThat(foundReplyList, hasItems(reply1, reply2, reply3));
 	}
 	
-	@Test @Ignore
+	@Test
 	public void ObjectId_생성시간이_있다() throws Exception {
 		postRepository.save(post1);
 		assertThat(new Date(post1.getId().getTime()).toString(), is(notNullValue()));
