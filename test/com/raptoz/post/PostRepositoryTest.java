@@ -41,9 +41,12 @@ public class PostRepositoryTest {
 	
 	@Before
 	public void setUp() {
+		Tag userTag = new Tag("tag1");
+		tagRepository.save(userTag);
+		
 		user = new User("testuser@raptoz.com", "test", "testuser", "");
+		user.setTagList(Arrays.asList(userTag));
 		userRepository.save(user);
-		user.setPassword(null);
 		
 		post1 = new Post("title1", "description1", user);
 		post2 = new Post("title2", "description2", user);
@@ -63,18 +66,6 @@ public class PostRepositoryTest {
 		assertThat(postRepository, is(notNullValue()));
 		assertThat(userRepository, is(notNullValue()));
 	}
-	
-	/*
-	 * java.lang.AssertionError: (a collection containing
-	 * <Tag [id=4ff667cf4728b8c0d499746f, value=tag1, count=null]> and a collection
-	 * containing <Tag [id=4ff667cf4728b8c0d4997470, value=tag2, count=null]>
-	 * and a collection containing <Tag [id=4ff667cf4728b8c0d4997471,
-	 * value=tag3, count=null]>)
-	 * 
-	 * <[Tag [id=4ff667cf4728b8c0d499746f, value=tag1, count=null], Tag
-	 * [id=4ff667cf4728b8c0d4997470, value=tag2, count=null], Tag
-	 * [id=4ff667cf4728b8c0d4997471, value=tag3, count=null]]>
-	 */
 	
 	@Test
 	public void crud() throws Exception {
@@ -126,10 +117,10 @@ public class PostRepositoryTest {
 	
 	@After
 	public void tearDown() {
-//		tagRepository.deleteAll();
-//		userRepository.deleteAll();
-//		postRepository.deleteAll();
-//		replyRepository.deleteAll();
+		tagRepository.deleteAll();
+		userRepository.deleteAll();
+		postRepository.deleteAll();
+		replyRepository.deleteAll();
 	}
 	
 }
