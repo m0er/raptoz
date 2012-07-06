@@ -63,6 +63,8 @@ public class PostRepositoryTest {
 		postRepository.save(Arrays.asList(post1, post2, post3));
 		assertThat(postRepository.count(), is(before + 3));
 		
+		logger.info(postRepository.findAll().toString());
+		
 		// update post
 		post1.setContent("asdf");
 		postRepository.save(post1);
@@ -83,6 +85,8 @@ public class PostRepositoryTest {
 		// same as: mongoTemplate.find(query(where("_id").in(replyIdList)), Reply.class);
 		List<Reply> foundReplyList = replyRepository.findByIdIn(replyIdList);
 		assertThat(foundReplyList, hasItems(reply1, reply2, reply3));
+		
+		logger.info(replyRepository.findAll().toString());
 	}
 	
 	@Test

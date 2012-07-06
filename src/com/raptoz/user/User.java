@@ -1,5 +1,6 @@
 package com.raptoz.user;
 
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -7,8 +8,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.raptoz.tag.Tag;
 
+@Document
 public class User {
 	private ObjectId id;
+	private Date joined;
 	private String email;
 	private String password;
 	private String nickname;
@@ -32,6 +35,14 @@ public class User {
 
 	public void setId(ObjectId id) {
 		this.id = id;
+	}
+
+	public Date getJoined() {
+		return joined;
+	}
+
+	public void setJoined(Date joined) {
+		this.joined = joined;
 	}
 
 	public String getEmail() {

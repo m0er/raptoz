@@ -22,6 +22,7 @@ public class Post {
 	private List<ObjectId> replyIdList;
 	
 	public Post() {
+		this.created = new Date();
 	}
 	
 	public Post(String title, String content, User writer) {
