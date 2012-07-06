@@ -86,8 +86,9 @@ public class PostRepositoryTest {
 	}
 	
 	@Test
-	public void ObjectId_생성시간이_있다() throws Exception {
+	public void ObjectId안에_생성시간이_있다() throws Exception {
 		postRepository.save(post1);
+		// created 필드를 없애도 될 것 같긴 한데..
 		assertThat(new Date(post1.getId().getTime()).toString(), is(notNullValue()));
 	}
 	
