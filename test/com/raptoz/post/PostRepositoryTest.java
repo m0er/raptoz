@@ -17,6 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.raptoz.reply.Reply;
 import com.raptoz.reply.ReplyRepository;
+import com.raptoz.tag.Tag;
+import com.raptoz.tag.TagRepository;
 import com.raptoz.user.User;
 import com.raptoz.user.UserRepository;
 
@@ -26,13 +28,15 @@ import com.raptoz.user.UserRepository;
 public class PostRepositoryTest {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
+	@Autowired MongoTemplate mongoTemplate;
+	@Autowired TagRepository tagRepository;
 	@Autowired PostRepository postRepository;
 	@Autowired UserRepository userRepository;
 	@Autowired ReplyRepository replyRepository;
-	@Autowired MongoTemplate mongoTemplate;
 	
 	User user;
 	Post post1, post2, post3;
+	Tag tag1, tag2, tag3;
 	Reply reply1, reply2, reply3;
 	
 	@Before
@@ -45,6 +49,10 @@ public class PostRepositoryTest {
 		post2 = new Post("title2", "description2", user);
 		post3 = new Post("title3", "description3", user);
 		
+		tag1 = new Tag("tag1");
+		tag2 = new Tag("tag2");
+		tag3 = new Tag("tag3");
+		
 		reply1 = new Reply("reply1", user);
 		reply2 = new Reply("reply2", user);
 		reply3 = new Reply("reply3", user);
@@ -56,21 +64,41 @@ public class PostRepositoryTest {
 		assertThat(userRepository, is(notNullValue()));
 	}
 	
+	/*
+	 * java.lang.AssertionError: (a collection containing
+	 * <Tag [id=4ff667cf4728b8c0d499746f, value=tag1, count=null]> and a collection
+	 * containing <Tag [id=4ff667cf4728b8c0d4997470, value=tag2, count=null]>
+	 * and a collection containing <Tag [id=4ff667cf4728b8c0d4997471,
+	 * value=tag3, count=null]>)
+	 * 
+	 * <[Tag [id=4ff667cf4728b8c0d499746f, value=tag1, count=null], Tag
+	 * [id=4ff667cf4728b8c0d4997470, value=tag2, count=null], Tag
+	 * [id=4ff667cf4728b8c0d4997471, value=tag3, count=null]]>
+	 */
+	
 	@Test
 	public void crud() throws Exception {
+		// save tags
+		tagRepository.save(Arrays.asList(tag1, tag2, tag3));
+
 		// save posts
 		long before = postRepository.count();
+		
+		post1.setTagList(Arrays.asList(tag1, tag2, tag3));
 		postRepository.save(Arrays.asList(post1, post2, post3));
 		assertThat(postRepository.count(), is(before + 3));
+		assertThat(postRepository.findOne(post1.getId()).getTagList(), hasItems(tag1, tag2, tag3));
 		
 		logger.info(postRepository.findAll().toString());
 		
 		// update post
 		post1.setContent("asdf");
+		post1.setTagList(Arrays.asList(tag2));
 		postRepository.save(post1);
 		
 		Post found = postRepository.findOne(post1.getId());
 		assertThat(found.getContent(), is(post1.getContent()));
+		assertThat(found.getTagList(), not(hasItems(tag1, tag3)));
 		
 		// save replies
 		replyRepository.save(Arrays.asList(reply1, reply2, reply3));
@@ -98,9 +126,10 @@ public class PostRepositoryTest {
 	
 	@After
 	public void tearDown() {
-		userRepository.deleteAll();
-		postRepository.deleteAll();
-		replyRepository.deleteAll();
+//		tagRepository.deleteAll();
+//		userRepository.deleteAll();
+//		postRepository.deleteAll();
+//		replyRepository.deleteAll();
 	}
 	
 }
