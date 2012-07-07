@@ -25,6 +25,4 @@
 	
 	<mongo:repositories base-package="com.raptoz"/>
 	
-	<bean id="domainClassPropertyEditorRegistrar" class="org.springframework.data.repository.support.DomainClassPropertyEditorRegistrar"/>
-	
 </beans>

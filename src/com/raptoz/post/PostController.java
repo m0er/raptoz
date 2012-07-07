@@ -1,5 +1,6 @@
 package com.raptoz.post;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,9 @@ public class PostController {
 	
 	@RequestMapping("/{id}")
 	@ResponseBody
-	public Post get(@PathVariable("id") Post post) {
-		logger.info("Post:" + post.toString());
-		return post;
+	public Post get(@PathVariable("id") ObjectId id) {
+		logger.info("Post Id:" + id);
+		return postService.getById(id);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.raptoz.mypage;
 
 import org.apache.catalina.util.Base64;
+import org.bson.types.ObjectId;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.raptoz.tag.Tag;
 import com.raptoz.user.User;
+import com.raptoz.user.UserService;
 import com.raptoz.util.RaptozUtil;
 
 @Controller
@@ -17,14 +19,15 @@ import com.raptoz.util.RaptozUtil;
 public class MyPageController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired MyPageService mypageService;
+	@Autowired UserService userService;
+	
+	@RequestMapping("/{id}")
+	public String mypage(@PathVariable("id") ObjectId id, Model model) {
+		logger.info("사용자 아이디: " + id);
+		model.addAttribute("user", userService.getById(id));
+		return "mypage/form";
+	}
 
-//	@RequestMapping("/{id}")
-//	public String mypage(@PathVariable("id") User user, Model model) {
-//		logger.info("사용자 아이디: " + user.getId());
-//		model.addAttribute("user", user);
-//		return "mypage/form";
-//	}
-//
 //	@RequestMapping(value="/{userId}/update", method=RequestMethod.POST)
 //	public String updateUser(@PathVariable Long userId, PersonalInfo personalInfo, Model model) {
 //		logger.info("updateUser() called");

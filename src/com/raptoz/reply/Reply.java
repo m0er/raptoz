@@ -5,6 +5,7 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.raptoz.post.Post;
 import com.raptoz.user.User;
 
 @Document
@@ -12,6 +13,7 @@ public class Reply {
 	private ObjectId id;
 	private Date created;
 	private String content;
+	private ObjectId postId;
 	
 	private User writer;
 	
@@ -47,6 +49,14 @@ public class Reply {
 		this.content = content;
 	}
 
+	public ObjectId getPostId() {
+		return postId;
+	}
+
+	public void setPostId(ObjectId postId) {
+		this.postId = postId;
+	}
+
 	public User getWriter() {
 		return writer;
 	}
@@ -58,7 +68,7 @@ public class Reply {
 	@Override
 	public String toString() {
 		return "Reply [id=" + id + ", created=" + created + ", content="
-				+ content + ", writer=" + writer + "]";
+				+ content + ", postId=" + postId + ", writer=" + writer + "]";
 	}
 
 	@Override

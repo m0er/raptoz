@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.catalina.util.Base64;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,11 @@ public class UserService {
 	public List<User> getByTag(String term) {
 		List<User> users = userRepository.findByTagsValue(term);
 		return users;
+	}
+
+	public User getById(ObjectId id) {
+		User user = userRepository.findOne(id);
+		return user;
 	}
 
 }

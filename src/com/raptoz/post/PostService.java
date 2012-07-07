@@ -27,4 +27,9 @@ public class PostService {
 		return posts;
 	}
 
+	public Post getById(ObjectId id) {
+		Post post = postRepository.findOne(id);
+		return post;
+	}
+
 }
