@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 
 public class RaptozUtil {
+	
 	public static byte[] getBytes(MultipartFile profileImage) {
 		byte[] bytes = null;
 		try {
@@ -14,4 +15,5 @@ public class RaptozUtil {
 		}
 		return bytes;
 	}
+	
 }

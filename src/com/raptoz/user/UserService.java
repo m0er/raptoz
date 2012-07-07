@@ -16,15 +16,15 @@ import com.raptoz.util.RaptozUtil;
 public class UserService {
 	private Logger logger = LoggerFactory.getLogger(UserService.class);
 	
-	//@Autowired private UserRepository userRepository;
+	@Autowired private UserRepository userRepository;
 	
-//	public void add(User user, MultipartFile profileImage) {
-//		String email = user.getEmail();
-//		user.setNickname(getNickname(email));
-//		user.setEncodeProfileImage(Base64.encode(RaptozUtil.getBytes(profileImage)));
-//		userRepository.save(user);
-//	}
-//	
+	public void add(User user, MultipartFile profileImage) {
+		String email = user.getEmail();
+		user.setNickname(getNickname(email));
+		user.setEncodeProfileImage(Base64.encode(RaptozUtil.getBytes(profileImage)));
+		userRepository.save(user);
+	}
+	
 //	public List<User> getByTagWithTagAndToz(String value) {
 //		throw new UnsupportedOperationException();
 //	}
@@ -43,17 +43,17 @@ public class UserService {
 		throw new UnsupportedOperationException();
 	}
 
-//	public User login(User user) {
-//		User found = userRepository.findEmailAndPassword(user.getEmail(), user.getPassword());
-//		
-//		if (found != null) {
-//			logger.info("로그인 성공!: " + found.toString());
-//			return found;
-//		} else {
-//			logger.info("사용자를 찾을 수 없습니다: " + user.toString());
-//			return null;
-//		}
-//	}
+	public User login(User user) {
+		User found = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
+		
+		if (found != null) {
+			logger.info("로그인 성공!: " + found.toString());
+			return found;
+		} else {
+			logger.info("사용자를 찾을 수 없습니다: " + user.toString());
+			return null;
+		}
+	}
 
 	private String getNickname(String email) {
 		return email.split("@")[0];

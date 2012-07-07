@@ -14,9 +14,9 @@ import com.raptoz.user.*;
 @Controller
 @SessionAttributes("loginUser")
 public class MainController {
-	@Autowired SearchService searchService;
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	
-	Logger logger = LoggerFactory.getLogger(getClass());
+	@Autowired SearchService searchService;
 	
 	@RequestMapping("/index")
 	public String index() {

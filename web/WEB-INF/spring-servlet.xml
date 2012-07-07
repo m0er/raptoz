@@ -4,24 +4,38 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:c="http://www.springframework.org/schema/c"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	
 	<context:component-scan base-package="com.raptoz" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
-	<mvc:annotation-driven conversion-service="conversionService"/>
-
+	<mvc:annotation-driven/>
+	
+	<!-- DomainClassConverter에서 conversionService 참조를 가지고 있어서 오류남. 
 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 		<property name="converters">
-			<list>
-				<bean class="org.springframework.data.repository.support.DomainClassConverter"
-					c:service-ref="conversionService"/>
-				<!-- MongoDB를 사용하면 도메인 객체가 다른 도메인 객체를 포함하는 경우가 많기 때문에,
-					관련된 컨버터를 만들어 줘야 할듯. -->
-			</list>
+			<set>
+				<bean class="org.springframework.data.repository.support.DomainClassConverter" c:service-ref="conversionService"/>
+			</set>
+		</property>
+	</bean> 
+	-->
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+				<property name="propertyEditorRegistrars">
+					<!-- <mongo:repositories> 에서 스캔한 빈들이 필요하기 때문에 applicationContext에 선언함. -->
+					<ref bean="domainClassPropertyEditorRegistrar"/>
+				</property>
+			</bean>
 		</property>
 	</bean>
 	
