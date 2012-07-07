@@ -1,24 +1,27 @@
 package com.raptoz.search;
 
-import org.slf4j.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.raptoz.post.*;
-import com.raptoz.user.*;
+import com.raptoz.post.PostService;
+import com.raptoz.user.UserService;
 
 @Service("searchService")
 public class SearchService {
-	@Autowired PostService postService;
-	//@Autowired UserService userService;
+	private Logger logger = LoggerFactory.getLogger(getClass());
+
+	@Autowired private PostService postService;
+	@Autowired private UserService userService;
 	
-	Logger logger = LoggerFactory.getLogger(getClass());
-	
-//	public Search search(String term) {
-//		Search search = new Search();
-//		search.setTozList(postService.getByTagWithAllTags(term));
-//		search.setUserList(userService.getByTagWithTagAndToz(term));
-//		logger.info(search.toString());
-//		return search;
-//	}
+	public Search search(String term) {
+		Search search = new Search();
+		search.setPosts(postService.getByTag(term));
+		search.setUsers(userService.getByTag(term));
+		
+		logger.info(search.toString());
+		
+		return search;
+	}
 }

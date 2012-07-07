@@ -1,5 +1,6 @@
 package com.raptoz.user;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.catalina.util.Base64;
@@ -19,15 +20,15 @@ public class UserService {
 	@Autowired private UserRepository userRepository;
 	
 	public void add(User user, MultipartFile profileImage) {
+		user.setJoined(new Date());
+		
 		String email = user.getEmail();
 		user.setNickname(getNickname(email));
+		
 		user.setEncodeProfileImage(Base64.encode(RaptozUtil.getBytes(profileImage)));
+		
 		userRepository.save(user);
 	}
-	
-//	public List<User> getByTagWithTagAndToz(String value) {
-//		throw new UnsupportedOperationException();
-//	}
 	
 	private List<Post> getRecentUserParticipantToz(Long userId) {
 //		List<Reply> tozParticipantList = tozParticipantMapper.findAllByUsrId(userId);
@@ -57,6 +58,11 @@ public class UserService {
 
 	private String getNickname(String email) {
 		return email.split("@")[0];
+	}
+
+	public List<User> getByTag(String term) {
+		List<User> users = userRepository.findByTagsValue(term);
+		return users;
 	}
 
 }

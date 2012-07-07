@@ -27,32 +27,32 @@
 		#leftNav .nav li a {color: #999; text-shadow: none;}
 		#leftNav .nav li a:HOVER {color: #FFF; background-color: #2C2C2C;}
 		
-		#userlist {min-width: 430px;}
-		#userlist article {border: 1px solid black; margin-left: 0px; margin-bottom: 10px; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background-color: #FFF; width: 418px;}
-		#userlist .usertag {padding-top: 10px; margin-left: 2px;}
-		#userlist .usertag ul li ul li {display: inline;}
-		#userlist .usertag .taglist {margin-bottom: 5px;}
-		#userlist .userface {height: 85px; float: left; padding: 15px 5px; width: 90px; text-align: center; background-color: #FFF;}
-		#userlist .userface img {width: 66px; height: 66px;}
-		#userlist .usernamex {text-align: center;}
-		#userlist .usertag .participate-toz-list li {display: block;}
+		#users {min-width: 430px;}
+		#users article {border: 1px solid black; margin-left: 0px; margin-bottom: 10px; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background-color: #FFF; width: 418px;}
+		#users .usertag {padding-top: 10px; margin-left: 2px;}
+		#users .usertag ul li ul li {display: inline;}
+		#users .usertag .taglist {margin-bottom: 5px;}
+		#users .userface {height: 85px; float: left; padding: 15px 5px; width: 90px; text-align: center; background-color: #FFF;}
+		#users .userface img {width: 66px; height: 66px;}
+		#users .usernamex {text-align: center;}
+		#users .usertag .participate-post-list li {display: block;}
 		
-		#tozlist {margin-left: 0; width: 480px;}
-		#tozlist .toz {border: 1px solid black; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background-color: #FFF; padding: 5px; margin-bottom: 16px;}
-		#tozlist .toz > *:not(.taglist) {cursor: pointer;}
-		#tozlist .toz .toz-title {text-align: center;}
-		#tozlist .toz .description {padding: 0 5px;}
-		#tozlist .toz .taglist {margin-top: 5px;}
-		#tozlist .toz footer {padding: 0; margin: 0; text-align: inherit; background-color: inherit; padding: 0 5px;}
+		#posts {margin-left: 0; width: 480px;}
+		#posts .post {border: 1px solid black; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background-color: #FFF; padding: 5px; margin-bottom: 16px;}
+		#posts .post > *:not(.taglist) {cursor: pointer;}
+		#posts .post .post-title {text-align: center;}
+		#posts .post .description {padding: 0 5px;}
+		#posts .post .taglist {margin-top: 5px;}
+		#posts .post footer {padding: 0; margin: 0; text-align: inherit; background-color: inherit; padding: 0 5px;}
 		
-		#tozlist .toz-modal .modal-header {height: 50px; padding: 15px;}
-		#tozlist .toz-modal .profile-image {float: left; margin-right: 10px; width: 50px; height: 50px;}
-		#tozlist .toz-modal .modal-body {clear: both;}
-		#tozlist .toz-modal .modal-footer {text-align: left; background-color: #FFF;}
-		#tozlist .toz-modal .modal-footer .comment {height: 50px; margin-bottom: 10px;}
-		#tozlist .toz-modal .modal-footer .comment textarea {border: 1px solid; font-size: 1em; height: 32px; padding: 8px; resize: none; width: 452px; border-color: #DDDDDD #E1DFDF #D1CDCD;}
-		#tozlist .toz-modal .modal-footer .comment:last-child {margin-bottom: 0;}
-		#tozlist .toz-modal .modal-footer .commenter-nickname {margin-bottom: 0;} 
+		#posts .post-modal .modal-header {height: 50px; padding: 15px;}
+		#posts .post-modal .profile-image {float: left; margin-right: 10px; width: 50px; height: 50px;}
+		#posts .post-modal .modal-body {clear: both;}
+		#posts .post-modal .modal-footer {text-align: left; background-color: #FFF;}
+		#posts .post-modal .modal-footer .reply {height: 50px; margin-bottom: 10px;}
+		#posts .post-modal .modal-footer .reply textarea {border: 1px solid; font-size: 1em; height: 32px; padding: 8px; resize: none; width: 452px; border-color: #DDDDDD #E1DFDF #D1CDCD;}
+		#posts .post-modal .modal-footer .reply:last-child {margin-bottom: 0;}
+		#posts .post-modal .modal-footer .replyer-nickname {margin-bottom: 0;} 
 		
 		footer {margin-top: 30px; padding: 20px; text-align: center;}
 	</style>
@@ -139,18 +139,18 @@
 	<nav class="pull-left well" id="leftNav">
 		<ul class="nav nav-list">
 			<li class="nav-header">
-				Toz
+				Post
 			</li>
-			<li><a id="createToz" href="#createTozForm">Create Toz</a></li>
+			<li><a id="writePost" href="#writePostForm">Write post</a></li>
 			<li class="nav-header">
 				Poster
 			</li>
 			<li><a>Attach Poster</a></li>
 		</ul>
 		
-	    <form action="<c:url value="/toz/create"/>" method="post" class="form-horizontal modal hide fade in" id="createTozForm">
+	    <form action="<c:url value="/post/write"/>" method="post" class="form-horizontal modal hide fade in" id="writePostForm">
 			<div class="modal-header">
-				<h3>Create Toz</h3>
+				<h3>Write post</h3>
 			</div>
 			<fieldset class="modal-body">
 				<div class="control-group">
@@ -175,8 +175,8 @@
 	
 	<div class="container" id="resultContainer">
 		<div class="row">
-			<section id="userlist" class="span4">
-				<c:forEach var="user" items="${result.userList}">
+			<section id="users" class="span4">
+				<c:forEach var="user" items="${search.users}">
 					<article class="row userinfo">
 						<div class="userface">
 							<a href="#">
@@ -191,14 +191,14 @@
 								</li>
 								<li>
 									<ul class="unstyled taglist">
-										<c:forEach var="tag" items="${user.userTagList}">
+										<c:forEach var="tag" items="${user.tags}">
 											<li>${tag.value}</li>
 										</c:forEach>
 									</ul>
 								</li>
 								<li>
 									<b>Recent participate toz</b>
-									<ul class="unstyled participate-toz-list">
+									<ul class="unstyled participate-post-list">
 										<c:forEach var="recent" items="${user.recentParticipantTozList}" begin="0" end="3">
 											<li>${recent.title}</li>
 										</c:forEach>
@@ -209,30 +209,30 @@
 					</article>
 				</c:forEach>
 			</section>
-			<section id="tozlist" class="span6">
+			<section id="posts" class="span6">
 				<div class="row">
-					<c:forEach var="toz" items="${result.tozList}">
-						<article class="span3 toz" data-toz-id="${toz.id}" data-toggle="modal" data-target="tozModalTemplate">
-							<header class="toz-title">
-								<b>${toz.title}</b>
+					<c:forEach var="post" items="${result.posts}">
+						<article class="span3 post" data-post-id="${post.id}" data-toggle="modal" data-target="postModalTemplate">
+							<header class="post-title">
+								<b>${post.title}</b>
 							</header>
 							<p class="description">
-								<str:truncateNicely lower="400" appendToEnd="...">${toz.description}</str:truncateNicely>
+								<str:truncateNicely lower="400" appendToEnd="...">${post.description}</str:truncateNicely>
 							</p>
 							<ul class="unstyled taglist">
-								<c:forEach var="tag" items="${toz.tagList}">
+								<c:forEach var="tag" items="${post.tags}">
 									<li>${tag.value}</li>
 								</c:forEach>
 							</ul>
 							<footer>
 								<p>
-									<small>${fn:length(toz.tozParticipantList)} participants</small>&nbsp;
+									<small>${fn:length(post.postParticipantList)} participants</small>&nbsp;
 									<small>1h ago</small>
 								</p>
 							</footer>
 						</article>
 					</c:forEach>
-					<section class="modal hide toz-modal" id="tozModalTemplate">
+					<section class="modal hide post-modal" id="postModalTemplate">
 					    <header class="modal-header">
 						    <img src="<c:url value="/image/50x50.gif"/>" alt="questioner image" class="profile-image"/>
 						    <h3>title</h3>
@@ -243,22 +243,22 @@
 					    <footer class="modal-footer">
 					    	<c:if test="${sessionScope.loginUser ne null}">
 					    	<form action="<c:url value="/participant/add"/>" method="post">
-					    		<article class="comment comment-input">
+					    		<article class="reply reply-input">
 						    		<img src="data:image/gif;base64,${sessionScope.loginUser.encodeProfileImage}" alt="your image" class="profile-image"/>
-						    		<textarea name="comment" placeholder="Add your opinion..."></textarea>
+						    		<textarea name="reply" placeholder="Add your opinion..."></textarea>
 						    	</article>
 						    </form>
 					    	</c:if>
 					    </footer>
 				    </section>
 				</div>
-				<article class="comment hide" id="tozModalCommentTemplate">
+				<article class="reply hide" id="postModalReplyTemplate">
 					<c:if test="${sessionScope.loginUser ne null}">
-					<button class="close comment-delete">x</button>
+					<button class="close reply-delete">x</button>
 					</c:if>
-		    		<img src="<c:url value="/image/50x50.gif"/>" alt="commenter image" class="profile-image"/>
-		    		<p class="commenter-nickname"><b>nickname</b></p>
-		    		<p>comment test</p>
+		    		<img src="<c:url value="/image/50x50.gif"/>" alt="replyer image" class="profile-image"/>
+		    		<p class="replyer-nickname"><b>nickname</b></p>
+		    		<p>reply test</p>
 		    	</article>
 			</section>
 		</div>
@@ -276,41 +276,41 @@
 				img: "<c:url value='/image/living.social.street1.jpg'/>"
 			});
 			
-			$(document).on("keypress", ".comment-input", function(e) {
+			$(document).on("keypress", ".reply-input", function(e) {
 				if (e.keyCode == enter) {
 					e.preventDefault();
 					var $target = $(e.target);
 					var $form = $target.parents("form");
 					var params = $form.serialize();
-					params += "&tozId=" + $target.parents("section").attr("id").replace(/\D/g, "");
+					params += "&postId=" + $target.parents("section").attr("id").replace(/\D/g, "");
 					console.log(params);
 					
 					$.ajax({
 						url: $form.attr("action"),
 						data: params,
 						type: $form.attr("method").toUpperCase()
-					}).done(function(comment) {
-						console.log(comment);
-						$tozModal = $("#tozModal" + comment.tozId);
-						var $commentTemplate = $("#tozModalCommentTemplate").clone().removeClass("hide");
-						$commentTemplate.attr("id", "participant" + comment.id).find("b").text(comment.participant.nickname).end()
-							.children("img").attr("src", getProfileImageIfExists(comment.participant)).end()
-							.children(":last").text(comment.comment);
-						$form.before($commentTemplate).find("textarea").val("").blur();
+					}).done(function(reply) {
+						console.log(reply);
+						$postModal = $("#postModal" + reply.postId);
+						var $replyTemplate = $("#postModalReplyTemplate").clone().removeClass("hide");
+						$replyTemplate.attr("id", "participant" + reply.id).find("b").text(reply.participant.nickname).end()
+							.children("img").attr("src", getProfileImageIfExists(reply.participant)).end()
+							.children(":last").text(reply.content);
+						$form.before($replyTemplate).find("textarea").val("").blur();
 					});
 				}
-			}).on("click", ".comment-delete", function(e) {
+			}).on("click", ".reply-delete", function(e) {
 				console.log(e);
 				var wholeId = $(e.target).parent().attr("id");
-				var commentId = wholeId.replace(/\D/g, "");
-				var url = "<c:url value="/participant/delete/"/>" + commentId;
+				var replyId = wholeId.replace(/\D/g, "");
+				var url = "<c:url value="/participant/delete/"/>" + replyId;
 				$.get(url, function(data) {
 					console.log(data);
 					$("#" + wholeId).remove();
 				});
 			});
 			
-			$("#signupForm, #createTozForm").modal({
+			$("#signupForm, #writePostForm").modal({
 				show: false
 			});
 			
@@ -324,7 +324,7 @@
 				$("#jq_ez_bg img").attr("src", "<c:url value='/image/paper.jpg'/>");
 			});
 			
-			$("#createToz").click(function (e) {
+			$("#writePost").click(function (e) {
 				e.preventDefault();
 				var target = $(e.target).attr("href");
 				var url = "<c:url value="/user/islogin" />";
@@ -333,20 +333,20 @@
 				});
 			});
 			
-			$(".toz > *:not(.taglist)").click(function(e) {
+			$(".post > *:not(.taglist)").click(function(e) {
 				var $target = $(e.target);
-				var tozId = $target.hasClass(".toz") ? $target.attr("data-toz-id") : $target.parents(".toz").attr("data-toz-id");
-				var $toz = $("#tozModal" + tozId);
-				if (isExists($toz)) {
-					$toz.modal("show");
+				var postId = $target.hasClass(".post") ? $target.attr("data-post-id") : $target.parents(".post").attr("data-post-id");
+				var $post = $("#postModal" + postId);
+				if (isExists($post)) {
+					$post.modal("show");
 					return;
 				}
 				
-				var url = "<c:url value='/toz/' />" + tozId;
-				$.get(url, function(toz) {
-					var template = getTozModalTemplates(tozId);
-					createTozModal(toz, template);
-					appendParticipant(tozId, template);
+				var url = "<c:url value='/post/' />" + postId;
+				$.get(url, function(post) {
+					var template = getPostModalTemplates(postId);
+					writePostModal(post, template);
+					appendParticipant(postId, template);
 				});
 			});
 			
@@ -356,9 +356,9 @@
 				return true;
 			});
 			
-			function getTozModalTemplates(tozId) {
+			function getPostModalTemplates(postId) {
 				var template = new Object();
-				template.outer = $("#tozModalTemplate").clone().attr("id", "tozModal" + tozId);
+				template.outer = $("#postModalTemplate").clone().attr("id", "postModal" + postId);
 				template.header = template.outer.children(".modal-header");
 				template.body = template.outer.children(".modal-body");
 				template.footer = template.outer.children(".modal-footer");
@@ -369,30 +369,30 @@
 				return $target.length != 0;
 			}
 			
-			function createTozModal(toz, template) {
-				template.header.children("h3").text(toz.title).end()
-					.children("img").attr("src", getProfileImageIfExists(toz.questioner));
-				template.body.children("p").text(toz.description);
+			function writePostModal(post, template) {
+				template.header.children("h3").text(post.title).end()
+					.children("img").attr("src", getProfileImageIfExists(post.writer));
+				template.body.children("p").text(post.description);
 			}
 			
-			function appendParticipant(tozId, template) {
-				var url = "<c:url value='/participant/' />" + tozId;
+			function appendParticipant(postId, template) {
+				var url = "<c:url value='/participant/' />" + postId;
 				$.get(url, function(data) {
-					$.each(data, function(index, comment) {
-						template.comment = $("#tozModalCommentTemplate").clone().removeClass("hide");
-						template.comment.attr("id", "participant" + comment.id).find("b").text(comment.participant.nickname).end()
-							.children("img").attr("src", getProfileImageIfExists(comment.participant)).end()
-							.children(":last").text(comment.comment);
+					$.each(data, function(index, reply) {
+						template.reply = $("#postModalReplyTemplate").clone().removeClass("hide");
+						template.reply.attr("id", "participant" + reply.id).find("b").text(reply.participant.nickname).end()
+							.children("img").attr("src", getProfileImageIfExists(reply.participant)).end()
+							.children(":last").text(reply.content);
 						
-						if (comment.participant.nickname != "${sessionScope.loginUser.nickname}")
-							template.comment.children(".close").remove();
+						if (reply.participant.nickname != "${sessionScope.loginUser.nickname}")
+							template.reply.children(".close").remove();
 						
 						if (template.footer.children("form").size() > 0)
-							template.footer.children("form").before(template.comment);
+							template.footer.children("form").before(template.reply);
 						else
-							template.footer.append(template.comment);
+							template.footer.append(template.reply);
 					});
-					template.outer.appendTo("#tozlist").modal("show");
+					template.outer.appendTo("#posts").modal("show");
 				});
 			}
 			
@@ -401,13 +401,13 @@
 			}
 			
 			function positioning() {
-				$tozs = $("article.toz");
-				$row = $("#tozlist .row");
-				$tozs.eq(0).position({of: $row, at: "left top", collision: "none", my: "left top", offset: "20 0"});
-				$tozs.eq(1).position({of: $row, at: "right top", collision: "none", my: "right top", offset: "-5 0"});
+				$posts = $("article.post");
+				$row = $("#posts .row");
+				$posts.eq(0).position({of: $row, at: "left top", collision: "none", my: "left top", offset: "20 0"});
+				$posts.eq(1).position({of: $row, at: "right top", collision: "none", my: "right top", offset: "-5 0"});
 				
-				for (var i = 0, j = 2; i < $tozs.size() - 2; i++, j++) {
-					$tozs.eq(j).position({of: $("article.toz").eq(i), at: "bottom", collision: "none", my: "top", offset: "0 10"});
+				for (var i = 0, j = 2; i < $posts.size() - 2; i++, j++) {
+					$posts.eq(j).position({of: $("article.post").eq(i), at: "bottom", collision: "none", my: "top", offset: "0 10"});
 				}
 			}
 				

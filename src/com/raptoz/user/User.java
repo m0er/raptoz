@@ -17,7 +17,7 @@ public class User {
 	private String nickname;
 	private String encodeProfileImage;
 	
-	private List<Tag> tagList;
+	private List<Tag> tags;
 	
 	public User() {
 	}
@@ -77,19 +77,20 @@ public class User {
 		this.encodeProfileImage = encodeProfileImage;
 	}
 
-	public List<Tag> getTagList() {
-		return tagList;
+	public List<Tag> getTags() {
+		return tags;
 	}
 
-	public void setTagList(List<Tag> tagList) {
-		this.tagList = tagList;
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", password=" + password
-				+ ", nickname=" + nickname + ", encodeProfileImage="
-				+ encodeProfileImage + ", tagList=" + tagList + "]";
+		return "User [id=" + id + ", joined=" + joined + ", email=" + email
+				+ ", password=" + password + ", nickname=" + nickname
+				+ ", encodeProfileImage=" + encodeProfileImage + ", tags="
+				+ tags + "]";
 	}
 	
 }

@@ -45,7 +45,7 @@ public class PostRepositoryTest {
 		tagRepository.save(userTag);
 		
 		user = new User("testuser@raptoz.com", "test", "testuser", "");
-		user.setTagList(Arrays.asList(userTag));
+		user.setTags(Arrays.asList(userTag));
 		userRepository.save(user);
 		
 		post1 = new Post("title1", "description1", user);
@@ -75,29 +75,29 @@ public class PostRepositoryTest {
 		// save posts
 		long before = postRepository.count();
 		
-		post1.setTagList(Arrays.asList(tag1, tag2, tag3));
+		post1.setTags(Arrays.asList(tag1, tag2, tag3));
 		postRepository.save(Arrays.asList(post1, post2, post3));
 		assertThat(postRepository.count(), is(before + 3));
-		assertThat(postRepository.findOne(post1.getId()).getTagList(), hasItems(tag1, tag2, tag3));
+		assertThat(postRepository.findOne(post1.getId()).getTags(), hasItems(tag1, tag2, tag3));
 		
 		logger.info(postRepository.findAll().toString());
 		
 		// update post
 		post1.setContent("asdf");
-		post1.setTagList(Arrays.asList(tag2));
+		post1.setTags(Arrays.asList(tag2));
 		postRepository.save(post1);
 		
 		Post found = postRepository.findOne(post1.getId());
 		assertThat(found.getContent(), is(post1.getContent()));
-		assertThat(found.getTagList(), not(hasItems(tag1, tag3)));
+		assertThat(found.getTags(), not(hasItems(tag1, tag3)));
 		
 		// save replies
 		replyRepository.save(Arrays.asList(reply1, reply2, reply3));
-		post1.setReplyIdList(Arrays.asList(reply1.getId(), reply2.getId(), reply3.getId()));
+		post1.setReplyIds(Arrays.asList(reply1.getId(), reply2.getId(), reply3.getId()));
 		postRepository.save(post1);
 		
 		found = postRepository.findOne(post1.getId());
-		List<ObjectId> replyIdList = found.getReplyIdList();
+		List<ObjectId> replyIdList = found.getReplyIds();
 		assertThat(replyIdList.size(), is(3));
 		
 		// retrieve replies
@@ -113,6 +113,21 @@ public class PostRepositoryTest {
 		postRepository.save(post1);
 		// created 필드를 없애도 될 것 같긴 한데..
 		assertThat(new Date(post1.getId().getTime()).toString(), is(notNullValue()));
+	}
+	
+	@Test
+	public void Tag_value로_검색() throws Exception {
+		List<Tag> tags = Arrays.asList(tag1, tag2, tag3);
+		tagRepository.save(tags);
+		
+		post1.setTags(tags);
+		post1.setCreated(new Date());
+		post1.setViewCount(0L);
+		postRepository.save(post1);
+		
+		List<Post> postList = postRepository.findByTagsValue(tag1.getValue());
+		
+		assertThat(postList.get(0).getId(), is(post1.getId()));
 	}
 	
 	@After

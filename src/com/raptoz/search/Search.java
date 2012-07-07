@@ -6,27 +6,27 @@ import com.raptoz.post.*;
 import com.raptoz.user.*;
 
 public class Search {
-	private List<User> userList;
-	private List<Post> postList;
+	private List<User> users;
+	private List<Post> posts;
 	
-	public List<User> getUserList() {
-		return userList;
+	public List<User> getUsers() {
+		return users;
 	}
 
-	public void setUserList(List<User> userList) {
-		this.userList = userList;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
-	public List<Post> getPostList() {
-		return postList;
+	public List<Post> getPosts() {
+		return posts;
 	}
 
-	public void setPostList(List<Post> postList) {
-		this.postList = postList;
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override
 	public String toString() {
-		return "Search [userList=" + userList + ", postList=" + postList + "]";
+		return "Search [users=" + users + ", posts=" + posts + "]";
 	}
 }

@@ -16,7 +16,7 @@ public class PostController {
 	
 	@Autowired private PostService postService;
 	
-	@RequestMapping("/create")
+	@RequestMapping("/write")
 	public String create(@ModelAttribute("loginUser") User user, Post post) {
 		logger.info(user.toString());
 		logger.info(post.toString());

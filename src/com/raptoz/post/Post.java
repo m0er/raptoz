@@ -18,11 +18,10 @@ public class Post {
 	private String content;
 
 	private User writer;
-	private List<Tag> tagList;
-	private List<ObjectId> replyIdList;
+	private List<Tag> tags;
+	private List<ObjectId> replyIds;
 	
 	public Post() {
-		this.created = new Date();
 	}
 	
 	public Post(String title, String content, User writer) {
@@ -79,28 +78,28 @@ public class Post {
 		this.viewCount = viewCount;
 	}
 
-	public List<Tag> getTagList() {
-		return tagList;
+	public List<Tag> getTags() {
+		return tags;
 	}
 	
-	public void setTagList(List<Tag> tagList) {
-		this.tagList = tagList;
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 
-	public List<ObjectId> getReplyIdList() {
-		return replyIdList;
+	public List<ObjectId> getReplyIds() {
+		return replyIds;
 	}
 
-	public void setReplyIdList(List<ObjectId> replyIdList) {
-		this.replyIdList = replyIdList;
+	public void setReplyIds(List<ObjectId> replyIds) {
+		this.replyIds = replyIds;
 	}
 
 	@Override
 	public String toString() {
 		return "Post [id=" + id + ", title=" + title + ", created=" + created
 				+ ", viewCount=" + viewCount + ", content=" + content
-				+ ", writer=" + writer + ", tagList=" + tagList
-				+ ", replyIdList=" + replyIdList + "]";
+				+ ", writer=" + writer + ", tags=" + tags + ", replyIds="
+				+ replyIds + "]";
 	}
 	
 }

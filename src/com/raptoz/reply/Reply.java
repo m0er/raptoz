@@ -16,7 +16,6 @@ public class Reply {
 	private User writer;
 	
 	public Reply() {
-		this.created = new Date();
 	}
 	
 	public Reply(String content, User writer) {
