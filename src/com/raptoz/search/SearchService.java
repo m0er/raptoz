@@ -21,6 +21,8 @@ public class SearchService {
 		search.setUsers(userService.getByTag(term));
 		
 		logger.info(search.toString());
+		logger.info("post:" + search.getPosts().size());
+		logger.info("user:" + search.getUsers().size());
 		
 		return search;
 	}

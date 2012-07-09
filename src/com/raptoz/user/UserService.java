@@ -1,5 +1,7 @@
 package com.raptoz.user;
 
+import static com.raptoz.user.User.Activity.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -8,10 +10,14 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.raptoz.post.Post;
+import com.raptoz.post.PostRepository;
+import com.raptoz.reply.ReplyRepository;
+import com.raptoz.user.User.Activity;
 import com.raptoz.util.RaptozUtil;
 
 @Service("userService")
@@ -19,6 +25,8 @@ public class UserService {
 	private Logger logger = LoggerFactory.getLogger(UserService.class);
 	
 	@Autowired private UserRepository userRepository;
+	@Autowired private PostRepository postRepository;
+	@Autowired private ReplyRepository replyRepository;
 	
 	public void add(User user, MultipartFile profileImage) {
 		user.setJoined(new Date());
@@ -31,18 +39,14 @@ public class UserService {
 		userRepository.save(user);
 	}
 	
-	private List<Post> getRecentUserParticipantToz(Long userId) {
-//		List<Reply> tozParticipantList = tozParticipantMapper.findAllByUsrId(userId);
-//		List<Post> userParticipantTozList = new ArrayList<Post>();
-//		
-//		for (Reply tozParticipant : tozParticipantList) {
-//			Post toz = tozMapper.findOne(tozParticipant.getTozId());
-//			userParticipantTozList.add(toz);
-//		}
-//		
-//		return userParticipantTozList;
+	public Activity getRecentUserActivities(User user) {
+		Activity activity = new Activity();
+		PageRequest limitTenCreatedDesc = new PageRequest(0, USER_ACTIVITY_COUNT, new Sort(Direction.DESC, "created"));
 		
-		throw new UnsupportedOperationException();
+		activity.setPosts(postRepository.findByWriterId(user.getId(), limitTenCreatedDesc));
+		activity.setReplies(replyRepository.findByWriterId(user.getId(), limitTenCreatedDesc));
+		
+		return activity;
 	}
 
 	public User login(User user) {
@@ -50,7 +54,7 @@ public class UserService {
 		
 		if (found != null) {
 			logger.info("로그인 성공!: " + found.toString());
-			return found;
+			return userRepository.findOneSimpleById(found.getId());
 		} else {
 			logger.info("사용자를 찾을 수 없습니다: " + user.toString());
 			return null;
@@ -63,6 +67,15 @@ public class UserService {
 
 	public List<User> getByTag(String term) {
 		List<User> users = userRepository.findByTagsValue(term);
+		return users;
+	}
+	
+	public List<User> getByTagAndActivities(String term) {
+		List<User> users = userRepository.findByTagsValue(term);
+		
+		for (User user : users)
+			user.setActivities(getRecentUserActivities(user));
+		
 		return users;
 	}
 

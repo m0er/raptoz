@@ -199,9 +199,9 @@
 								<li>
 									<b>Recent participate toz</b>
 									<ul class="unstyled participate-post-list">
-										<c:forEach var="recent" items="${user.recentParticipantTozList}" begin="0" end="3">
+										<%-- <c:forEach var="recent" items="${user.recentwriterTozList}" begin="0" end="3">
 											<li>${recent.title}</li>
-										</c:forEach>
+										</c:forEach> --%>
 									</ul>
 								</li>
 							</ul>
@@ -211,13 +211,13 @@
 			</section>
 			<section id="posts" class="span6">
 				<div class="row">
-					<c:forEach var="post" items="${result.posts}">
+					<c:forEach var="post" items="${search.posts}">
 						<article class="span3 post" data-post-id="${post.id}" data-toggle="modal" data-target="postModalTemplate">
 							<header class="post-title">
 								<b>${post.title}</b>
 							</header>
 							<p class="description">
-								<str:truncateNicely lower="400" appendToEnd="...">${post.description}</str:truncateNicely>
+								<str:truncateNicely lower="400" appendToEnd="...">${post.content}</str:truncateNicely>
 							</p>
 							<ul class="unstyled taglist">
 								<c:forEach var="tag" items="${post.tags}">
@@ -226,7 +226,7 @@
 							</ul>
 							<footer>
 								<p>
-									<small>${fn:length(post.postParticipantList)} participants</small>&nbsp;
+									<small>${fn:length(post.replyIds)} replies</small>&nbsp;
 									<small>1h ago</small>
 								</p>
 							</footer>
@@ -242,7 +242,7 @@
 					    </article>
 					    <footer class="modal-footer">
 					    	<c:if test="${sessionScope.loginUser ne null}">
-					    	<form action="<c:url value="/participant/add"/>" method="post">
+					    	<form action="<c:url value="/reply/add"/>" method="post">
 					    		<article class="reply reply-input">
 						    		<img src="data:image/gif;base64,${sessionScope.loginUser.encodeProfileImage}" alt="your image" class="profile-image"/>
 						    		<textarea name="reply" placeholder="Add your opinion..."></textarea>
@@ -293,8 +293,8 @@
 						console.log(reply);
 						$postModal = $("#postModal" + reply.postId);
 						var $replyTemplate = $("#postModalReplyTemplate").clone().removeClass("hide");
-						$replyTemplate.attr("id", "participant" + reply.id).find("b").text(reply.participant.nickname).end()
-							.children("img").attr("src", getProfileImageIfExists(reply.participant)).end()
+						$replyTemplate.attr("id", "writer" + reply.id).find("b").text(reply.writer.nickname).end()
+							.children("img").attr("src", getProfileImageIfExists(reply.writer)).end()
 							.children(":last").text(reply.content);
 						$form.before($replyTemplate).find("textarea").val("").blur();
 					});
@@ -303,7 +303,7 @@
 				console.log(e);
 				var wholeId = $(e.target).parent().attr("id");
 				var replyId = wholeId.replace(/\D/g, "");
-				var url = "<c:url value="/participant/delete/"/>" + replyId;
+				var url = "<c:url value="/reply/delete/"/>" + replyId;
 				$.get(url, function(data) {
 					console.log(data);
 					$("#" + wholeId).remove();
@@ -346,7 +346,7 @@
 				$.get(url, function(post) {
 					var template = getPostModalTemplates(postId);
 					writePostModal(post, template);
-					appendParticipant(postId, template);
+					appendWriter(postId, template);
 				});
 			});
 			
@@ -375,16 +375,16 @@
 				template.body.children("p").text(post.description);
 			}
 			
-			function appendParticipant(postId, template) {
-				var url = "<c:url value='/participant/' />" + postId;
+			function appendWriter(postId, template) {
+				var url = "<c:url value='/reply/' />" + postId;
 				$.get(url, function(data) {
 					$.each(data, function(index, reply) {
 						template.reply = $("#postModalReplyTemplate").clone().removeClass("hide");
-						template.reply.attr("id", "participant" + reply.id).find("b").text(reply.participant.nickname).end()
-							.children("img").attr("src", getProfileImageIfExists(reply.participant)).end()
+						template.reply.attr("id", "writer" + reply.id).find("b").text(reply.writer.nickname).end()
+							.children("img").attr("src", getProfileImageIfExists(reply.writer)).end()
 							.children(":last").text(reply.content);
 						
-						if (reply.participant.nickname != "${sessionScope.loginUser.nickname}")
+						if (reply.writer.nickname != "${sessionScope.loginUser.nickname}")
 							template.reply.children(".close").remove();
 						
 						if (template.footer.children("form").size() > 0)

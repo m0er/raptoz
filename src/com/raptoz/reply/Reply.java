@@ -5,7 +5,6 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.raptoz.post.Post;
 import com.raptoz.user.User;
 
 @Document

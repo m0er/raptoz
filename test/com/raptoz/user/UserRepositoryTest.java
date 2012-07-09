@@ -59,6 +59,14 @@ public class UserRepositoryTest {
 		assertThat(users.get(0).getId(), is(user1.getId()));
 	}
 	
+	@Test
+	public void findAllSimple() throws Exception {
+		List<User> users = userRepository.findAllSimple();
+		
+		for (User user : users)
+			assertThat(user.getPassword(), is(nullValue()));
+	}
+	
 	@After
 	public void tearDown() {
 		userRepository.deleteAll();

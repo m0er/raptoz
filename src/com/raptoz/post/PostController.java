@@ -29,7 +29,7 @@ public class PostController {
 	
 	@RequestMapping("/{id}")
 	@ResponseBody
-	public Post get(@PathVariable("id") ObjectId id) {
+	public Post get(@PathVariable ObjectId id) {
 		logger.info("Post Id:" + id);
 		return postService.getById(id);
 	}

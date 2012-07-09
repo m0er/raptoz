@@ -18,4 +18,7 @@ public interface UserRepository extends MongoRepository<User, ObjectId> {
 	@Query(value = "{ 'tags.value' : ?0 }", fields = "{password: 0}")
 	List<User> findSimpleByTagsValue(String value);
 	
+	@Query(value = "{}", fields = "{password: 0}")
+	List<User> findAllSimple();
+	
 }
