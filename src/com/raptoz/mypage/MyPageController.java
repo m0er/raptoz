@@ -1,5 +1,8 @@
 package com.raptoz.mypage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.catalina.util.Base64;
 import org.bson.types.ObjectId;
 import org.slf4j.*;
@@ -10,16 +13,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.raptoz.tag.Tag;
+import com.raptoz.tag.TagService;
 import com.raptoz.user.User;
+import com.raptoz.user.UserRepository;
 import com.raptoz.user.UserService;
 import com.raptoz.util.RaptozUtil;
 
 @Controller
 @RequestMapping("/mypage")
+@SessionAttributes("loginUser")
 public class MyPageController {
 	Logger logger = LoggerFactory.getLogger(getClass());
+	
 	@Autowired MyPageService mypageService;
 	@Autowired UserService userService;
+	@Autowired TagService tagService;
 	
 	@RequestMapping("/{id}")
 	public String mypage(@PathVariable("id") ObjectId id, Model model) {
@@ -37,22 +45,33 @@ public class MyPageController {
 //		}
 //		return null;
 //	}
-//
-//	@RequestMapping("/{userId}/tag/add")
-//	@ResponseBody
-//	public Tag addTag(@PathVariable Long userId, @RequestParam("tag") String tag) {
-//		logger.info("추가할 태그: " + tag);
-//		Tag insertedTag = mypageService.addTag(userId, tag);
-//		return insertedTag;
-//	}
-//
-//	@RequestMapping("/{userId}/tag/{tagId}/delete")
-//	@ResponseBody
-//	public String deleteTag(@PathVariable Long userId, @PathVariable Long tagId) {
-//		mypageService.deleteTag(tagId);
-//		// 조건 작성
-//		return "true";
-//	}
+
+	@RequestMapping("/{id}/tag/add")
+	@ResponseBody
+	public User addTag(@PathVariable("id") ObjectId userId, Tag tag) {
+		logger.info("추가할 태그: " + tag);
+		Tag insertedTag = tagService.addTag(tag);
+		
+		User user = userService.getById(userId);
+		
+		List<Tag> tags = user.getTags();
+		
+		if (tags == null) {
+			tags = new ArrayList<Tag>();
+		}
+		tags.add(insertedTag);
+		user.setTags(tags);
+		return userService.updateUser(user);
+	}
+
+	@RequestMapping("/{userId}/tag/{tagId}/delete")
+	@ResponseBody
+	public boolean deleteTag(@PathVariable("userId") ObjectId userId, @PathVariable ObjectId tagId) {
+		if (mypageService.removeTag(userId, tagId) != null) {
+			return true;
+		}
+		return false;
+	}
 //
 //	@RequestMapping(value="/{userId}/profileImage/update", method=RequestMethod.POST)
 //	@ResponseBody
