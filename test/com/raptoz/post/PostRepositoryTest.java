@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -128,6 +129,17 @@ public class PostRepositoryTest {
 		List<Post> postList = postRepository.findByTagsValue(tag1.getValue());
 		
 		assertThat(postList.get(0).getId(), is(post1.getId()));
+	}
+	
+	@Test
+	public void limit() throws Exception {
+		postRepository.save(Arrays.asList(post1, post2, post3));
+		
+		// same as
+		// List<Post> founds = mongoTemplate.find(Query.query(Criteria.where("writer._id").is(user.getId())).limit(1), Post.class);
+		List<Post> founds = postRepository.findByWriterId(user.getId(), new PageRequest(0, 1));
+		
+		assertThat(founds.size(), is(1));
 	}
 	
 	@After

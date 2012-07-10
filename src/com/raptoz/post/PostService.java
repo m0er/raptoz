@@ -1,5 +1,6 @@
 package com.raptoz.post;
 
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -14,6 +15,7 @@ public class PostService {
 	
 	public void create(User writer, Post post) {
 		post.setWriter(writer);
+		post.setCreated(new Date());
 		postRepository.save(post);
 	}
 

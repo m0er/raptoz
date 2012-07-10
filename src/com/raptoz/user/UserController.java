@@ -45,10 +45,11 @@ public class UserController {
 		return "redirect:" + referer;
 	}
 	
-//	@RequestMapping(value="/islogin", method=RequestMethod.GET)
-//	@ResponseBody
-//	public Object isLogin(HttpSession session) {
-//		User loginUser = (User) session.getAttribute("loginUser");
-//		return loginUser == null ? false : loginUser;
-//	}
+	@RequestMapping(value="/islogin", method=RequestMethod.GET)
+	@ResponseBody
+	public Object isLogin(HttpSession session) {
+		User loginUser = (User) session.getAttribute("loginUser");
+		return loginUser == null ? false : loginUser;
+	}
+	
 }

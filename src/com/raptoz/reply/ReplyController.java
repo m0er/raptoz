@@ -18,8 +18,7 @@ public class ReplyController {
 	@RequestMapping("/add")
 	@ResponseBody
 	public Reply add(Reply reply, @ModelAttribute("loginUser") User user) {
-		reply.setWriter(user);
-		replyService.add(reply);
+		reply = replyService.add(user, reply);
 		return reply;
 	}
 	
@@ -30,10 +29,10 @@ public class ReplyController {
 		return "success";
 	}
 	
-	@RequestMapping("/{id}")
+	@RequestMapping("/{postId}")
 	@ResponseBody
-	public List<Reply> get(@PathVariable ObjectId id) {
-		List<Reply> replyList = replyService.get(id);
+	public List<Reply> get(@PathVariable ObjectId postId) {
+		List<Reply> replyList = replyService.get(postId);
 		return replyList;
 	}
 }

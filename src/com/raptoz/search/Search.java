@@ -1,9 +1,9 @@
 package com.raptoz.search;
 
-import java.util.*;
+import java.util.List;
 
-import com.raptoz.post.*;
-import com.raptoz.user.*;
+import com.raptoz.post.Post;
+import com.raptoz.user.User;
 
 public class Search {
 	private List<User> users;
@@ -29,4 +29,5 @@ public class Search {
 	public String toString() {
 		return "Search [users=" + users + ", posts=" + posts + "]";
 	}
+
 }

@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.raptoz</groupId>
 	<artifactId>raptoz</artifactId>
-	<version>1.0.0.M1</version>
+	<version>1.0.0.M2</version>
 	<packaging>war</packaging>
 	<name>raptoz</name>
-
+	
 	<properties>
 		<spring.version>3.1.1.RELEASE</spring.version>
 		<default.encoding>UTF-8</default.encoding>
@@ -301,8 +301,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<encoding>${default.encoding}</encoding>
 					<includes>
 						<include>**/*.java</include>
