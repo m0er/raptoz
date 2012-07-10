@@ -1,7 +1,6 @@
 package com.raptoz.user;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -85,6 +84,9 @@ public class User {
 	}
 
 	public void setTags(List<Tag> tags) {
+		if (tags == null)
+			tags = new ArrayList<>();
+		
 		this.tags = tags;
 	}
 	
