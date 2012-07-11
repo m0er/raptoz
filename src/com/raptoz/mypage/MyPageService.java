@@ -3,15 +3,18 @@ package com.raptoz.mypage;
 
 import java.util.List;
 
+import org.apache.catalina.util.Base64;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.raptoz.tag.Tag;
 import com.raptoz.user.User;
 import com.raptoz.user.UserRepository;
+import com.raptoz.util.RaptozUtil;
 
 @Service("mypageService")
 public class MyPageService {
@@ -72,6 +75,9 @@ public class MyPageService {
 	 */
 	public User removeTag(ObjectId userId, ObjectId tagId) {
 		User user = userRepository.findOne(userId);
+		
+		logger.debug("Before Size : " + user.getTags().size());
+		
 		List<Tag> tags = user.getTags();
 		for (int i = 0, len = tags.size(); i < len; i++) {
 			if (tagId.equals(tags.get(i).getId())) {
@@ -80,12 +86,16 @@ public class MyPageService {
 				return user;
 			}
 		}
+		
+		logger.debug("After Size : " + user.getTags().size());
 		return null;
 	}
-//	
-//	public void updateProfileImage(Long userId, MultipartFile profileImage) {
-//		userMapper.updateProfileImage(Base64.encode(RaptozUtil.getBytes(profileImage)), userId);
-//	}
+	
+	public void updateProfileImage(ObjectId userId, MultipartFile profileImage) {
+		User user = userRepository.findOne(userId);
+		user.setEncodeProfileImage(Base64.encode(RaptozUtil.getBytes(profileImage)));
+		userRepository.save(user);
+	}
 	
 	private boolean isEqual(String pwd1, String pwd2) {
 		return pwd1.trim().equals(pwd2.trim());

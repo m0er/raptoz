@@ -66,17 +66,23 @@ public class MyPageController {
 
 	@RequestMapping("/{userId}/tag/{tagId}/delete")
 	@ResponseBody
-	public boolean deleteTag(@PathVariable("userId") ObjectId userId, @PathVariable ObjectId tagId) {
+	public boolean deleteTag(@PathVariable("userId") ObjectId userId, @PathVariable("tagId") ObjectId tagId) {
+		/*
+		 * ToDo 
+		 * 
+		 * tagId 소스 수정
+		 * 삭제 정상작동하지 않음
+		 */
 		if (mypageService.removeTag(userId, tagId) != null) {
 			return true;
 		}
 		return false;
 	}
-//
-//	@RequestMapping(value="/{userId}/profileImage/update", method=RequestMethod.POST)
-//	@ResponseBody
-//	public String updateProfileImage(@PathVariable Long userId, @RequestParam("profileImage") MultipartFile profileImage) {
-//		mypageService.updateProfileImage(userId, profileImage);
-//		return Base64.encode(RaptozUtil.getBytes(profileImage));
-//	}
+
+	@RequestMapping(value="/{id}/profileImage/update", method=RequestMethod.POST)
+	@ResponseBody
+	public String updateProfileImage(@PathVariable("id") ObjectId userId, @RequestParam("profileImage") MultipartFile profileImage) {
+		mypageService.updateProfileImage(userId, profileImage);
+		return Base64.encode(RaptozUtil.getBytes(profileImage));
+	}
 }

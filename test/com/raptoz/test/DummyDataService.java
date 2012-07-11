@@ -87,7 +87,7 @@ public class DummyDataService {
 			ObjectId dummyId = dummyReply.getId();
 			
 			if (dummyReplyIds == null) {
-				dummyReplyIds = new ArrayList<>();
+				dummyReplyIds = new ArrayList<ObjectId>();
 				dummyReplyIds.add(dummyId);
 			} else { 
 				dummyReplyIds.add(dummyId);
