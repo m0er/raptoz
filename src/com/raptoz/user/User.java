@@ -82,7 +82,7 @@ public class User {
 
 	public void setTags(List<Tag> tags) {
 		if (tags == null)
-			tags = new ArrayList<>();
+			tags = new ArrayList<Tag>();
 		
 		this.tags = tags;
 	}
