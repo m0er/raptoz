@@ -5,10 +5,12 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.raptoz.activity.Activity.Type;
+import com.raptoz.activity.FootPrintable;
 import com.raptoz.user.User;
 
 @Document
-public class Reply {
+public class Reply implements FootPrintable {
 	private ObjectId id;
 	private Date created;
 	private String content;
@@ -93,6 +95,27 @@ public class Reply {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public User getOwner() {
+		return writer;
+	}
+
+	@Override
+	public Type getType() {
+		return Type.REPLY;
+	}
+
+	@Override
+	public void clear() {
+		setCreated(null);
+		setWriter(null);
+	}
+
+	@Override
+	public String getContentString() {
+		return content;
 	}
 	
 }
