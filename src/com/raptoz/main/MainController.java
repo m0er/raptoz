@@ -31,6 +31,9 @@ public class MainController {
 			model.addAttribute("user", loginUser);
 		}
 		
+		Search search = searchService.recent();
+		model.addAttribute("search", search);
+		
 		return "main/list";
 	}
 	

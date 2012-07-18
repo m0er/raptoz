@@ -8,6 +8,8 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,5 +60,10 @@ public class UserService {
 
 	public User updateUser(User user) {
 		return userRepository.save(user);
+	}
+
+	public List<User> getRecent(final int limit) {
+		Pageable pageable = new PageRequest(0, limit, Direction.DESC, "joined");
+		return userRepository.findAllSimplePageable(pageable);
 	}
 }

@@ -20,21 +20,39 @@ public class SearchService {
 	@Autowired private UserService userService;
 	@Autowired private ActivityService activityService;
 	
+	private static final int RECENT_LIMIT = 10;
+	
 	public Search search(String term) {
 		Search search = new Search();
 		search.setPosts(postService.getByTag(term));
 		
 		List<User> users = userService.getByTag(term);
+		setRecentActivities(users);
+		
+		search.setUsers(users);
+		
+		logger.info("search " + term + ":\n" + search.toString());
+		
+		return search;
+	}
+
+	private void setRecentActivities(List<User> users) {
 		for (int i = 0; i < users.size(); i++) {
 			User user  = users.get(i);
 			user.setActivities(activityService.getByUser(user));
 		}
+	}
+
+	public Search recent() {
+		Search search = new Search();
+		search.setPosts(postService.getRecent(RECENT_LIMIT));
+		
+		List<User> users = userService.getRecent(RECENT_LIMIT);
+		setRecentActivities(users);
 		
 		search.setUsers(users);
 		
-		logger.info(search.toString());
-		logger.info("Posts:" + search.getPosts().size());
-		logger.info("Users:" + search.getUsers().size());
+		logger.info("search recent" + ":\n" + search.toString());
 		
 		return search;
 	}
