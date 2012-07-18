@@ -197,11 +197,11 @@
 									</ul>
 								</li>
 								<li>
-									<b>Recent participate toz</b>
+									<b>Recent activities</b>
 									<ul class="unstyled participate-post-list">
-										<%-- <c:forEach var="recent" items="${user.recentwriterTozList}" begin="0" end="3">
-											<li>${recent.title}</li>
-										</c:forEach> --%>
+										<c:forEach var="activity" items="${user.activities}">
+											<li><str:truncateNicely lower="50" appendToEnd="...">${activity.contentString}</str:truncateNicely></li>
+										</c:forEach>
 									</ul>
 								</li>
 							</ul>

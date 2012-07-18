@@ -34,6 +34,10 @@ public class Activity<T extends FootPrintable> {
 	public Type getType() {
 		return type;
 	}
+	
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
 
 	public User getOwner() {
 		return owner;

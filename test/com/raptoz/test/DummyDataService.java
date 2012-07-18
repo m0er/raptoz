@@ -22,6 +22,7 @@ public class DummyDataService {
 	@Autowired ActivityRepository activityRepository;
 	
 	private static final int DUMMY_DATA_COUNT = 100;
+	private final Calendar calendar = Calendar.getInstance();
 	
 	Random random = new Random(System.currentTimeMillis());
 	String dummyText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis adipiscing nunc sit amet consectetur. Donec vitae molestie neque. Aliquam fringilla velit ut massa accumsan sed lacinia metus aliquet. Sed porttitor pellentesque mi, sed placerat arcu vehicula vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec ornare congue ligula ut placerat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc interdum, mi vel varius faucibus, nibh justo fermentum nisi, vitae tincidunt neque velit sit amet nunc. Donec vulputate augue nec leo dignissim a fermentum purus auctor. Nam feugiat ultricies orci, tempor condimentum libero viverra et. Mauris massa enim, sollicitudin id varius at, egestas eu erat.";
@@ -53,7 +54,8 @@ public class DummyDataService {
 			
 			// write dummy posts
 			Post dummyPost = new Post("title" + count, dummyText.substring(0, 100 + random.nextInt(700)), simpleUser);
-			dummyPost.setCreated(new Date());
+			calendar.setTimeInMillis(System.currentTimeMillis() + random.nextInt(10000));
+			dummyPost.setCreated(calendar.getTime());
 			dummyPost.setTags(dummyTags.subList(0, random.nextInt(dummyTags.size())));
 			
 			postRepository.save(dummyPost);
@@ -81,7 +83,8 @@ public class DummyDataService {
 				dummyReply = new Reply(generateDummyComment() + i, randomUser);
 			
 			dummyReply.setPostId(randomPost.getId());
-			dummyReply.setCreated(new Date());
+			calendar.setTimeInMillis(System.currentTimeMillis() + random.nextInt(10000));
+			dummyReply.setCreated(calendar.getTime());
 			
 			replyRepository.save(dummyReply);
 			activityRepository.save(new Activity<Reply>(dummyReply));
@@ -121,6 +124,7 @@ public class DummyDataService {
 		userRepository.deleteAll();
 		postRepository.deleteAll();
 		replyRepository.deleteAll();
+		activityRepository.deleteAll();
 	}
 	
 }

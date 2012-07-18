@@ -115,7 +115,7 @@ public class Reply implements FootPrintable {
 
 	@Override
 	public String getContentString() {
-		return content;
+		return "[reply] " + content;
 	}
 	
 }

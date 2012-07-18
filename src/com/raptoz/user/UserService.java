@@ -47,7 +47,7 @@ public class UserService {
 	}
 
 	public List<User> getByTag(String term) {
-		List<User> users = userRepository.findByTagsValue(term);
+		List<User> users = userRepository.findSimpleByTagsValue(term);
 		return users;
 	}
 	

@@ -5,6 +5,8 @@ import java.util.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.raptoz.activity.Activity;
+import com.raptoz.activity.FootPrintable;
 import com.raptoz.tag.Tag;
 
 @Document
@@ -17,6 +19,7 @@ public class User {
 	private String encodeProfileImage;
 	
 	private List<Tag> tags;
+	private List<Activity<? extends FootPrintable>> activities;
 	
 	public User() {
 	}
@@ -87,12 +90,20 @@ public class User {
 		this.tags = tags;
 	}
 	
+	public List<Activity<? extends FootPrintable>> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(List<Activity<? extends FootPrintable>> activities) {
+		this.activities = activities;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", joined=" + joined + ", email=" + email
 				+ ", password=" + password + ", nickname=" + nickname
 				+ ", encodeProfileImage=" + encodeProfileImage + ", tags="
-				+ tags + "]";
+				+ tags + ", activities=" + activities + "]";
 	}
 	
 }

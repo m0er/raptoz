@@ -1,7 +1,13 @@
 package com.raptoz.activity;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+
+import com.raptoz.user.User;
 
 @Service
 public class ActivityService {
@@ -9,6 +15,12 @@ public class ActivityService {
 	
 	public void addActivity(Activity<? extends FootPrintable> activity) {
 		activityRepository.save(activity);
+	}
+
+	public List<Activity<? extends FootPrintable>> getByUser(User user) {
+		PageRequest pageable = new PageRequest(0, 3, Direction.DESC, "created");
+		List<Activity<? extends FootPrintable>> activities = activityRepository.findByOwnerId(user.getId(), pageable);
+		return activities;
 	}
 	
 }
