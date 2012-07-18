@@ -41,7 +41,8 @@ public class DummyDataService {
 		// save dummy users
 		for (int count = 0; count < DUMMY_DATA_COUNT; count++) {
 			User user = new User("user" + count + "@raptoz.com", "test", "user" + count, "");
-			user.setJoined(new Date());
+			calendar.setTimeInMillis(System.currentTimeMillis() + random.nextInt(10000));
+			user.setJoined(calendar.getTime());
 			
 			Collections.shuffle(dummyTags);
 			
