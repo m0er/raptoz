@@ -3,6 +3,8 @@ package com.raptoz.tag;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.*;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +34,16 @@ public class TagService {
 		
 		return found;
 	}
+
+	public void upsert(List<Tag> tags) {
+		if (tags == null)  {
+			logger.debug("TagService.upsert(List<Tag>) :: " + "태그 리스트가 null 입니다");
+			return;
+		}
+		
+		for (Tag tag : tags) {
+			upsert(tag);
+		}
+	}
+	
 }

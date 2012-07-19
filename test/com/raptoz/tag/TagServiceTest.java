@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.*;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -47,7 +49,13 @@ public class TagServiceTest {
 		assertThat(tag2.getId(), is(tag1.getId()));
 		assertThat(tag2.getCount(), is(2L));
 	}
-
+	
+	@Test
+	public void upsert_리스트가_null일때() throws Exception {
+		List<Tag> tags = null;
+		tagService.upsert(tags);
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 		mongoTemplate.findAndRemove(query(where("value").is(TAG_VALUE)), Tag.class);
