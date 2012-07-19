@@ -48,20 +48,6 @@ public class TagServiceTest {
 		assertThat(tag2.getId(), is(tag1.getId()));
 		assertThat(tag2.getCount(), is(2L));
 	}
-	
-	@Test
-	public void countIncWithUpsert() throws Exception {
-		mongoTemplate.upsert(query(where("value").is(TAG_VALUE)), new Update().inc("count", 1L), Tag.class);
-		
-		Tag found1 = tagRepository.findByValue(TAG_VALUE);
-		assertThat(found1, is(notNullValue(Tag.class)));
-		assertThat(found1.getCount(), is(1L));
-		
-		mongoTemplate.upsert(query(where("value").is(TAG_VALUE)), new Update().inc("count", 1L), Tag.class);
-		Tag found2 = tagRepository.findByValue(TAG_VALUE);
-		assertThat(found2, is(notNullValue(Tag.class)));
-		assertThat(found2.getCount(), is(2L));
-	}
 
 	@After
 	public void tearDown() throws Exception {
