@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Tag {
 	private ObjectId id;
 	private String value;
-	private Long count;
+	private Long count = 1L;
 	
 	public Tag() {
 	}

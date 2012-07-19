@@ -50,7 +50,7 @@ public class MyPageController {
 	@ResponseBody
 	public User addTag(@PathVariable("id") ObjectId userId, Tag tag) {
 		logger.info("추가할 태그: " + tag);
-		Tag insertedTag = tagService.addTag(tag);
+		Tag insertedTag = tagService.upsert(tag);
 		
 		User user = userService.getById(userId);
 		
