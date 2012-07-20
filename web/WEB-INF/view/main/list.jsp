@@ -35,13 +35,13 @@
 		#users .userface {height: 85px; float: left; padding: 15px 5px; width: 90px; text-align: center; background-color: #FFF;}
 		#users .userface img {width: 66px; height: 66px;}
 		#users .usernamex {text-align: center;}
-		#users .usertag .participate-post-list li {display: block;}
+		#users .usertag .reply-list li {display: block;}
 		
 		#posts {margin-left: 0; width: 480px;}
 		#posts .post {border: 1px solid black; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background-color: #FFF; padding: 5px; margin-bottom: 16px;}
 		#posts .post > *:not(.taglist) {cursor: pointer;}
 		#posts .post .post-title {text-align: center;}
-		#posts .post .description {padding: 0 5px;}
+		#posts .post .content {padding: 0 5px;}
 		#posts .post .taglist {margin-top: 5px;}
 		#posts .post footer {padding: 0; margin: 0; text-align: inherit; background-color: inherit; padding: 0 5px;}
 		
@@ -160,9 +160,9 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="description">Description</label>
+					<label class="control-label" for="content">Content</label>
 					<div class="controls">
-						<input type="text" class="input-xlarge" id="description" name="description" placeholder="description"/>
+						<input type="text" class="input-xlarge" id="content" name="content" placeholder="content"/>
 					</div>
 				</div>
 			</fieldset>
@@ -197,11 +197,11 @@
 									</ul>
 								</li>
 								<li>
-									<b>Recent participate toz</b>
-									<ul class="unstyled participate-post-list">
-										<%-- <c:forEach var="recent" items="${user.recentwriterTozList}" begin="0" end="3">
-											<li>${recent.title}</li>
-										</c:forEach> --%>
+									<b>Recent activities</b>
+									<ul class="unstyled reply-list">
+										<c:forEach var="activity" items="${user.activities}">
+											<li><str:truncateNicely lower="50" appendToEnd="...">${activity.contentString}</str:truncateNicely></li>
+										</c:forEach>
 									</ul>
 								</li>
 							</ul>
@@ -216,7 +216,7 @@
 							<header class="post-title">
 								<b>${post.title}</b>
 							</header>
-							<p class="description">
+							<p class="content">
 								<str:truncateNicely lower="400" appendToEnd="...">${post.content}</str:truncateNicely>
 							</p>
 							<ul class="unstyled taglist">
@@ -372,7 +372,7 @@
 			function writePostModal(post, template) {
 				template.header.children("h3").text(post.title).end()
 					.children("img").attr("src", getProfileImageIfExists(post.writer));
-				template.body.children("p").text(post.description);
+				template.body.children("p").text(post.content);
 			}
 			
 			function appendWriter(postId, template) {

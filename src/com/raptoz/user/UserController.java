@@ -10,18 +10,24 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.*;
 import org.springframework.web.multipart.*;
 
+import com.raptoz.tag.TagService;
+
 @Controller
 @RequestMapping("/user")
 @SessionAttributes("loginUser")
 public class UserController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired UserService userService;
+	@Autowired TagService tagService;
 	
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public String signup(User user, @RequestParam("profileImage") MultipartFile profileImage) {
 		logger.info(user.toString());
 		logger.info("File '" + profileImage.getOriginalFilename() + "' uploaded successfully");
+		
 		userService.add(user, profileImage);
+		tagService.upsert(user.getTags());
+		
 		return "redirect:/list";
 	}
 	

@@ -6,6 +6,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
+import com.raptoz.activity.Activity;
+import com.raptoz.activity.ActivityRepository;
 import com.raptoz.post.*;
 import com.raptoz.reply.*;
 import com.raptoz.tag.*;
@@ -17,8 +19,10 @@ public class DummyDataService {
 	@Autowired UserRepository userRepository;
 	@Autowired PostRepository postRepository;
 	@Autowired ReplyRepository replyRepository;
+	@Autowired ActivityRepository activityRepository;
 	
 	private static final int DUMMY_DATA_COUNT = 100;
+	private final Calendar calendar = Calendar.getInstance();
 	
 	Random random = new Random(System.currentTimeMillis());
 	String dummyText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis adipiscing nunc sit amet consectetur. Donec vitae molestie neque. Aliquam fringilla velit ut massa accumsan sed lacinia metus aliquet. Sed porttitor pellentesque mi, sed placerat arcu vehicula vitae. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec ornare congue ligula ut placerat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc interdum, mi vel varius faucibus, nibh justo fermentum nisi, vitae tincidunt neque velit sit amet nunc. Donec vulputate augue nec leo dignissim a fermentum purus auctor. Nam feugiat ultricies orci, tempor condimentum libero viverra et. Mauris massa enim, sollicitudin id varius at, egestas eu erat.";
@@ -37,7 +41,8 @@ public class DummyDataService {
 		// save dummy users
 		for (int count = 0; count < DUMMY_DATA_COUNT; count++) {
 			User user = new User("user" + count + "@raptoz.com", "test", "user" + count, "");
-			user.setJoined(new Date());
+			calendar.setTimeInMillis(System.currentTimeMillis() + random.nextInt(10000));
+			user.setJoined(calendar.getTime());
 			
 			Collections.shuffle(dummyTags);
 			
@@ -49,11 +54,13 @@ public class DummyDataService {
 			User simpleUser = userRepository.findOneSimpleById(user.getId());
 			
 			// write dummy posts
-			Post post = new Post("title" + count, dummyText.substring(0, 100 + random.nextInt(700)), simpleUser);
-			post.setCreated(new Date());
-			post.setTags(dummyTags.subList(0, random.nextInt(dummyTags.size())));
+			Post dummyPost = new Post("title" + count, dummyText.substring(0, 100 + random.nextInt(700)), simpleUser);
+			calendar.setTimeInMillis(System.currentTimeMillis() + random.nextInt(10000));
+			dummyPost.setCreated(calendar.getTime());
+			dummyPost.setTags(dummyTags.subList(0, random.nextInt(dummyTags.size())));
 			
-			postRepository.save(post);
+			postRepository.save(dummyPost);
+			activityRepository.save(new Activity<Post>(dummyPost));
 		}
 		
 		// write dummy replies
@@ -77,9 +84,11 @@ public class DummyDataService {
 				dummyReply = new Reply(generateDummyComment() + i, randomUser);
 			
 			dummyReply.setPostId(randomPost.getId());
-			dummyReply.setCreated(new Date());
+			calendar.setTimeInMillis(System.currentTimeMillis() + random.nextInt(10000));
+			dummyReply.setCreated(calendar.getTime());
 			
 			replyRepository.save(dummyReply);
+			activityRepository.save(new Activity<Reply>(dummyReply));
 			
 			// add reply to post
 			List<ObjectId> dummyReplyIds = randomPost.getReplyIds();
@@ -116,6 +125,7 @@ public class DummyDataService {
 		userRepository.deleteAll();
 		postRepository.deleteAll();
 		replyRepository.deleteAll();
+		activityRepository.deleteAll();
 	}
 	
 }

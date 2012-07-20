@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.raptoz.user.User;
@@ -32,6 +34,11 @@ public class PostService {
 	public Post getById(ObjectId id) {
 		Post post = postRepository.findOne(id);
 		return post;
+	}
+
+	public List<Post> getRecent(final int limit) {
+		Pageable pageable = new PageRequest(0, limit, Direction.DESC, "created");
+		return postRepository.findAll(pageable).getContent();
 	}
 
 }

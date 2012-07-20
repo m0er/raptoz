@@ -3,6 +3,7 @@ package com.raptoz.user;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -20,5 +21,8 @@ public interface UserRepository extends MongoRepository<User, ObjectId> {
 	
 	@Query(value = "{}", fields = "{password: 0}")
 	List<User> findAllSimple();
+	
+	@Query(value = "{}", fields = "{password: 0}")
+	List<User> findAllSimplePageable(Pageable pageable);
 	
 }
