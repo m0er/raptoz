@@ -170,7 +170,7 @@
 			
 			<div id="tags">
 				<ul class="tagit ui-widget ui-widget-content ui-corner-all">
-					<c:forEach var="tag" items="${tags}">
+					<c:forEach var="tag" items="${user.tags}">
 					<li class="tagit-choice ui-widget-content ui-state-default ui-corner-all">
 						<span class="tagit-label" id="${tag.id}">${tag.value}</span>
 						<a class="close">

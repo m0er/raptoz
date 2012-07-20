@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TagBuilder {
-	private List<Tag> tags = new ArrayList<Tag>();
+	private List<Tag> tags = new ArrayList<>();
 	
 	public TagBuilder add(String... values) {
 		for (String value : values)

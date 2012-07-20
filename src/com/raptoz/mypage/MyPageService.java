@@ -72,6 +72,8 @@ public class MyPageService {
 
 	/*
 	 * User가 가지고 있는 Tag만을 삭제
+	 * 
+	 * ToDo : TagService의 Tag 클래스는 카운팅을 -1 시켜주면 OK
 	 */
 	public User removeTag(ObjectId userId, ObjectId tagId) {
 		User user = userRepository.findOne(userId);

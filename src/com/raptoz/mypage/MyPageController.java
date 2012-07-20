@@ -48,7 +48,7 @@ public class MyPageController {
 	
 	@RequestMapping("/{id}/tag/add")
 	@ResponseBody
-	public User addTag(@PathVariable("id") ObjectId userId, Tag tag) {
+	public Tag addTag(@PathVariable("id") ObjectId userId, Tag tag) {
 		logger.info("추가할 태그: " + tag);
 		Tag insertedTag = tagService.upsert(tag);
 		
@@ -57,11 +57,13 @@ public class MyPageController {
 		List<Tag> tags = user.getTags();
 		
 		if (tags == null) {
-			tags = new ArrayList<Tag>();
+			tags = new ArrayList<>();
 		}
+		
 		tags.add(insertedTag);
 		user.setTags(tags);
-		return userService.updateUser(user);
+		userService.updateUser(user);
+		return insertedTag;
 	}
 
 	@RequestMapping("/{userId}/tag/{tagId}/delete")
