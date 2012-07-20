@@ -85,7 +85,7 @@ public class User {
 
 	public void setTags(List<Tag> tags) {
 		if (tags == null)
-			tags = new ArrayList<Tag>();
+			tags = new ArrayList<>();
 		
 		this.tags = tags;
 	}
