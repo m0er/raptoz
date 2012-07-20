@@ -45,7 +45,7 @@ public class MyPageController {
 //		}
 //		return null;
 //	}
-
+	
 	@RequestMapping("/{id}/tag/add")
 	@ResponseBody
 	public User addTag(@PathVariable("id") ObjectId userId, Tag tag) {
