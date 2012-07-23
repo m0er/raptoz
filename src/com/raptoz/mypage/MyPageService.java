@@ -1,6 +1,5 @@
 package com.raptoz.mypage;
 
-
 import java.util.List;
 
 import org.apache.catalina.util.Base64;
@@ -8,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,75 +21,49 @@ public class MyPageService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired UserRepository userRepository;
+	@Autowired MongoTemplate mongoTemplate;
 	
-//	public User getUser(ObjectId id) {
-//		return userRepository.findOne(id);
-//	}
-		
-//	public User updateUser(ObjectId userId, PersonalInfo personalInfo) {
-//		if (userMapper.isVerifyPassword(getUser(userId).getEmail(), personalInfo.getCurPwd())) {
-//			logger.info("failed identify password");
-//			return null;
-//		}
-//		
-//		String newPwd = personalInfo.getNewPwd();
-//		String confirmPwd = personalInfo.getConfirmPwd();
-//		if (newPwd.trim().length() == 0 || confirmPwd.trim().length() == 0 || !isEqual(newPwd, confirmPwd)) {
-//			logger.info("failed apply new password");
-//			return null;
-//		}
-//		
-//		userMapper.deleteById(userId);
-//		User user = new User(personalInfo.getEmail(), newPwd, personalInfo.getNickname(), "");
-//		userMapper.save(user);
-//		logger.info("update success");
-//		
-//		return user;
-//	}
-//	
-//	public List<Tag> getTags(Long userId) {
-//		return userRepository.findAllByOwnerId(userId);
-//	}
-	
-//	public Tag addTag(Long userId, String tagValue) {
-//		List<Tag> tags = getTags(userId);
-//		boolean notExistTag = true;
-//		
-//		for (Tag t : tags) {
-//			if (t.getValue().equals(tagValue)) {
-//				notExistTag = false;
-//				break;
-//			}
-//		}
-//		
-//		if (notExistTag) {
-//			Tag tag = new Tag(userId, tagValue);
-//			userRepository.save(tag);
-//			return tag;
-//		}
-//		return null;
-//	}
-
-	/*
-	 * User가 가지고 있는 Tag만을 삭제
-	 * 
-	 * ToDo : TagService의 Tag 클래스는 카운팅을 -1 시켜주면 OK
-	 */
-	public User removeTag(ObjectId userId, ObjectId tagId) {
+	public User updateUser(ObjectId userId, PersonalInfo personalInfo) {
 		User user = userRepository.findOne(userId);
 		
-		logger.debug("Before Size : " + user.getTags().size());
+		if (userRepository.findByEmailAndPassword(user.getEmail(), personalInfo.getCurPwd()) == null) {
+			logger.info("failed identify password");
+			return null;
+		}
 		
+		String newPwd = personalInfo.getNewPwd();
+		String confirmPwd = personalInfo.getConfirmPwd();
+		if (newPwd.trim().length() == 0 || confirmPwd.trim().length() == 0 || !isEqual(newPwd, confirmPwd)) {
+			logger.info("failed apply new password");
+			return null;
+		}
+		
+		userRepository.delete(userId);
+		String imgUrl = user.getEncodeProfileImage();
+		user = new User(personalInfo.getEmail(), newPwd, personalInfo.getNickname(), imgUrl);
+		userRepository.save(user);
+		logger.info("update success");
+		
+		return user;
+	}
+
+	public Tag removeTag(ObjectId userId, ObjectId tagId) {
+		User user = userRepository.findOne(userId);
 		List<Tag> tags = user.getTags();
 		for (int i = 0, len = tags.size(); i < len; i++) {
 			if (tagId.equals(tags.get(i).getId())) {
-				tags.remove(i);
+				Tag tag = tags.remove(i);
 				user.setTags(tags);
-				return user;
+				userRepository.save(user);
+				return tag;
 			}
 		}
-		
-		logger.debug("After Size : " + user.getTags().size());
+		/*
+		 * ToDo
+		 * 
+		 * 반복 제어문 -> mongoTemplate으로 수정  
+		 * 
+		 */
 		return null;
 	}
 	

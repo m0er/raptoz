@@ -46,4 +46,14 @@ public class TagService {
 		}
 	}
 	
+	public void delete(Tag tag) {
+		String value = tag.getValue();
+		Tag found = tagRepository.findByValue(value);
+		
+		if (found.getCount() > 0) {
+			mongoTemplate.upsert(query(where("value").is(value)), new Update().inc("count", -1L), Tag.class);
+		} else {
+			tagRepository.delete(tag);
+		}
+	}
 }

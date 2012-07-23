@@ -1,6 +1,7 @@
 package com.raptoz.mypage;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.apache.catalina.util.Base64;
@@ -15,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.raptoz.tag.Tag;
 import com.raptoz.tag.TagService;
 import com.raptoz.user.User;
-import com.raptoz.user.UserRepository;
 import com.raptoz.user.UserService;
 import com.raptoz.util.RaptozUtil;
 
@@ -36,19 +36,19 @@ public class MyPageController {
 		return "mypage/form";
 	}
 
-//	@RequestMapping(value="/{userId}/update", method=RequestMethod.POST)
-//	public String updateUser(@PathVariable Long userId, PersonalInfo personalInfo, Model model) {
-//		logger.info("updateUser() called");
-//		User user = mypageService.updateUser(userId, personalInfo);
-//		if (user != null) {
-//			return "redirect:/mypage/" + user.getId();
-//		}
-//		return null;
-//	}
+	@RequestMapping(value="/{userId}/update", method=RequestMethod.POST)
+	public String updateUser(@PathVariable ObjectId userId, PersonalInfo personalInfo, Model model) {
+		logger.info("updateUser() called");
+		User user = mypageService.updateUser(userId, personalInfo);
+		if (user != null) {
+			return "redirect:/mypage/" + user.getId();
+		}
+		return null;
+	}
 	
-	@RequestMapping("/{id}/tag/add")
+	@RequestMapping("/{userId}/tag/add")
 	@ResponseBody
-	public Tag addTag(@PathVariable("id") ObjectId userId, Tag tag) {
+	public Tag insertTag(@PathVariable("userId") ObjectId userId, Tag tag) {
 		logger.info("추가할 태그: " + tag);
 		Tag insertedTag = tagService.upsert(tag);
 		
@@ -69,13 +69,9 @@ public class MyPageController {
 	@RequestMapping("/{userId}/tag/{tagId}/delete")
 	@ResponseBody
 	public boolean deleteTag(@PathVariable("userId") ObjectId userId, @PathVariable("tagId") ObjectId tagId) {
-		/*
-		 * ToDo 
-		 * 
-		 * tagId 소스 수정
-		 * 삭제 정상작동하지 않음
-		 */
-		if (mypageService.removeTag(userId, tagId) != null) {
+		Tag tag = mypageService.removeTag(userId, tagId);
+		if (tag != null) {
+			tagService.delete(tag);
 			return true;
 		}
 		return false;
