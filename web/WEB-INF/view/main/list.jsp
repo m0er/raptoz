@@ -10,12 +10,7 @@
 	<title>Raptoz List Page</title>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/overcast/jquery-ui.css"/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/jquery.tagit.css"/>"/>
-	<link rel="stylesheet" type="text/css" href="<c:url value="/bootstrap/css/bootstrap.css"/>"/>
-	<script type="text/javascript" src="<c:url value="/js/jquery.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/jquery-ui.min.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/tag-it.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/bootstrap/js/bootstrap.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/jquery.ez-bg-resize.js"/>"></script>
+	<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.css"/>"/>
 	<style type="text/css">
 		ul.tagit li.tagit-choice {padding-right: 7px;}
 		
@@ -200,7 +195,7 @@
 									<b>Recent activities</b>
 									<ul class="unstyled reply-list">
 										<c:forEach var="activity" items="${user.activities}">
-											<li><str:truncateNicely lower="50" appendToEnd="...">${activity.contentString}</str:truncateNicely></li>
+											<li><str:truncateNicely lower="45" appendToEnd="...">${activity.contentString}</str:truncateNicely></li>
 										</c:forEach>
 									</ul>
 								</li>
@@ -268,151 +263,21 @@
 		Raptoz@2012
 	</footer>
 	 -->
+	<script type="text/javascript" >
+        ENV = {
+            CP_DEFAULT_CACHEABLE: true,
+            VIEW_PRESERVES_CONTEXT: true
+        };
+    </script>
+    <script type="text/javascript" data-main="<c:url value="/js/raptoz-list"/>" src="<c:url value="/js/require-jquery.js"/>"></script>
+	<%-- <script type="text/javascript" src="<c:url value="/js/jquery.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/js/jquery-ui.min.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/js/tag-it.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/bootstrap/js/bootstrap.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/js/jquery.ez-bg-resize.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/js/ember.js"/>"></script> --%>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			var enter = 13;
-			
-			$("body").ezBgResize({
-				img: "<c:url value='/image/living.social.street1.jpg'/>"
-			});
-			
-			$(document).on("keypress", ".reply-input", function(e) {
-				if (e.keyCode == enter) {
-					e.preventDefault();
-					var $target = $(e.target);
-					var $form = $target.parents("form");
-					var params = $form.serialize();
-					params += "&postId=" + $target.parents("section").attr("id").replace(/\D/g, "");
-					console.log(params);
-					
-					$.ajax({
-						url: $form.attr("action"),
-						data: params,
-						type: $form.attr("method").toUpperCase()
-					}).done(function(reply) {
-						console.log(reply);
-						$postModal = $("#postModal" + reply.postId);
-						var $replyTemplate = $("#postModalReplyTemplate").clone().removeClass("hide");
-						$replyTemplate.attr("id", "writer" + reply.id).find("b").text(reply.writer.nickname).end()
-							.children("img").attr("src", getProfileImageIfExists(reply.writer)).end()
-							.children(":last").text(reply.content);
-						$form.before($replyTemplate).find("textarea").val("").blur();
-					});
-				}
-			}).on("click", ".reply-delete", function(e) {
-				console.log(e);
-				var wholeId = $(e.target).parent().attr("id");
-				var replyId = wholeId.replace(/\D/g, "");
-				var url = "<c:url value="/reply/delete/"/>" + replyId;
-				$.get(url, function(data) {
-					console.log(data);
-					$("#" + wholeId).remove();
-				});
-			});
-			
-			$("#signupForm, #writePostForm").modal({
-				show: false
-			});
-			
-			$(".taglist").tagit({
-				allowAddTag: false,
-				showCloseButton: false
-			});
-			
-			$("#bgChange").click(function(e) {
-				e.preventDefault();
-				$("#jq_ez_bg img").attr("src", "<c:url value='/image/paper.jpg'/>");
-			});
-			
-			$("#writePost").click(function (e) {
-				e.preventDefault();
-				var target = $(e.target).attr("href");
-				var url = "<c:url value="/user/islogin" />";
-				$.get(url, function(data) {
-					if (data) $(target).modal("show");
-				});
-			});
-			
-			$(".post > *:not(.taglist)").click(function(e) {
-				var $target = $(e.target);
-				var postId = $target.hasClass(".post") ? $target.attr("data-post-id") : $target.parents(".post").attr("data-post-id");
-				var $post = $("#postModal" + postId);
-				if (isExists($post)) {
-					$post.modal("show");
-					return;
-				}
-				
-				var url = "<c:url value='/post/' />" + postId;
-				$.get(url, function(post) {
-					var template = getPostModalTemplates(postId);
-					writePostModal(post, template);
-					appendWriter(postId, template);
-				});
-			});
-			
-			$("#search").submit(function() {
-				var term = $(this).children("input").val();
-				$(this).attr("action", $(this).attr("action") + "/" + term);
-				return true;
-			});
-			
-			function getPostModalTemplates(postId) {
-				var template = new Object();
-				template.outer = $("#postModalTemplate").clone().attr("id", "postModal" + postId);
-				template.header = template.outer.children(".modal-header");
-				template.body = template.outer.children(".modal-body");
-				template.footer = template.outer.children(".modal-footer");
-				return template;
-			}
-			
-			function isExists($target) {
-				return $target.length != 0;
-			}
-			
-			function writePostModal(post, template) {
-				template.header.children("h3").text(post.title).end()
-					.children("img").attr("src", getProfileImageIfExists(post.writer));
-				template.body.children("p").text(post.content);
-			}
-			
-			function appendWriter(postId, template) {
-				var url = "<c:url value='/reply/' />" + postId;
-				$.get(url, function(data) {
-					$.each(data, function(index, reply) {
-						template.reply = $("#postModalReplyTemplate").clone().removeClass("hide");
-						template.reply.attr("id", "writer" + reply.id).find("b").text(reply.writer.nickname).end()
-							.children("img").attr("src", getProfileImageIfExists(reply.writer)).end()
-							.children(":last").text(reply.content);
-						
-						if (reply.writer.nickname != "${sessionScope.loginUser.nickname}")
-							template.reply.children(".close").remove();
-						
-						if (template.footer.children("form").size() > 0)
-							template.footer.children("form").before(template.reply);
-						else
-							template.footer.append(template.reply);
-					});
-					template.outer.appendTo("#posts").modal("show");
-				});
-			}
-			
-			function getProfileImageIfExists(target) {
-				return target.encodeProfileImage == "" ? "<c:url value="/image/50x50.gif"/>" : "data:image/gif;base64," + target.encodeProfileImage;
-			}
-			
-			function positioning() {
-				$posts = $("article.post");
-				$row = $("#posts .row");
-				$posts.eq(0).position({of: $row, at: "left top", collision: "none", my: "left top", offset: "20 0"});
-				$posts.eq(1).position({of: $row, at: "right top", collision: "none", my: "right top", offset: "-5 0"});
-				
-				for (var i = 0, j = 2; i < $posts.size() - 2; i++, j++) {
-					$posts.eq(j).position({of: $("article.post").eq(i), at: "bottom", collision: "none", my: "top", offset: "0 10"});
-				}
-			}
-				
-			positioning();
-		});
+		
 	</script>
 </body>
 </html>
