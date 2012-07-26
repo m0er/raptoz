@@ -190,7 +190,7 @@
 		</div>
 		
 		<div class="row" id="tozInfos">
-			<h1>Toz</h1>
+			<h1>Post</h1>
 			<hr/>
 
 <%-- 			<form action="<c:url value="/mypage/${user.id}/tag/add"/>" method="post" style="margin-left:10px"> --%>

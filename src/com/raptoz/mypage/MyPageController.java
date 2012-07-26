@@ -13,6 +13,10 @@ import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.raptoz.activity.Activity;
+import com.raptoz.activity.ActivityService;
+import com.raptoz.activity.Activity.Type;
+import com.raptoz.activity.FootPrintable;
 import com.raptoz.tag.Tag;
 import com.raptoz.tag.TagService;
 import com.raptoz.user.User;
@@ -28,11 +32,17 @@ public class MyPageController {
 	@Autowired MyPageService mypageService;
 	@Autowired UserService userService;
 	@Autowired TagService tagService;
+	@Autowired ActivityService activityService;
 	
 	@RequestMapping("/{id}")
 	public String mypage(@PathVariable("id") ObjectId id, Model model) {
 		logger.info("사용자 아이디: " + id);
 		model.addAttribute("user", userService.getById(id));
+		model.addAttribute("posts", activityService.getByType(id, Type.POST));
+		
+		List<Activity<? extends FootPrintable>> activities = activityService.getByType(id, Type.POST);
+		logger.debug("activity's size : " + activities.size());
+		
 		return "mypage/form";
 	}
 

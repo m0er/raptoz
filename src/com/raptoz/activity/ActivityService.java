@@ -2,11 +2,13 @@ package com.raptoz.activity;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.raptoz.activity.Activity.Type;
 import com.raptoz.user.User;
 
 @Service
@@ -23,4 +25,7 @@ public class ActivityService {
 		return activities;
 	}
 	
+	public List<Activity<? extends FootPrintable>> getByType(ObjectId id, Type type) {
+		return activityRepository.findByOwnerIdAndType(id, type);
+	}
 }
