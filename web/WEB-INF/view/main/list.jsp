@@ -136,7 +136,7 @@
 			<li class="nav-header">
 				Post
 			</li>
-			<li><a id="writePost" href="#writePostForm">Write post</a></li>
+			<li><a id="writePost" data-toggle="modal" href="#writePostForm">Write post</a></li>
 			<li class="nav-header">
 				Poster
 			</li>
@@ -175,7 +175,7 @@
 					<article class="row userinfo">
 						<div class="userface">
 							<a href="#">
-								<img alt="profile image" src="<c:url value="/image/66x66.gif"/>" alt=""/>
+								<img alt="profile image" src="<c:url value="/img/66x66.gif"/>" alt=""/>
 							</a>
 							<p class="username"><small>${user.nickname}</small></p>
 						</div>
@@ -229,7 +229,7 @@
 					</c:forEach>
 					<section class="modal hide post-modal" id="postModalTemplate">
 					    <header class="modal-header">
-						    <img src="<c:url value="/image/50x50.gif"/>" alt="questioner image" class="profile-image"/>
+						    <img src="<c:url value="/img/50x50.gif"/>" alt="questioner image" class="profile-image"/>
 						    <h3>title</h3>
 					    </header>
 					    <article class="modal-body">
@@ -251,7 +251,7 @@
 					<c:if test="${sessionScope.loginUser ne null}">
 					<button class="close reply-delete">x</button>
 					</c:if>
-		    		<img src="<c:url value="/image/50x50.gif"/>" alt="replyer image" class="profile-image"/>
+		    		<img src="<c:url value="/img/50x50.gif"/>" alt="replyer image" class="profile-image"/>
 		    		<p class="replyer-nickname"><b>nickname</b></p>
 		    		<p>reply test</p>
 		    	</article>
@@ -270,14 +270,5 @@
         };
     </script>
     <script type="text/javascript" data-main="<c:url value="/js/raptoz-list"/>" src="<c:url value="/js/require-jquery.js"/>"></script>
-	<%-- <script type="text/javascript" src="<c:url value="/js/jquery.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/jquery-ui.min.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/tag-it.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/bootstrap/js/bootstrap.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/jquery.ez-bg-resize.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/ember.js"/>"></script> --%>
-	<script type="text/javascript">
-		
-	</script>
 </body>
 </html>

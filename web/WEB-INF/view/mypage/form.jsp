@@ -10,13 +10,7 @@
 	<!-- jquery fileupload style -->
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/overcast/jquery.fileupload-ui.css"/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/jquery.tagit.css"/>"/>
-	<link rel="stylesheet" type="text/css" href="<c:url value="/bootstrap/css/bootstrap.css"/>"/>
-	<script type="text/javascript" src="<c:url value="/js/jquery.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/jquery-ui.min.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/tag-it.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/bootstrap/js/bootstrap.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/jquery.ez-bg-resize.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/jquery.form.js"/>"></script>
+	<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.css"/>"/>
 	<style type="text/css">
 		#topNav .navbar-inner {border-radius: 0;}
 		
@@ -51,47 +45,6 @@
 		.tagit-label {position:relative;top:10px;}
 		.icon-remove-sign {position:relative;top:-5px;right:-15px;}
 	</style>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("body").ezBgResize({
-				img: "<c:url value='/image/living.social.street1.jpg'/>"
-			});
-			
-			$("#bgChange").click(function(e) {
-				e.preventDefault();
-				$("#jq_ez_bg img").attr("src", "<c:url value='/image/paper.jpg'/>");
-			});
-			
-			$("#profileImage").change(function() {
-				$("#imageForm").ajaxSubmit({
-					success : function(data) {
-						$("td.profile img").attr("src", "data:image/gif;base64," + data);	
-					}
-				});
-			});
-			
-			$("#tagInfos form").submit(function(e) {
-				e.preventDefault();
-				var url = $(this).attr("action") + "?" + $(this).serialize();
-				$.ajax({
-					url : url
-				}).done(function(data) {
-					console.log(data);
-					var $tagTemplate = $("#tagTemplate").clone();
-					$tagTemplate.removeAttr("style");
-					$tagTemplate.children().first().attr("id", data.id).text(data.value).end().end().appendTo("#tags ul");
-				});
-			});
-			
-			$(document).on("click", "a.close", function() {
-				var id = $(this).parent().find(".tagit-label").attr("id");
-				$.ajax({
-					url : "${user.id}/tag/" + id + "/delete"
-				});
-				$(this).parent().remove();
-			});
-		});
-	</script>
 </head>
 <body>
 	<nav class="navbar" id="topNav">
@@ -199,5 +152,12 @@
 <!-- 			</form> -->
 		</div>
 	</div>
+	<script type="text/javascript" >
+        ENV = {
+            CP_DEFAULT_CACHEABLE: true,
+            VIEW_PRESERVES_CONTEXT: true
+        };
+    </script>
+	<script type="text/javascript" data-main="/js/raptoz-mypage" src="/js/require-jquery.js"></script>
 </body>
 </html>

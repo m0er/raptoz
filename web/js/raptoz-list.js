@@ -16,7 +16,7 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 		var enter = 13;
 		
 		$("body").ezBgResize({
-			img: "/image/living.social.street1.jpg"
+			img: "/img/living.social.street1.jpg"
 		});
 		
 		$(document).on("keypress", ".reply-input", function(e) {
@@ -71,7 +71,7 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 		
 		$("#bgChange").click(function(e) {
 			e.preventDefault();
-			$("#jq_ez_bg img").attr("src", "/image/paper.jpg");
+			$("#jq_ez_bg img").attr("src", "/img/paper.jpg");
 		});
 		
 		$("#writePost").click(function (e) {
@@ -79,7 +79,7 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			
 			var target = $(e.target).attr("href");
 			
-			var url = '<c:url value="/user/islogin" />';
+			var url = '/user/islogin';
 			$.get(url, function(data) {
 				if (data) $(target).modal("show");
 			});
@@ -154,7 +154,7 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 		}
 		
 		function getProfileImageIfExists(target) {
-			return target.encodeProfileImage == "" ? "/image/50x50.gif" : "data:image/gif;base64," + target.encodeProfileImage;
+			return target.encodeProfileImage == "" ? "/img/50x50.gif" : "data:image/gif;base64," + target.encodeProfileImage;
 		}
 		
 		function positioning() {
