@@ -33,14 +33,16 @@
 		#users .usertag .reply-list li {display: block;}
 		
 		#posts {margin-left: 0; width: 480px;}
-		#posts .post {border: 1px solid black; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background-color: #FFF; padding: 5px; margin-bottom: 16px;}
-		#posts .post > *:not(.taglist) {cursor: pointer;}
+		#posts .post {border: 1px solid black; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background-color: #FFF; padding: 5px 5px 0 5px; margin-bottom: 16px;}
+		#posts .post > header, #posts .post > .content {cursor: pointer;}
 		#posts .post .post-title {text-align: center;}
 		#posts .post .content {padding: 0 5px;}
 		#posts .post .taglist {margin-top: 5px;}
 		#posts .post .icon-space {margin-right: 10px;}
 		#posts .post footer {padding: 0; margin: 0; text-align: inherit; background-color: inherit; padding: 0 5px;}
-		#posts .post footer p {float: right;}
+		#posts .post footer .post-status {float: right;}
+		#posts .post footer .post-writer {float: left; background-color: #F2F0F0; width: 100%; padding: 7px 10px; margin: 0 -10px;}
+		#posts .post footer .post-writer a:first-child:HOVER {text-decoration: none;}
 		
 		#posts .post-modal .modal-header {height: 50px; padding: 15px;}
 		#posts .post-modal .profile-image {float: left; margin-right: 10px; width: 50px; height: 50px;}
@@ -223,10 +225,16 @@
 								</c:forEach>
 							</ul>
 							<footer>
-								<p>
+								<p class="post-status">
 									<small style="margin-right: 7px;"><i class="icon-eye-open icon-gray"></i>&nbsp;${post.viewCount == null ? 0 : post.viewCount}</small>
 									<small style="margin-right: 7px;"><i class="icon-comment icon-gray"></i>&nbsp;${fn:length(post.replyIds)}</small>
 									<small><i class="icon-time icon-gray"></i>&nbsp;1h ago</small>
+								</p>
+								<p class="post-writer">
+									<a href="<c:url value="/mypage/${post.writer.id}"/>">
+										<img alt="profile image" src="<c:url value="/img/66x66.gif"/>" alt="" width="30" height="30"/>
+									</a>
+									<a href="<c:url value="/mypage/${post.writer.id}"/>"><b>${post.writer.nickname}</b></a> attach to <a href="#"><b>toz</b></a>
 								</p>
 							</footer>
 						</article>
@@ -243,7 +251,7 @@
 					    	<c:if test="${sessionScope.loginUser ne null}">
 					    	<form action="<c:url value="/reply/add"/>" method="post">
 					    		<article class="reply reply-input">
-						    		<img src="data:image/gif;base64,${sessionScope.loginUser.encodeProfileImage}" alt="your image" class="profile-image"/>
+						    		<img src="/img/66x66.gif" alt="your image" class="profile-image"/>
 						    		<textarea name="reply" placeholder="Add your opinion..."></textarea>
 						    	</article>
 						    </form>

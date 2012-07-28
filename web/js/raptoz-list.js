@@ -85,7 +85,7 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			});
 		});
 		
-		$(".post > *:not(.taglist)").click(function(e) {
+		$(".post header, .post .content").click(function(e) {
 			var $target = $(e.target);
 			var postId = $target.hasClass(".post") ? $target.attr("data-post-id") : $target.parents(".post").attr("data-post-id");
 			var $post = $("#postModal" + postId);
@@ -103,6 +103,11 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 				writePostModal(post, template);
 				appendWriter(postId, template);
 			});
+		});
+		
+		$(".post footer a").click(function(e) {
+			e.stopPropagation();
+			return true;
 		});
 		
 		$("#search").submit(function() {
@@ -172,8 +177,8 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 	});
 });
 
-require(['ember/load'], function(Ember) {
-	console.log($);
-	console.log(Ember);
-});
+//require(['ember/load'], function(Ember) {
+//	console.log($);
+//	console.log(Ember);
+//});
 
