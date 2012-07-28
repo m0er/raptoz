@@ -38,7 +38,9 @@
 		#posts .post .post-title {text-align: center;}
 		#posts .post .content {padding: 0 5px;}
 		#posts .post .taglist {margin-top: 5px;}
+		#posts .post .icon-space {margin-right: 10px;}
 		#posts .post footer {padding: 0; margin: 0; text-align: inherit; background-color: inherit; padding: 0 5px;}
+		#posts .post footer p {float: right;}
 		
 		#posts .post-modal .modal-header {height: 50px; padding: 15px;}
 		#posts .post-modal .profile-image {float: left; margin-right: 10px; width: 50px; height: 50px;}
@@ -48,6 +50,7 @@
 		#posts .post-modal .modal-footer .reply textarea {border: 1px solid; font-size: 1em; height: 32px; padding: 8px; resize: none; width: 452px; border-color: #DDDDDD #E1DFDF #D1CDCD;}
 		#posts .post-modal .modal-footer .reply:last-child {margin-bottom: 0;}
 		#posts .post-modal .modal-footer .replyer-nickname {margin-bottom: 0;} 
+		
 		
 		footer {margin-top: 30px; padding: 20px; text-align: center;}
 	</style>
@@ -221,8 +224,9 @@
 							</ul>
 							<footer>
 								<p>
-									<small>${fn:length(post.replyIds)} replies</small>&nbsp;
-									<small>1h ago</small>
+									<small style="margin-right: 7px;"><i class="icon-eye-open icon-gray"></i>&nbsp;${post.viewCount == null ? 0 : post.viewCount}</small>
+									<small style="margin-right: 7px;"><i class="icon-comment icon-gray"></i>&nbsp;${fn:length(post.replyIds)}</small>
+									<small><i class="icon-time icon-gray"></i>&nbsp;1h ago</small>
 								</p>
 							</footer>
 						</article>
