@@ -12,6 +12,8 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/jquery.tagit.css"/>"/>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.css"/>"/>
 	<style type="text/css">
+		body {padding-top: 70px;}
+		
 		ul.tagit li.tagit-choice {padding-right: 7px;}
 		
 		#topNav .navbar-inner {border-radius: 0;}
@@ -59,7 +61,7 @@
 	</style>
 </head>
 <body>
-	<nav class="navbar" id="topNav">
+	<nav class="navbar navbar-fixed-top" id="topNav">
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="brand" href="<c:url value="/list"/>">Raptoz</a>
