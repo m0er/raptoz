@@ -26,7 +26,7 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 				var $target = $(e.target);
 				var $form = $target.parents("form");
 				var params = $form.serialize();
-				params += "&postId=" + $target.parents("section").attr("id");
+				params += "&postId=" + $target.parents("section").attr("id").replace("postModal", "");
 				
 				console.log(params);
 				

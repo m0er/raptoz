@@ -21,6 +21,7 @@
 		#leftNav .nav li {color: #FFF;}
 		#leftNav .nav li a {color: #999; text-shadow: none;}
 		#leftNav .nav li a:HOVER {color: #FFF; background-color: #2C2C2C;}
+		#leftNav #writePostForm textarea {resize: none;}
 		
 		#users {min-width: 430px;}
 		#users article {border: 1px solid black; margin-left: 0px; margin-bottom: 10px; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background-color: #FFF; width: 418px;}
@@ -162,7 +163,7 @@
 				<div class="control-group">
 					<label class="control-label" for="content">Content</label>
 					<div class="controls">
-						<input type="text" class="input-xlarge" id="content" name="content" placeholder="content"/>
+						<textarea class="input-xlarge" id="content" name="content" rows="10" cols="3"></textarea>
 					</div>
 				</div>
 			</fieldset>
@@ -252,7 +253,7 @@
 					    	<form action="<c:url value="/reply/add"/>" method="post">
 					    		<article class="reply reply-input">
 						    		<img src="/img/66x66.gif" alt="your image" class="profile-image"/>
-						    		<textarea name="reply" placeholder="Add your opinion..."></textarea>
+						    		<textarea name="content" placeholder="Add your opinion..."></textarea>
 						    	</article>
 						    </form>
 					    	</c:if>
