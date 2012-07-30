@@ -44,9 +44,10 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 		});
 		
 		$(document).on("click", "a.close", function() {
-			var id = $(this).parent().find(".tagit-label").attr("id");
+			var userId = $("#myInfos").find("h1").attr("id");
+			var tagId = $(this).parent().find(".tagit-label").attr("id");
 			$.ajax({
-				url : "${user.id}/tag/" + id + "/delete"
+				url : userId + "/tag/" + tagId + "/delete"
 			});
 			$(this).parent().remove();
 		});

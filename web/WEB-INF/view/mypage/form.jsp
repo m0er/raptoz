@@ -63,7 +63,7 @@
 	
 	<div class="container" id="resultContainer">
 		<div class="row" id="myInfos">
-			<h1>User</h1>
+			<h1 id="${user.id}">User</h1>
 			<hr/>
 			
 			<table>
