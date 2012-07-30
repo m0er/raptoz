@@ -50,12 +50,12 @@
 		#posts .post-modal .modal-header {height: 50px; padding: 15px;}
 		#posts .post-modal .profile-image {float: left; margin-right: 10px; width: 50px; height: 50px;}
 		#posts .post-modal .modal-body {clear: both;}
-		#posts .post-modal .modal-footer {text-align: left; background-color: #FFF;}
-		#posts .post-modal .modal-footer .reply {height: 50px; margin-bottom: 10px;}
-		#posts .post-modal .modal-footer .reply textarea {border: 1px solid; font-size: 1em; height: 32px; padding: 8px; resize: none; width: 452px; border-color: #DDDDDD #E1DFDF #D1CDCD;}
-		#posts .post-modal .modal-footer .reply:last-child {margin-bottom: 0;}
-		#posts .post-modal .modal-footer .replyer-nickname {margin-bottom: 0;} 
-		
+		#posts .post-modal footer {margin-top: 0;}
+		#posts .post-modal .modal-reply {text-align: left; background-color: #FFF;}
+		#posts .post-modal .modal-reply .reply {height: 50px; margin-bottom: 10px;}
+		#posts .post-modal .modal-reply .reply textarea {border: 1px solid; font-size: 1em; height: 32px; padding: 8px; resize: none; width: 452px; border-color: #DDDDDD #E1DFDF #D1CDCD;}
+		#posts .post-modal .modal-reply .reply:last-child {margin-bottom: 0;}
+		#posts .post-modal .modal-reply .replyer-nickname {margin-bottom: 0;} 
 		
 		footer {margin-top: 30px; padding: 20px; text-align: center;}
 	</style>
@@ -249,16 +249,20 @@
 					    </header>
 					    <article class="modal-body">
 					    	<p>One fine body…</p>
+					    	
+					    	<div class="modal-reply">
+						    	<c:if test="${sessionScope.loginUser ne null}">
+						    	<form action="<c:url value="/reply/add"/>" method="post">
+						    		<article class="reply reply-input">
+							    		<img src="/img/66x66.gif" alt="your image" class="profile-image"/>
+							    		<textarea name="content" placeholder="Add your opinion..."></textarea>
+							    	</article>
+							    </form>
+						    	</c:if>
+					    	</div>
 					    </article>
 					    <footer class="modal-footer">
-					    	<c:if test="${sessionScope.loginUser ne null}">
-					    	<form action="<c:url value="/reply/add"/>" method="post">
-					    		<article class="reply reply-input">
-						    		<img src="/img/66x66.gif" alt="your image" class="profile-image"/>
-						    		<textarea name="content" placeholder="Add your opinion..."></textarea>
-						    	</article>
-						    </form>
-					    	</c:if>
+					    	
 					    </footer>
 				    </section>
 				</div>

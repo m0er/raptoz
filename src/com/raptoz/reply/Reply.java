@@ -12,6 +12,8 @@ import com.raptoz.user.User;
 @Document
 public class Reply implements FootPrintable {
 	private ObjectId id;
+	private String idString;
+	
 	private Date created;
 	private String content;
 	private ObjectId postId;
@@ -32,6 +34,13 @@ public class Reply implements FootPrintable {
 	
 	public void setId(ObjectId id) {
 		this.id = id;
+		this.idString = id.toString();
+	}
+
+	public String getIdString() {
+		if (idString == null && id != null)
+			return id.toString();
+		return idString;
 	}
 
 	public Date getCreated() {

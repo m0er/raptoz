@@ -40,5 +40,9 @@ public class PostService {
 		Pageable pageable = new PageRequest(0, limit, Direction.DESC, "created");
 		return postRepository.findAll(pageable).getContent();
 	}
+	
+	public void update(Post post) {
+		postRepository.save(post);
+	}
 
 }
