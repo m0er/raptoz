@@ -23,7 +23,8 @@
 		#leftNav .nav li {color: #FFF;}
 		#leftNav .nav li a {color: #999; text-shadow: none;}
 		#leftNav .nav li a:HOVER {color: #FFF; background-color: #2C2C2C;}
-		#leftNav #writePostForm textarea {resize: none;}
+		
+		#writePostForm textarea {resize: none;}
 		
 		#users {min-width: 430px;}
 		#users article {border: 1px solid black; margin-left: 0px; margin-bottom: 10px; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background-color: #FFF; width: 418px;}
