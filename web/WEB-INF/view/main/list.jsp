@@ -47,15 +47,17 @@
 		#posts .post footer .post-writer {float: left; background-color: #F2F0F0; width: 100%; padding: 7px 10px; margin: 0 -10px;}
 		#posts .post footer .post-writer a:first-child:HOVER {text-decoration: none;}
 		
-		#posts .post-modal .modal-header {height: 50px; padding: 15px;}
-		#posts .post-modal .profile-image {float: left; margin-right: 10px; width: 50px; height: 50px;}
-		#posts .post-modal .modal-body {clear: both;}
-		#posts .post-modal footer {margin-top: 0;}
-		#posts .post-modal .modal-reply {text-align: left; background-color: #FFF;}
-		#posts .post-modal .modal-reply .reply {height: 50px; margin-bottom: 10px;}
-		#posts .post-modal .modal-reply .reply textarea {border: 1px solid; font-size: 1em; height: 32px; padding: 8px; resize: none; width: 452px; border-color: #DDDDDD #E1DFDF #D1CDCD;}
-		#posts .post-modal .modal-reply .reply:last-child {margin-bottom: 0;}
-		#posts .post-modal .modal-reply .replyer-nickname {margin-bottom: 0;} 
+		#posts .modal-post {top: 40%;}
+		#posts .modal-post .modal-header {height: 50px; padding: 15px; border: none;}
+		#posts .modal-post .modal-header .post-content {float: left; margin: 10px 0;}
+		#posts .modal-post .profile-image {float: left; margin-right: 10px; width: 50px; height: 50px;}
+		#posts .modal-post .modal-body {clear: both; border-top: 1px solid #EEEEEE;}
+		#posts .modal-post footer {margin-top: 0;}
+		#posts .modal-post .modal-reply {text-align: left; background-color: #FFF;}
+		#posts .modal-post .modal-reply .reply {height: 50px; margin-bottom: 10px;}
+		#posts .modal-post .modal-reply .reply textarea {border: 1px solid; font-size: 1em; height: 32px; padding: 8px; resize: none; width: 437px; border-color: #DDDDDD #E1DFDF #D1CDCD;}
+		#posts .modal-post .modal-reply .reply:last-child {margin-bottom: 0;}
+		#posts .modal-post .modal-reply .replyer-nickname {margin-bottom: 0;} 
 		
 		footer {margin-top: 30px; padding: 20px; text-align: center;}
 	</style>
@@ -76,7 +78,7 @@
 						</c:when>
 						<c:otherwise>
 							<li><a href="<c:url value="/user/logout"/>">Logout</a></li>
-							<li><a href="<c:url value="/mypage/${sessionScope.loginUser.id}"/>">My Page</a></li>
+							<li id="mypage" data-sessionuser-nickname="${sessionScope.loginUser.nickname}"><a href="<c:url value="/mypage/${sessionScope.loginUser.id}"/>">My Page</a></li>
 						</c:otherwise>
 					</c:choose>
 					<li id="bgChange"><a href="#">Background</a></li>
@@ -242,14 +244,14 @@
 							</footer>
 						</article>
 					</c:forEach>
-					<section class="modal hide post-modal" id="postModalTemplate">
+					<section class="modal hide modal-post" id="postModalTemplate">
 					    <header class="modal-header">
 						    <img src="<c:url value="/img/50x50.gif"/>" alt="questioner image" class="profile-image"/>
 						    <h3>title</h3>
+						    <article class="post-content">
+					    	</article>
 					    </header>
 					    <article class="modal-body">
-					    	<p>One fine body…</p>
-					    	
 					    	<div class="modal-reply">
 						    	<c:if test="${sessionScope.loginUser ne null}">
 						    	<form action="<c:url value="/reply/add"/>" method="post">
@@ -260,7 +262,7 @@
 							    </form>
 						    	</c:if>
 					    	</div>
-					    </article>
+				    	</article>
 					    <footer class="modal-footer">
 					    	
 					    </footer>

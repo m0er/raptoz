@@ -94,6 +94,7 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			
 			if (isExists($post)) {
 				$post.modal("show");
+				$post.focus();
 				return;
 			}
 			
@@ -104,6 +105,8 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 				var template = getPostModalTemplates(postId);
 				writePostModal(post, template);
 				appendWriter(postId, template);
+				
+				$("postModal" + postId).focus();
 			});
 		});
 		
@@ -123,6 +126,7 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			var template = new Object();
 			template.outer = $("#postModalTemplate").clone().attr("id", "postModal" + postId);
 			template.header = template.outer.children(".modal-header");
+			template.content = template.header.find("article");
 			template.body = template.outer.children(".modal-body");
 			template.reply = template.body.children(".modal-reply");
 			template.footer = template.outer.children(".modal-footer");
@@ -137,7 +141,7 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 		function writePostModal(post, template) {
 			template.header.children("h3").text(post.title).end()
 				.children("img").attr("src", getProfileImageIfExists(post.writer));
-			template.body.children("p").text(post.content);
+			template.header.children("article").text(post.content);
 		}
 		
 		function appendWriter(postId, template) {
@@ -152,11 +156,12 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 						.children("img").attr("src", getProfileImageIfExists(reply.writer)).end()
 						.children(":last").text(reply.content);
 					
-					if (reply.writer.nickname != "${sessionScope.loginUser.nickname}")
+					if (reply.writer.nickname != $("#mypage").attr("data-sessionuser-nickname"))
 						$replyTemplate.children(".close").remove();
 					
-					if (template.reply.children("form").size() > 0)
-						template.reply.children("form").before($replyTemplate);
+					var $form = template.reply.children("form");
+					if ($form.size() > 0)
+						$form.before($replyTemplate);
 					else
 						template.reply.append($replyTemplate);
 				});
