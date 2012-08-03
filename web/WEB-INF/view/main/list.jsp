@@ -50,7 +50,7 @@
 		
 		#posts .modal-post {top: 40%;}
 		#posts .modal-post .modal-header {height: 50px; padding: 15px; border: none;}
-		#posts .modal-post .modal-header .post-content {float: left; margin: 10px 0;}
+		#posts .modal-post .modal-header .post-content {float: left; margin: 10px 0; width: 100%;}
 		#posts .modal-post .profile-image {float: left; margin-right: 10px; width: 50px; height: 50px;}
 		#posts .modal-post .modal-body {clear: both; border-top: 1px solid #EEEEEE;}
 		#posts .modal-post footer {margin-top: 0;}
@@ -248,7 +248,7 @@
 					<section class="modal hide modal-post" id="postModalTemplate">
 					    <header class="modal-header">
 						    <img src="<c:url value="/img/50x50.gif"/>" alt="questioner image" class="profile-image"/>
-						    <h3>title</h3>
+						    <h3 class="post-title">title</h3>
 						    <article class="post-content">
 					    	</article>
 					    </header>
@@ -265,7 +265,9 @@
 					    	</div>
 				    	</article>
 					    <footer class="modal-footer">
-					    	
+					    	<button class="btn btn-primary post-modify" type="submit">Modify</button>
+					    	<button class="btn btn-danger post-delete" type="submit">Delete</button>
+							<button class="btn" data-dismiss="modal">Cancel</button>
 					    </footer>
 				    </section>
 				</div>
