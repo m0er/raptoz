@@ -277,7 +277,7 @@
 					</c:if>
 		    		<img src="<c:url value="/img/50x50.gif"/>" alt="replyer image" class="profile-image"/>
 		    		<p class="replyer-nickname"><b>nickname</b></p>
-		    		<p>reply test</p>
+		    		<p class="reply-content">reply test</p>
 		    	</article>
 			</section>
 		</div>

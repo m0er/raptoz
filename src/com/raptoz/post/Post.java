@@ -1,7 +1,6 @@
 package com.raptoz.post;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -89,6 +88,8 @@ public class Post implements FootPrintable {
 	}
 
 	public List<ObjectId> getReplyIds() {
+		if (replyIds == null)
+			replyIds = new ArrayList<ObjectId>();
 		return replyIds;
 	}
 
