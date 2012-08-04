@@ -26,7 +26,7 @@ public class MyPageService {
 	public User updateUser(ObjectId userId, PersonalInfo personalInfo) {
 		User user = userRepository.findOne(userId);
 		
-		if (userRepository.findByEmailAndPassword(user.getEmail(), personalInfo.getCurPwd()) == null) {
+		if (userRepository.findOneByEmailAndPassword(user.getEmail(), personalInfo.getCurPwd()) == null) {
 			logger.info("failed identify password");
 			return null;
 		}

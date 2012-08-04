@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,13 +22,15 @@ import com.raptoz.tag.Tag;
 @ContextConfiguration(locations = {"classpath:/applicationContext.xml"})
 public class UserRepositoryTest {
 	@Autowired UserRepository userRepository;
+	@Autowired MongoTemplate mongoTemplate;
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
-	User user1;
+	User user0, user1;
 	Tag tag1, tag2, tag3;
 	
 	@Before
 	public void setUp() throws Exception {
+		user0 = new User("user0@raptoz.com", "test", "user0", "");
 		user1 = new User("user1@raptoz.com", "test", "user1", "");
 		
 		tag1 = new Tag("tag1");
@@ -36,7 +39,7 @@ public class UserRepositoryTest {
 		
 		user1.setTags(Arrays.asList(tag1, tag2, tag3));
 		
-		userRepository.save(user1);
+		userRepository.save(Arrays.asList(user0, user1));
 	}
 	
 	
@@ -65,6 +68,14 @@ public class UserRepositoryTest {
 		
 		for (User user : users)
 			assertThat(user.getPassword(), is(nullValue()));
+	}
+	
+	@Test
+	public void findByEmailAndPassword() throws Exception {
+		User found = userRepository.findOneByEmailAndPassword("user1@raptoz.com", "test");
+		
+		assertThat(user1.getId(), is(found.getId()));
+		assertThat(user1.getEmail(), is(found.getEmail()));
 	}
 	
 	@After
