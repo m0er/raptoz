@@ -135,56 +135,6 @@
 			<scope>provided</scope>
 		</dependency>
 		
-		<!-- Tomcat API for Base64 Test -->
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-catalina</artifactId>
-			<version>${tomcat.library.version}</version>
-			<scope>test provided</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.tomcat</groupId>
-					<artifactId>tomcat-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.tomcat</groupId>
-      				<artifactId>tomcat-servlet-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.tomcat</groupId>
-      				<artifactId>tomcat-juli</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.tomcat</groupId>
-      				<artifactId>tomcat-annotations-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.tomcat</groupId>
-      				<artifactId>tomcat-util</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-coyote</artifactId>
-			<version>${tomcat.library.version}</version>
-			<scope>test provided</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.tomcat</groupId>
-      				<artifactId>tomcat-juli</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-util</artifactId>
-			<version>${tomcat.library.version}</version>
-			<scope>test provided</scope>
-		</dependency>
-		
 		<!-- Apache Commons-long for Jakarta Taglib -->
 		<dependency>
 			<groupId>commons-lang</groupId>
