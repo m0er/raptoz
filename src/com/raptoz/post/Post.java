@@ -123,7 +123,7 @@ public class Post implements FootPrintable {
 
 	@Override
 	public String getContentString() {
-		return "[" + title + "]" + " " + content;
+		return content;
 	}
 	
 }

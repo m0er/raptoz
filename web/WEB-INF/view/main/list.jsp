@@ -206,7 +206,16 @@
 									<b>Recent activities</b>
 									<ul class="unstyled reply-list">
 										<c:forEach var="activity" items="${user.activities}">
-											<li><str:truncateNicely lower="45" appendToEnd="...">${activity.contentString}</str:truncateNicely></li>
+											<li>
+												<c:choose>
+													<c:when test="${activity.type eq 'POST' }">
+														<span class="label label-success">post</span>&nbsp;<str:truncateNicely lower="40" appendToEnd="...">${activity.contentString}</str:truncateNicely>
+													</c:when>
+													<c:when test="${activity.type eq 'REPLY' }">
+														<span class="label label-info">reply</span>&nbsp;<str:truncateNicely lower="40" appendToEnd="...">${activity.contentString}</str:truncateNicely>
+													</c:when>
+												</c:choose>
+											</li>
 										</c:forEach>
 									</ul>
 								</li>
