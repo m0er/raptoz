@@ -34,7 +34,7 @@ public class PostController {
 	@ResponseBody
 	public Post get(@PathVariable ObjectId id) {
 		logger.info("Post Id:" + id);
-		return postService.getById(id);
+		return postService.increaseViewCount(id);
 	}
 	
 	@RequestMapping("/{id}/delete")

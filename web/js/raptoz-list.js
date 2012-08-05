@@ -147,6 +147,8 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 				writePostModal(post, template);
 				appendWriter(postId, template);
 				
+				$("article[data-post-id=" + postId + "]").find(".post-view-count .number").text(post.viewCount);
+				
 				$("postModal" + postId).focus();
 			});
 		});

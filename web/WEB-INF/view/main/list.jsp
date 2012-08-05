@@ -232,9 +232,9 @@
 							</ul>
 							<footer>
 								<p class="post-status">
-									<small style="margin-right: 7px;"><i class="icon-eye-open icon-gray"></i>&nbsp;${post.viewCount == null ? 0 : post.viewCount}</small>
-									<small style="margin-right: 7px;"><i class="icon-comment icon-gray"></i>&nbsp;${fn:length(post.replyIds)}</small>
-									<small><i class="icon-time icon-gray"></i>&nbsp;1h ago</small>
+									<small class="post-view-count" style="margin-right: 7px;"><i class="icon-eye-open icon-gray"></i>&nbsp;<span class="number">${post.viewCount == null ? 0 : post.viewCount}</span></small>
+									<small class="post-reply-count" style="margin-right: 7px;"><i class="icon-comment icon-gray"></i>&nbsp;<span class="number">${fn:length(post.replyIds)}</span></small>
+									<small class="post-created-time"><i class="icon-time icon-gray"></i>&nbsp;<span class="string">1h ago</span></small>
 								</p>
 								<p class="post-writer">
 									<a href="<c:url value="/mypage/${post.writer.id}"/>">
