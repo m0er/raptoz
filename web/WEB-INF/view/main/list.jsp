@@ -37,6 +37,7 @@
 		#users .usertag .reply-list li {display: block;}
 		
 		#posts {margin-left: 0; width: 480px;}
+		#posts .row {margin-left: 0;}
 		#posts .post {border: 1px solid black; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background-color: #FFF; padding: 5px 5px 0 5px; margin-bottom: 16px;}
 		#posts .post > header, #posts .post > .content {cursor: pointer;}
 		#posts .post .post-title {text-align: center;}

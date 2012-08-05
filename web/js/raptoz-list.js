@@ -11,7 +11,7 @@ require.config({
     }
 });
 
-require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery.ez-bg-resize', 'plugin/jtextarea'], function() {
+require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery.ez-bg-resize', 'plugin/jquery-pinterest-positioning'], function() {
 	$(document).ready(function() {
 		var enter = 13;
 		
@@ -241,18 +241,8 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			return target.encodeProfileImage == "" ? "/img/50x50.gif" : "data:image/gif;base64," + target.encodeProfileImage;
 		}
 		
-		function positioning() {
-			$posts = $("article.post");
-			$row = $("#posts .row");
-			$posts.eq(0).position({of: $row, at: "left top", collision: "none", my: "left top", offset: "20 0"});
-			$posts.eq(1).position({of: $row, at: "right top", collision: "none", my: "right top", offset: "-5 0"});
-			
-			for (var i = 0, j = 2; i < $posts.size() - 2; i++, j++) {
-				$posts.eq(j).position({of: $("article.post").eq(i), at: "bottom", collision: "none", my: "top", offset: "0 10"});
-			}
-		}
+		$("#posts .row, .post").positioning();
 		
-		positioning();
 	});
 });
 
