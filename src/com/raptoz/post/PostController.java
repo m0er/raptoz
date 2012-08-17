@@ -36,5 +36,4 @@ public class PostController {
 		logger.info("Post Id:" + id);
 		return postService.getById(id);
 	}
-	
 }

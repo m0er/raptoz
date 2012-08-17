@@ -7,11 +7,12 @@ require.config({
         external: 'external',
         models: 'ember/models',
         controllers: 'ember/controllers',
-        views: 'ember/views'
+        views: 'ember/views',
+        selector : 'selector'
     }
 });
 
-require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery.ez-bg-resize'], function() {
+require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery.ez-bg-resize', 'selector/select2'], function() {
 	$(document).ready(function() {
 		$("body").ezBgResize({
 			img: "/img/living.social.street1.jpg"
@@ -30,27 +31,26 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			});
 		});
 		
-		$("#tagInfos form").submit(function(e) {
-			e.preventDefault();
-			var url = $(this).attr("action") + "?" + $(this).serialize();
-			$.ajax({
-				url : url
-			}).done(function(data) {
-				console.log(data);
-				var $tagTemplate = $("#tagTemplate").clone();
-				$tagTemplate.removeAttr("style");
-				$tagTemplate.children().first().attr("id", data.id).text(data.value).end().end().appendTo("#tags ul");
-			});
-		});
+//		$("#tags").change(function(e) {
+//			e.preventDefault();
+//			var value = $(this).val();
+//			var url = $(this).parent().attr("action") + "?" + $(this).serialize();
+//			console.log(value);
+//			$.ajax({
+//				url : url
+//			});
+//		});
 		
-		$(document).on("click", "a.close", function() {
-			var userId = $("#myInfos").find("h1").attr("id");
-			var tagId = $(this).parent().find(".tagit-label").attr("id");
-			$.ajax({
-				url : userId + "/tag/" + tagId + "/delete"
-			});
-			$(this).parent().remove();
-		});
+//		$(document).on("click", "a.close", function() {
+//			var userId = $("#myInfos").find("h1").attr("id");
+//			var tagId = $(this).parent().find(".tagit-label").attr("id");
+//			$.ajax({
+//				url : userId + "/tag/" + tagId + "/delete"
+//			});
+//			$(this).parent().remove();
+//		});
+		
+		$("#tags").select2({tags:null});
 	});
 });
 

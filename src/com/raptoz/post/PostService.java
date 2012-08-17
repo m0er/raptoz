@@ -19,7 +19,7 @@ public class PostService {
 		post.setWriter(writer);
 		post.setCreated(new Date());
 		postRepository.save(post);
-	}
+	}		
 
 	public Post get(ObjectId id) {
 		Post post = postRepository.findOne(id);
@@ -30,7 +30,7 @@ public class PostService {
 		List<Post> posts = postRepository.findByTagsValue(tag);
 		return posts;
 	}
-
+	
 	public Post getById(ObjectId id) {
 		Post post = postRepository.findOne(id);
 		return post;
@@ -44,5 +44,4 @@ public class PostService {
 	public void update(Post post) {
 		postRepository.save(post);
 	}
-
 }
