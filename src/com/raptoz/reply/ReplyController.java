@@ -3,6 +3,8 @@ package com.raptoz.reply;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import com.raptoz.user.User;
 @RequestMapping("/reply")
 @SessionAttributes("loginUser")
 public class ReplyController {
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 	@Autowired ReplyService replyService;
 	@Autowired PostService postService;
 	
@@ -23,9 +27,24 @@ public class ReplyController {
 	public Reply add(Reply reply, @ModelAttribute("loginUser") User user) {
 		reply = replyService.add(user, reply);
 		
+		logger.info("reply added: " + reply.toString());
+		
 		updatePost(reply);
 		
 		return reply;
+	}
+	
+	@RequestMapping("/update")
+	@ResponseBody
+	public Reply update(Reply reply) {
+		Reply origin = replyService.get(reply.getId());
+		
+		logger.info("original reply: " + origin.toString());
+		
+		origin.setContent(reply.getContent());
+		replyService.update(origin);
+		
+		return origin;
 	}
 
 	private void updatePost(Reply reply) {
@@ -47,7 +66,7 @@ public class ReplyController {
 	@RequestMapping("/{postId}")
 	@ResponseBody
 	public List<Reply> get(@PathVariable ObjectId postId) {
-		List<Reply> replyList = replyService.get(postId);
+		List<Reply> replyList = replyService.getByPostId(postId);
 		return replyList;
 	}
 }

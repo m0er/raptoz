@@ -23,9 +23,17 @@ public class ReplyService {
 	public void delete(ObjectId id) {
 		replyRepository.delete(id);
 	}
+	
+	public Reply get(ObjectId id) {
+		return replyRepository.findOne(id);
+	}
 
-	public List<Reply> get(ObjectId id) {
+	public List<Reply> getByPostId(ObjectId id) {
 		List<Reply> replyList = replyRepository.findAllByPostId(id);
 		return replyList;
+	}
+
+	public void update(Reply reply) {
+		replyRepository.save(reply);
 	}
 }

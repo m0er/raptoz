@@ -97,7 +97,6 @@ public class User {
 	public void setActivities(List<Activity<? extends FootPrintable>> activities) {
 		if (activities == null)
 			activities = new ArrayList<>();
-			
 		this.activities = activities;
 	}
 

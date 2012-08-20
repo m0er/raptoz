@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.repository.Query;
 
 public interface UserRepository extends MongoRepository<User, ObjectId> {
 
-	User findByEmailAndPassword(String email, String password);
-
+	User findOneByEmailAndPassword(String email, String password);
+	
 	List<User> findByTagsValue(String value);
 	
 	@Query(value = "{ 'id' : ?0 }", fields = "{password: 0}")

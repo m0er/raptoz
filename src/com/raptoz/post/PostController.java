@@ -34,6 +34,15 @@ public class PostController {
 	@ResponseBody
 	public Post get(@PathVariable ObjectId id) {
 		logger.info("Post Id:" + id);
-		return postService.getById(id);
+		return postService.increaseViewCount(id);
+	}
+	
+	@RequestMapping("/{id}/delete")
+	public String delete(@PathVariable ObjectId id, @RequestHeader("referer") String referer) {
+		logger.info("Post Id:" + id);
+		logger.info("referer:" + referer);
+		
+		postService.deleteById(id);
+		return "redirect:" + referer;
 	}
 }

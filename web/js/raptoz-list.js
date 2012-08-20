@@ -11,7 +11,7 @@ require.config({
     }
 });
 
-require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery.ez-bg-resize'], function() {
+require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery.ez-bg-resize', 'plugin/jquery-pinterest-positioning'], function() {
 	$(document).ready(function() {
 		var enter = 13;
 		
@@ -46,9 +46,30 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 					var $replyTemplate = $("#postModalReplyTemplate").clone().removeClass("hide");
 					$replyTemplate.attr("id", reply.idString).find("b").text(reply.writer.nickname).end()
 						.children("img").attr("src", getProfileImageIfExists(reply.writer)).end()
-						.children(":last").text(reply.content);
+						.children(":last").text(reply.content).attr("contenteditable", "true");
 					
 					$form.before($replyTemplate).find("textarea").val("").blur();
+				});
+			}
+		}).on("keypress", ".reply-content", function(e) {
+			if (e.keyCode == enter) {
+				e.preventDefault();
+				
+				var $target = $(e.target);
+				var params = "postId=" + $target.parents("section").attr("id").replace("postModal", "");
+				params += "&content=" + $target.text();
+				params += "&id=" + $target.parent().attr("id");
+				
+				console.log(params);
+				
+				$.ajax({
+					url: "/reply/update",
+					data: params,
+					type: "POST"
+				}).done(function(reply) {
+					console.log(reply);
+					
+					$("#" + reply.idString).find(".reply-content").text(reply.content);
 				});
 			}
 		}).on("click", ".reply-delete", function(e) {
@@ -60,7 +81,27 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			$.get(url, function(data) {
 				$("#" + replyId).remove();
 			});
+		}).on("click", ".post-modify", function(e) {
+			var $writePostForm = $("#writePostForm");
+			var $section = $(e.target).parents(".modal-post");
+			
+			$writePostForm.find("#title").val($section.find(".post-title").text());
+			$writePostForm.find("#content").val($section.find(".post-content").text());
+			$writePostForm.append(getHiddenInput("id", $section.attr("id").replace("postModal", "")));
+			$writePostForm.submit();
+		}).on("click", ".post-delete", function(e) {
+			e.preventDefault();
+			
+			var $section = $(e.target).parents(".modal-post");
+			window.location = "post/" + $section.attr("id").replace("postModal", "") + "/delete";
 		});
+		
+		function getHiddenInput(name, value) {
+			return $("<input type='hidden'/>").attr({
+				name: name,
+				value: value
+			});
+		}
 		
 		$("#signupForm, #writePostForm").modal({
 			show: false
@@ -94,6 +135,7 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			
 			if (isExists($post)) {
 				$post.modal("show");
+				$post.focus();
 				return;
 			}
 			
@@ -104,6 +146,10 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 				var template = getPostModalTemplates(postId);
 				writePostModal(post, template);
 				appendWriter(postId, template);
+				
+				$("article[data-post-id=" + postId + "]").find(".post-view-count .number").text(post.viewCount);
+				
+				$("postModal" + postId).focus();
 			});
 		});
 		
@@ -123,6 +169,8 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			var template = new Object();
 			template.outer = $("#postModalTemplate").clone().attr("id", "postModal" + postId);
 			template.header = template.outer.children(".modal-header");
+			template.title = template.header.children("h3");
+			template.content = template.header.find("article");
 			template.body = template.outer.children(".modal-body");
 			template.reply = template.body.children(".modal-reply");
 			template.footer = template.outer.children(".modal-footer");
@@ -135,9 +183,28 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 		}
 		
 		function writePostModal(post, template) {
-			template.header.children("h3").text(post.title).end()
+			template.title.text(post.title).end()
 				.children("img").attr("src", getProfileImageIfExists(post.writer));
-			template.body.children("p").text(post.content);
+			template.content.text(post.content);
+			
+			isNotWriter(post.writer.nickname, function() {
+				template.footer.find("[type=submit]").remove();
+			});
+			
+			isWriter(post.writer.nickname, function() {
+				template.title.attr("contenteditable", "true");
+				template.content.attr("contenteditable", "true");
+			});
+		}
+		
+		function isNotWriter(nickname, callback) {
+			if (nickname != $("#mypage").attr("data-sessionuser-nickname"))
+				callback.call();
+		}
+		
+		function isWriter(nickname, callback) {
+			if (nickname == $("#mypage").attr("data-sessionuser-nickname"))
+				callback.call();
 		}
 		
 		function appendWriter(postId, template) {
@@ -152,11 +219,17 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 						.children("img").attr("src", getProfileImageIfExists(reply.writer)).end()
 						.children(":last").text(reply.content);
 					
-					if (reply.writer.nickname != "${sessionScope.loginUser.nickname}")
+					isNotWriter(reply.writer.nickname, function() {
 						$replyTemplate.children(".close").remove();
+					});
 					
-					if (template.reply.children("form").size() > 0)
-						template.reply.children("form").before($replyTemplate);
+					isWriter(reply.writer.nickname, function() {
+						$replyTemplate.find(".reply-content").attr("contenteditable", "true");
+					});
+					
+					var $form = template.reply.children("form");
+					if ($form.size() > 0)
+						$form.before($replyTemplate);
 					else
 						template.reply.append($replyTemplate);
 				});
@@ -168,18 +241,8 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			return target.encodeProfileImage == "" ? "/img/50x50.gif" : "data:image/gif;base64," + target.encodeProfileImage;
 		}
 		
-		function positioning() {
-			$posts = $("article.post");
-			$row = $("#posts .row");
-			$posts.eq(0).position({of: $row, at: "left top", collision: "none", my: "left top", offset: "20 0"});
-			$posts.eq(1).position({of: $row, at: "right top", collision: "none", my: "right top", offset: "-5 0"});
-			
-			for (var i = 0, j = 2; i < $posts.size() - 2; i++, j++) {
-				$posts.eq(j).position({of: $("article.post").eq(i), at: "bottom", collision: "none", my: "top", offset: "0 10"});
-			}
-		}
+		$("#posts .row, .post").positioning();
 		
-		positioning();
 	});
 });
 

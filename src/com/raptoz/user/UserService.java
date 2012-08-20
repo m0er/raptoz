@@ -33,7 +33,7 @@ public class UserService {
 	}
 	
 	public User login(User user) {
-		User found = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
+		User found = userRepository.findOneByEmailAndPassword(user.getEmail(), user.getPassword());
 		
 		if (found != null) {
 			logger.info("로그인 성공!: " + found.toString());
