@@ -37,7 +37,9 @@ public class UserService {
 		
 		if (found != null) {
 			logger.info("로그인 성공!: " + found.toString());
-			return userRepository.findOneSimpleById(found.getId());
+			User loginUser = userRepository.findOneSimpleById(found.getId());
+			if (loginUser.getActivities() == null) loginUser.setActivities(null);
+			return loginUser;
 		} else {
 			logger.info("사용자를 찾을 수 없습니다: " + user.toString());
 			return null;

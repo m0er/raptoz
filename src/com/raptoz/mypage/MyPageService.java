@@ -23,25 +23,31 @@ public class MyPageService {
 	@Autowired UserRepository userRepository;
 	@Autowired MongoTemplate mongoTemplate;
 	
-	public User updateUser(ObjectId userId, PersonalInfo personalInfo) {
+	public User update(ObjectId userId, PersonalInfo infos) {
 		User user = userRepository.findOne(userId);
+		String email = user.getEmail();
+		String password = infos.getCurPwd();
+		String newPwd = infos.getNewPwd();
+		String confirmPwd = infos.getConfirmPwd();
 		
-		if (userRepository.findOneByEmailAndPassword(user.getEmail(), personalInfo.getCurPwd()) == null) {
-			logger.info("failed identify password");
-			return null;
+		String nickname = infos.getNickname();
+		String imgUrl = user.getEncodeProfileImage(); 
+		
+		if (password != null) {
+			if (userRepository.findOneByEmailAndPassword(email, password) == null) {
+				logger.info("failed identify password");
+				return null;
+			}
+			
+			if (newPwd.trim().length() == 0 || confirmPwd.trim().length() == 0 || !isEqual(newPwd, confirmPwd)) {
+				logger.info("failed apply new password");
+				return null;
+			}
+			userRepository.save(remakeUser(userId, email, newPwd, nickname, imgUrl));
+		} else {
+			userRepository.save(remakeUser(userId, email, user.getPassword(), nickname, imgUrl));	
 		}
 		
-		String newPwd = personalInfo.getNewPwd();
-		String confirmPwd = personalInfo.getConfirmPwd();
-		if (newPwd.trim().length() == 0 || confirmPwd.trim().length() == 0 || !isEqual(newPwd, confirmPwd)) {
-			logger.info("failed apply new password");
-			return null;
-		}
-		
-		userRepository.delete(userId);
-		String imgUrl = user.getEncodeProfileImage();
-		user = new User(personalInfo.getEmail(), newPwd, personalInfo.getNickname(), imgUrl);
-		userRepository.save(user);
 		logger.info("update success");
 		
 		return user;
@@ -73,7 +79,19 @@ public class MyPageService {
 		userRepository.save(user);
 	}
 	
-	private boolean isEqual(String pwd1, String pwd2) {
+	public boolean isVerify(ObjectId userId, String password) {
+		return !(userRepository.findOneByIdAndPassword(userId, password) == null);
+	}
+	
+	public boolean isEqual(String pwd1, String pwd2) {
 		return pwd1.trim().equals(pwd2.trim());
+	}
+	
+	private User remakeUser(ObjectId userId, String email, String password, String nickname, String imgUrl) {
+		userRepository.delete(userId);
+		User user = new User(email, password, nickname, imgUrl);
+		user.setActivities(null);
+		
+		return user;
 	}
 }

@@ -31,6 +31,40 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			});
 		});
 		
+		$("#curPwd").keyup(function() {
+			var id = $("#infos h1").attr("id");
+			var pwd = $(this);
+			
+			$.ajax({
+				url : id + "/verify", type : "post", data : { pwd : pwd.val() }	
+			}).done(function(data) {
+				if (data) {
+					$(pwd).parent().parent().attr("class", "control-group success");
+				} else {
+					$(pwd).parent().parent().attr("class", "control-group error");
+				}
+			});
+		});
+		
+		$("#confirmPwd").keyup(function() {
+			var id = $("#infos h1").attr("id");
+			var newPwd = $("#newPwd");
+			var confirmPwd = $(this);
+			
+			$.ajax({
+				url : id + "/verifyNewPassword", type : "post", data : { newPwd : newPwd.val(), confirmPwd : confirmPwd.val() }
+			}).done(function(data) {
+				if (data) {
+					$(newPwd).parent().parent().attr("class", "control-group success");
+					$(confirmPwd).parent().parent().attr("class", "control-group success");
+				} else {
+					$(newPwd).parent().parent().attr("class", "control-group error");
+					$(confirmPwd).parent().parent().attr("class", "control-group error");
+				}
+			});
+		});
+		
+		
 //		$("#tags").change(function(e) {
 //			e.preventDefault();
 //			var value = $(this).val();

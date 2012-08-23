@@ -11,6 +11,8 @@ public interface UserRepository extends MongoRepository<User, ObjectId> {
 
 	User findOneByEmailAndPassword(String email, String password);
 	
+	User findOneByIdAndPassword(ObjectId id, String password);
+	
 	List<User> findByTagsValue(String value);
 	
 	@Query(value = "{ 'id' : ?0 }", fields = "{password: 0}")

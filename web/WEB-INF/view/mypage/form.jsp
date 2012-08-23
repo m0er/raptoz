@@ -29,7 +29,6 @@
  		.select2-container {margin-top:4px;}
  		
  		fieldset {margin-left:20px;}
- 		h4 {text-align:center; margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #eeeeee;}
 
 		#general form {margin:8px 0 5px 0;}
 		#general form button {margin:-5px 0 0 20px;}
@@ -37,14 +36,10 @@
 		#infos {margin-bottom:30px;}
 		#posts {margin-top:30px; width:958px; height:200px; border:1px solid #000000;}
 		
-		div.control-group {margin:5px; padding-left:50px;}
-		div.control-group input {margin-top:5px; text-indent:10px;}
-		label.control-label {display:inline; margin:10px 37px 0px 0px; text-align:right; width:60px; float:left;}
 		td.user-group {vertical-align:top; border:1px solid #000000; width:80%;}
-		td.user-group label {width:120px;}
-		
-		.tagit-label {position:relative;top:10px;}
-		.icon-remove-sign {position:relative;top:-5px;right:-15px;}
+		td.user-group label {width:120px; display:inline; margin:10px 37px 0px 0px; text-align:right; float:left;}
+		td.user-group div.control-group {margin:5px; padding-left:50px;}
+		td.user-group div.control-group input {margin-top:5px; text-indent:10px;}
 	</style>
 </head>
 <body>
@@ -94,7 +89,7 @@
 								</form>
 									
 								<label class="control-label">Password</label>
-								<button class="btn btn-small btn-primary" style="margin-top:4px;">change password</button> <br/>
+								<a data-toggle="modal" href="#pwdForm"><button class="btn btn-small btn-primary" style="margin-top:4px;" >change password</button></a> <br/>
 								
 								<div style="margin-top:5px;">
 									<div class="select2-container select2-container-multi">
@@ -105,20 +100,6 @@
 									</div>
 								</div>
     						</div>
-    						
-    						
-<!--     							<div id="chPass" class="control-group"> -->
-<!-- 	  		 						<h4>Change Password</h4> -->
-<!--   		 							<label class="control-label">Current Password</label> -->
-<!-- 									<input name="curPwd" type="password" class="input-large"> <br/> -->
-  					
-<!--   									<label class="control-label">New Password</label> -->
-<!--   									<input name="newPwd" type="password" class="input-large"> <br/> -->
-  									
-<!--   									<label class="control-label">Confirm</label> -->
-<!--   									<input name="confirmPwd" type="password" class="input-large"> <br/> -->
-<!--     							</div> -->
-
   						</fieldset>
 					</td>
 				</tr>
@@ -163,6 +144,37 @@
 <!-- 			</form> -->
 		</div>
 	</div>
+	
+	<form action="<c:url value="/mypage/${user.id}/update"/>" enctype="multipart/form-data" method="post" class="form-horizontal modal hide fade in" id="pwdForm">
+		<div class="modal-header">
+			<h3>Password</h3>
+		</div>
+		<fieldset class="modal-body">
+			<div class="control-group">
+				<label class="control-label" for="email">Current Password</label>
+				<div class="controls">
+					<input type="password" class="input-xlarge" id="curPwd" name="curPwd" placeholder="CurrentPassword"/>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="password">New Password</label>
+				<div class="controls">
+					<input type="password" class="input-xlarge" id="newPwd" name="newPwd" placeholder="NewPassword"/>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="password">Confirm</label>
+				<div class="controls">
+					<input type="password" class="input-xlarge" id="confirmPwd" name="confirmPwd" placeholder="Confirm"/>
+				</div>
+			</div>
+		</fieldset>
+		<div class="modal-footer">
+			<button class="btn btn-primary" type="submit">Ok</button>
+			<button class="btn" data-dismiss="modal">Cancel</button>
+		</div>
+	</form>
+	
 	<script type="text/javascript" >
         ENV = {
             CP_DEFAULT_CACHEABLE: true,

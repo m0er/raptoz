@@ -42,7 +42,7 @@ public class MyPageController {
 	@RequestMapping(value="/{userId}/update", method=RequestMethod.POST)
 	public String updateUser(@PathVariable ObjectId userId, PersonalInfo personalInfo, Model model) {
 		logger.info("updateUser() called");
-		User user = mypageService.updateUser(userId, personalInfo);
+		User user = mypageService.update(userId, personalInfo);
 		if (user != null) {
 			return "redirect:/mypage/" + user.getId();
 		}
@@ -85,5 +85,18 @@ public class MyPageController {
 	public String updateProfileImage(@PathVariable("id") ObjectId userId, @RequestParam("profileImage") MultipartFile profileImage) {
 		mypageService.updateProfileImage(userId, profileImage);
 		return Base64.encode(RaptozUtil.getBytes(profileImage));
+	}
+	
+	@RequestMapping(value="/{id}/verify", method=RequestMethod.POST)
+	@ResponseBody
+	public boolean verifyPassword(@PathVariable("id") ObjectId userId, @RequestParam("pwd") String password) {
+		return mypageService.isVerify(userId, password);
+	}
+	
+	@RequestMapping(value="/{id}/verifyNewPassword", method=RequestMethod.POST)
+	@ResponseBody
+	public boolean verifyNewPassword(@PathVariable("id") ObjectId userId, 
+			@RequestParam("newPwd") String newPwd, @RequestParam("confirmPwd") String confirmPwd) {
+		return mypageService.isEqual(newPwd, confirmPwd);
 	}
 }
