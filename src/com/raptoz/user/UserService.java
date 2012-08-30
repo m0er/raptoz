@@ -26,6 +26,7 @@ public class UserService {
 		
 		String email = user.getEmail();
 		user.setNickname(getNickname(email));
+		user.setActivities(null);
 		
 		user.setEncodeProfileImage(Base64.encode(RaptozUtil.getBytes(profileImage)));
 		

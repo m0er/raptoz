@@ -36,6 +36,8 @@ public class MyPageController {
 		model.addAttribute("user", user);
 		model.addAttribute("posts", user.getActivities());
 		
+		logger.debug("<<<<<<<<<<<<<" + user.getActivities().size() + ">>>>>>>>>>>>>>>>>>");
+		
 		return "mypage/form";
 	}
 

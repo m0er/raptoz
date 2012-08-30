@@ -21,9 +21,6 @@ public class PostController {
 	
 	@RequestMapping("/write")
 	public String create(@ModelAttribute("loginUser") User user, Post post) {
-		logger.info(user.toString());
-		logger.info(post.toString());
-		
 		postService.create(user, post);
 		tagService.upsert(post.getTags());
 		

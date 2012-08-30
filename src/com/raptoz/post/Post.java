@@ -101,7 +101,7 @@ public class Post implements FootPrintable {
 	public String toString() {
 		return "Post [id=" + id + ", title=" + title + ", created=" + created
 				+ ", viewCount=" + viewCount + ", content=" + content
-				+ ", writer=" + writer + ", tags=" + tags + ", replyIds="
+				+ ", writer=" + writer.getNickname() + ", tags=" + tags + ", replyIds="
 				+ replyIds + "]";
 	}
 

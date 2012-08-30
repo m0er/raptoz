@@ -104,8 +104,6 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", joined=" + joined + ", email=" + email
 				+ ", password=" + password + ", nickname=" + nickname
-				+ ", encodeProfileImage=" + encodeProfileImage + ", tags="
-				+ tags + ", activities=" + activities + "]";
+				+ ", encodeProfileImage=" + encodeProfileImage + "]";
 	}
-	
 }
