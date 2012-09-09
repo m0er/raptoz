@@ -206,6 +206,7 @@
 								<li>
 									<b>Recent activities</b>
 									<ul class="unstyled reply-list">
+										<%--
 										<c:forEach var="activity" items="${user.activities}">
 											<li>
 												<c:choose>
@@ -218,6 +219,7 @@
 												</c:choose>
 											</li>
 										</c:forEach>
+										 --%>
 									</ul>
 								</li>
 							</ul>
