@@ -1,15 +1,15 @@
 package com.raptoz.mypage;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.apache.catalina.util.Base64;
 import org.bson.types.ObjectId;
-import org.slf4j.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
-import org.springframework.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,10 +33,8 @@ public class MyPageController {
 	public String mypage(@PathVariable("id") ObjectId id, Model model) {
 		logger.info("사용자 아이디: " + id);
 		User user = userService.getById(id);
-		model.addAttribute("user", user);
-		model.addAttribute("posts", user.getActivities());
 		
-		logger.debug("<<<<<<<<<<<<<" + user.getActivities().size() + ">>>>>>>>>>>>>>>>>>");
+		model.addAttribute("user", user);
 		
 		return "mypage/form";
 	}

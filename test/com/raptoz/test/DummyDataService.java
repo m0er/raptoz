@@ -6,8 +6,6 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
-import com.raptoz.activity.Activity;
-import com.raptoz.activity.ActivityRepository;
 import com.raptoz.post.*;
 import com.raptoz.reply.*;
 import com.raptoz.tag.*;
@@ -19,7 +17,6 @@ public class DummyDataService {
 	@Autowired UserRepository userRepository;
 	@Autowired PostRepository postRepository;
 	@Autowired ReplyRepository replyRepository;
-	@Autowired ActivityRepository activityRepository;
 	
 	private static final int DUMMY_DATA_COUNT = 100;
 	private final Calendar calendar = Calendar.getInstance();
@@ -60,7 +57,6 @@ public class DummyDataService {
 			dummyPost.setTags(dummyTags.subList(0, random.nextInt(dummyTags.size())));
 			
 			postRepository.save(dummyPost);
-			activityRepository.save(new Activity<Post>(dummyPost));
 		}
 		
 		// write dummy replies
@@ -88,7 +84,6 @@ public class DummyDataService {
 			dummyReply.setCreated(calendar.getTime());
 			
 			replyRepository.save(dummyReply);
-			activityRepository.save(new Activity<Reply>(dummyReply));
 			
 			// add reply to post
 			List<ObjectId> dummyReplyIds = randomPost.getReplyIds();
@@ -125,7 +120,6 @@ public class DummyDataService {
 		userRepository.deleteAll();
 		postRepository.deleteAll();
 		replyRepository.deleteAll();
-		activityRepository.deleteAll();
 	}
 	
 }

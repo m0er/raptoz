@@ -90,7 +90,6 @@ public class MyPageService {
 	private User remakeUser(ObjectId userId, String email, String password, String nickname, String imgUrl) {
 		userRepository.delete(userId);
 		User user = new User(email, password, nickname, imgUrl);
-		user.setActivities(null);
 		
 		return user;
 	}
