@@ -93,10 +93,10 @@
 								
 								<div style="margin-top:5px;">
 									<div class="select2-container select2-container-multi">
-										<form action="<c:url value="/mypage/${user.id}/tag/add"/>" method="post">
+<%-- 										<form action="<c:url value="/mypage/${user.id}/tag/add"/>" method="post"> --%>
 											<label class="control-label">Tags</label>
 											<input type="hidden" id="tags" style="width: 219px; display: none; " value="">
-										</form>
+<!-- 										</form> -->
 									</div>
 								</div>
     						</div>

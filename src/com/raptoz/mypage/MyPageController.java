@@ -36,8 +36,6 @@ public class MyPageController {
 		model.addAttribute("user", user);
 		model.addAttribute("posts", user.getActivities());
 		
-		logger.debug("<<<<<<<<<<<<<" + user.getActivities().size() + ">>>>>>>>>>>>>>>>>>");
-		
 		return "mypage/form";
 	}
 
@@ -95,7 +93,7 @@ public class MyPageController {
 		return mypageService.isVerify(userId, password);
 	}
 	
-	@RequestMapping(value="/{id}/verifyNewPassword", method=RequestMethod.POST)
+	@RequestMapping(value="/{id}/verifyNP", method=RequestMethod.POST)
 	@ResponseBody
 	public boolean verifyNewPassword(@PathVariable("id") ObjectId userId, 
 			@RequestParam("newPwd") String newPwd, @RequestParam("confirmPwd") String confirmPwd) {

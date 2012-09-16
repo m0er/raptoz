@@ -31,6 +31,10 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			});
 		});
 		
+		var clazz = "class";
+		var success = "control-group success";
+		var error = "control-group error";
+		
 		$("#curPwd").keyup(function() {
 			var id = $("#infos h1").attr("id");
 			var pwd = $(this);
@@ -38,11 +42,8 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			$.ajax({
 				url : id + "/verify", type : "post", data : { pwd : pwd.val() }	
 			}).done(function(data) {
-				if (data) {
-					$(pwd).parent().parent().attr("class", "control-group success");
-				} else {
-					$(pwd).parent().parent().attr("class", "control-group error");
-				}
+				if (data) $(pwd).parent().parent().attr(clazz, success);
+				else $(pwd).parent().parent().attr(clazz, error);
 			});
 		});
 		
@@ -52,28 +53,19 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			var confirmPwd = $(this);
 			
 			$.ajax({
-				url : id + "/verifyNewPassword", type : "post", data : { newPwd : newPwd.val(), confirmPwd : confirmPwd.val() }
+				url : id + "/verifyNP", type : "post", data : { newPwd : newPwd.val(), confirmPwd : confirmPwd.val() }
 			}).done(function(data) {
+				var n = $(newPwd).parent().parent();
+				var c = $(confirmPwd).parent().parent();
 				if (data) {
-					$(newPwd).parent().parent().attr("class", "control-group success");
-					$(confirmPwd).parent().parent().attr("class", "control-group success");
+					n.attr(clazz, success);
+					c.attr(clazz, success);
 				} else {
-					$(newPwd).parent().parent().attr("class", "control-group error");
-					$(confirmPwd).parent().parent().attr("class", "control-group error");
+					n.attr(clazz, error);
+					c.attr(clazz, error);
 				}
 			});
 		});
-		
-		
-//		$("#tags").change(function(e) {
-//			e.preventDefault();
-//			var value = $(this).val();
-//			var url = $(this).parent().attr("action") + "?" + $(this).serialize();
-//			console.log(value);
-//			$.ajax({
-//				url : url
-//			});
-//		});
 		
 //		$(document).on("click", "a.close", function() {
 //			var userId = $("#myInfos").find("h1").attr("id");
