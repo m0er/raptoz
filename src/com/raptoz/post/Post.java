@@ -5,13 +5,11 @@ import java.util.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.raptoz.activity.Activity.Type;
-import com.raptoz.activity.FootPrintable;
 import com.raptoz.tag.Tag;
 import com.raptoz.user.User;
 
 @Document
-public class Post implements FootPrintable {
+public class Post {
 	private ObjectId id;
 	private String title;
 	private Date created;
@@ -103,27 +101,6 @@ public class Post implements FootPrintable {
 				+ ", viewCount=" + viewCount + ", content=" + content
 				+ ", writer=" + writer.getNickname() + ", tags=" + tags + ", replyIds="
 				+ replyIds + "]";
-	}
-
-	@Override
-	public User getOwner() {
-		return writer;
-	}
-
-	@Override
-	public Type getType() {
-		return Type.POST;
-	}
-
-	@Override
-	public void clear() {
-		setCreated(null);
-		setWriter(null);
-	}
-
-	@Override
-	public String getContentString() {
-		return content;
 	}
 	
 }

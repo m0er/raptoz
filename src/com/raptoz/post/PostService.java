@@ -14,7 +14,6 @@ import org.springframework.data.mongodb.core.query.*;
 import org.springframework.stereotype.Service;
 
 import com.mongodb.WriteResult;
-import com.raptoz.activity.Activity;
 import com.raptoz.user.User;
 import com.raptoz.user.UserRepository;
 
@@ -30,9 +29,6 @@ public class PostService {
 		post.setWriter(writer);
 		post.setCreated(new Date());
 		postRepository.save(post);
-
-		writer.getActivities().add(new Activity<Post>(post));
-		writer.setActivities(writer.getActivities());
 		userRepository.save(writer);
 	}		
 

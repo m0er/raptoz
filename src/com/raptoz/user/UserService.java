@@ -26,8 +26,6 @@ public class UserService {
 		
 		String email = user.getEmail();
 		user.setNickname(getNickname(email));
-		user.setActivities(null);
-		
 		user.setEncodeProfileImage(Base64.encode(RaptozUtil.getBytes(profileImage)));
 		
 		userRepository.save(user);
@@ -39,7 +37,6 @@ public class UserService {
 		if (found != null) {
 			logger.info("로그인 성공!: " + found.toString());
 			User loginUser = userRepository.findOneSimpleById(found.getId());
-			if (loginUser.getActivities() == null) loginUser.setActivities(null);
 			return loginUser;
 		} else {
 			logger.info("사용자를 찾을 수 없습니다: " + user.toString());
