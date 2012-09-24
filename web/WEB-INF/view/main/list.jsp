@@ -199,7 +199,7 @@
 									<b>Interests</b>
 								</li>
 								<li>
-									<input class="taglist" type="text" value="${user.tagPrint}" disabled="disabled"/>
+									<input class="taglist" type="text" value="${user.tagPrint}"/>
 								</li>
 								<li>
 									<b>Recent activities</b>
