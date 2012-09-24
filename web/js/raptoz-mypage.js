@@ -2,17 +2,12 @@ require.config({
     paths: {
         jqueryui: 'jquery-ui',
         plugin: 'jquery-plugin',
-        ember: 'ember',
         bootstrap: 'bootstrap',
-        external: 'external',
-        models: 'ember/models',
-        controllers: 'ember/controllers',
-        views: 'ember/views',
         selector : 'selector'
     }
 });
 
-require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery.ez-bg-resize', 'selector/select2'], function() {
+require(['bootstrap/load', 'plugin/jquery.form', 'plugin/jquery.ez-bg-resize', 'plugin/select2'], function() {
 	$(document).ready(function() {
 		$("body").ezBgResize({
 			img: "/img/living.social.street1.jpg"
@@ -79,9 +74,3 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 		$("#tags").select2({tags:null});
 	});
 });
-
-require(['ember/load'], function(Ember) {
-	console.log($);
-	console.log(Ember);
-});
-

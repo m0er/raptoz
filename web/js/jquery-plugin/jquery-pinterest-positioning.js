@@ -1,4 +1,4 @@
-define(['jquery', 'jqueryui/core', 'jqueryui/position'], function (jQuery) {
+define(['jquery', 'jqueryui/load'], function (jQuery) {
 /**
  * Pinterest 스타일로 컨텐츠를 배치합니다. jQuery 셀렉터는 [컨텐츠를 감싼 래퍼, 컨텐츠들] 식으로 선언합니다.
  * 
