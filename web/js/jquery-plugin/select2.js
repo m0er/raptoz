@@ -1786,6 +1786,10 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
                 "</div>"].join(""));
+            
+            if (this.opts.tagInput == false)
+            	container.find(".select2-input").remove().end().find(".select2-drop").remove();
+            
 			return container;
         },
 

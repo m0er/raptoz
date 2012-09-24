@@ -103,7 +103,11 @@ require(['bootstrap/load',
 			show: false
 		});
 		
-		$(".taglist").select2({tags: [], tagRemoveButton: false});
+		$(".taglist").select2({
+			tags: [],
+			tagRemoveButton: false,
+			tagInput: false
+		});
 		
 		$("#bgChange").click(function(e) {
 			e.preventDefault();
