@@ -11,10 +11,12 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/overcast/jquery-ui.css"/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/jquery.tagit.css"/>"/>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.css"/>"/>
+	<link rel="stylesheet" type="text/css" href="<c:url value="/css/selector/select2.css"/>"/>
 	<style type="text/css">
 		body {padding-top: 70px;}
 		
-		ul.tagit li.tagit-choice {padding-right: 7px;}
+		.select2-container {width: 100% !important;}
+		.select2-choices .select2-search-choice {padding-left: 5px !important;}
 		
 		#topNav .navbar-inner {border-radius: 0;}
 		
@@ -197,11 +199,7 @@
 									<b>Interests</b>
 								</li>
 								<li>
-									<ul class="unstyled taglist">
-										<c:forEach var="tag" items="${user.tags}">
-											<li>${tag.value}</li>
-										</c:forEach>
-									</ul>
+									<input class="taglist" type="text" value="${user.tagPrint}"/>
 								</li>
 								<li>
 									<b>Recent activities</b>
@@ -237,11 +235,7 @@
 							<p class="content">
 								<str:truncateNicely lower="400" appendToEnd="...">${post.content}</str:truncateNicely>
 							</p>
-							<ul class="unstyled taglist">
-								<c:forEach var="tag" items="${post.tags}">
-									<li>${tag.value}</li>
-								</c:forEach>
-							</ul>
+							<input class="taglist" type="text" value="${post.tagPrint}"/>
 							<footer>
 								<p class="post-status">
 									<small class="post-view-count" style="margin-right: 7px;"><i class="icon-eye-open icon-gray"></i>&nbsp;<span class="number">${post.viewCount == null ? 0 : post.viewCount}</span></small>

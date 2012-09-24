@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.raptoz.tag.Tag;
+import com.raptoz.util.RaptozUtil;
 
 @Document
 public class User {
@@ -17,6 +18,8 @@ public class User {
 	private String encodeProfileImage;
 	
 	private List<Tag> tags;
+	@SuppressWarnings("unused")
+	private String tagPrint;
 	
 	public User() {
 	}
@@ -85,6 +88,10 @@ public class User {
 			tags = new ArrayList<>();
 		
 		this.tags = tags;
+	}
+	
+	public String getTagPrint() {
+		return RaptozUtil.getCsvTagValues(tags);
 	}
 	
 	@Override

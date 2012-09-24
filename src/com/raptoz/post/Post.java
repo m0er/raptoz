@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.raptoz.tag.Tag;
 import com.raptoz.user.User;
+import com.raptoz.util.RaptozUtil;
 
 @Document
 public class Post {
@@ -18,6 +19,8 @@ public class Post {
 
 	private User writer;
 	private List<Tag> tags;
+	@SuppressWarnings("unused")
+	private String tagPrint;
 	private List<ObjectId> replyIds;
 	
 	public Post() {
@@ -93,6 +96,10 @@ public class Post {
 
 	public void setReplyIds(List<ObjectId> replyIds) {
 		this.replyIds = replyIds;
+	}
+	
+	public String getTagPrint() {
+		return RaptozUtil.getCsvTagValues(tags);
 	}
 
 	@Override

@@ -1,23 +1,19 @@
 require.config({
     paths: {
-        jqueryui: 'jquery-ui',
+    	jqueryui: 'jquery-ui',
         plugin: 'jquery-plugin',
-        ember: 'ember',
         bootstrap: 'bootstrap',
-        external: 'external',
-        models: 'ember/models',
-        controllers: 'ember/controllers',
-        views: 'ember/views'
     }
 });
 
-require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery.ez-bg-resize', 'plugin/jquery-pinterest-positioning'], function() {
+require(['bootstrap/load', 
+         'plugin/jquery.form',
+         'plugin/jquery.ez-bg-resize', 
+         'plugin/jquery-pinterest-positioning', 
+         'plugin/select2'], function() {
+	
 	$(document).ready(function() {
 		var enter = 13;
-		
-		// Bootstrap에서 Modal 폼이 backdrop 뒤에 있는 현상 수정
-		// 참고: http://jsfiddle.net/ATeaH/8/
-		$('.modal').appendTo($('body'));
 		
 		$("body").ezBgResize({
 			img: "/img/living.social.street1.jpg"
@@ -107,10 +103,7 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 			show: false
 		});
 		
-		$(".taglist").tagit({
-			allowAddTag: false,
-			showCloseButton: false
-		});
+		$(".taglist").select2({tags: [], tagRemoveButton: false});
 		
 		$("#bgChange").click(function(e) {
 			e.preventDefault();
@@ -245,9 +238,3 @@ require(['bootstrap/load', 'plugin/tag-it', 'plugin/jquery.form', 'plugin/jquery
 		
 	});
 });
-
-//require(['ember/load'], function(Ember) {
-//	console.log($);
-//	console.log(Ember);
-//});
-
