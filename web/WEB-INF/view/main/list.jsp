@@ -15,7 +15,8 @@
 	<style type="text/css">
 		body {padding-top: 70px;}
 		
-		.select2-container {width: 100% !important;}
+		#users .select2-container,
+		#posts .select2-container {width: 100% !important;}
 		.select2-choices .select2-search-choice {padding-left: 5px !important;}
 		
 		#topNav .navbar-inner {border-radius: 0;}
@@ -150,7 +151,7 @@
 			<li class="nav-header">
 				Post
 			</li>
-			<li><a id="writePost" data-toggle="modal" href="#writePostForm">Write post</a></li>
+			<li><a id="writePost" href="#writePostForm">Write post</a></li>
 			<li class="nav-header">
 				Poster
 			</li>
@@ -165,13 +166,19 @@
 				<div class="control-group">
 					<label class="control-label" for="title">Title</label>
 					<div class="controls">
-						<input type="text" class="input-xlarge" id="title" name="title" placeholder="title"/>
+						<input type="text" class="input-xlarge" id="title" name="title" placeholder="input title"/>
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="content">Content</label>
 					<div class="controls">
-						<textarea class="input-xlarge" id="content" name="content" rows="10" cols="3"></textarea>
+						<textarea class="input-xlarge" id="content" name="content" rows="10" cols="3" placeholder="input content"></textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="tag">Tag</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" id="tag" name="tag" style="width:285px;"/>
 					</div>
 				</div>
 			</fieldset>

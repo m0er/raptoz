@@ -53,9 +53,9 @@ public class UserController {
 	
 	@RequestMapping(value="/islogin", method=RequestMethod.GET)
 	@ResponseBody
-	public Object isLogin(HttpSession session) {
+	public boolean isLogin(HttpSession session) {
 		User loginUser = (User) session.getAttribute("loginUser");
-		return loginUser == null ? false : loginUser;
+		return loginUser == null ? false : true;
 	}
 	
 }

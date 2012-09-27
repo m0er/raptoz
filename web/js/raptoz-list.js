@@ -19,6 +19,10 @@ require(['bootstrap/load',
 			img: "/img/living.social.street1.jpg"
 		});
 		
+		// Bootstrap에서 Modal 폼이 backdrop 뒤에 있는 현상 수정
+		// 참고: http://jsfiddle.net/ATeaH/8/
+		$('.modal').appendTo($('body'));
+		
 		$(document).on("keypress", ".reply-input", function(e) {
 			if (e.keyCode == enter) {
 				e.preventDefault();
@@ -109,6 +113,10 @@ require(['bootstrap/load',
 			tagInput: false
 		});
 		
+		$("#tag").select2({
+			tags: []
+		});
+		
 		$("#bgChange").click(function(e) {
 			e.preventDefault();
 			$("#jq_ez_bg img").attr("src", "/img/paper.jpg");
@@ -121,7 +129,11 @@ require(['bootstrap/load',
 			
 			var url = '/user/islogin';
 			$.get(url, function(data) {
-				if (data) $(target).modal("show");
+				if (data) {
+					$(target).modal("show");
+				} else {
+					alert("로그인을 해주세요.");
+				}
 			});
 		});
 		
