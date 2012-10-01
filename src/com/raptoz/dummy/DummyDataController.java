@@ -1,4 +1,4 @@
-package com.raptoz.test;
+package com.raptoz.dummy;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;

@@ -1,4 +1,4 @@
-package com.raptoz.test;
+package com.raptoz.dummy;
 
 import java.util.*;
 
