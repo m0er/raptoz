@@ -189,6 +189,10 @@
 		</form>
 	</nav>
 	
+	<script id="entry-template" type="text/x-handlebars-template">
+		handlebars template content
+	</script>
+	
 	<div class="container" id="resultContainer">
 		<div class="row">
 			<section id="users" class="span4">

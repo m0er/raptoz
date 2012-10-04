@@ -3,14 +3,16 @@ require.config({
     	jqueryui: 'jquery-ui',
         plugin: 'jquery-plugin',
         bootstrap: 'bootstrap',
+        template: 'template'
     }
 });
 
 require(['bootstrap/load', 
          'plugin/jquery.form',
          'plugin/jquery.ez-bg-resize', 
-         'plugin/jquery-pinterest-positioning', 
-         'plugin/select2'], function() {
+         'plugin/jquery-raptoz-positioning', 
+         'plugin/select2',
+         'template/handlebars'], function() {
 	
 	$(document).ready(function() {
 		var enter = 13;
@@ -252,5 +254,6 @@ require(['bootstrap/load',
 		
 		$("#posts .row, .post").positioning();
 		
+		//console.log("handlebar contents: " + $("#entry-template").html());
 	});
 });
