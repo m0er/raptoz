@@ -89,8 +89,9 @@ require(['bootstrap/load',
 			
 			$writePostForm.find("#title").val($section.find(".post-title").text());
 			$writePostForm.find("#content").val($section.find(".post-content").text());
+			$writePostForm.find("#tag").val($section.find("input.post-taglist").val());
 			$writePostForm.append(getHiddenInput("id", $section.attr("id").replace("postModal", "")));
-			$writePostForm.submit();
+			$writePostForm.attr("action", $writePostForm.attr("action").replace("write", "modify")).submit();
 		}).on("click", ".post-delete", function(e) {
 			e.preventDefault();
 			
@@ -182,6 +183,7 @@ require(['bootstrap/load',
 			template.header = template.outer.children(".modal-header");
 			template.title = template.header.children("h3");
 			template.content = template.header.find("article");
+			template.tag = template.header.find(".post-taglist");
 			template.body = template.outer.children(".modal-body");
 			template.reply = template.body.children(".modal-reply");
 			template.footer = template.outer.children(".modal-footer");
@@ -197,14 +199,23 @@ require(['bootstrap/load',
 			template.title.text(post.title).end()
 				.children("img").attr("src", getProfileImageIfExists(post.writer));
 			template.content.text(post.content);
+			template.tag.val(post.tagPrint);
 			
 			isNotWriter(post.writer.nickname, function() {
 				template.footer.find("[type=submit]").remove();
+				template.tag.select2({
+					tags: [],
+					tagRemoveButton: false,
+					tagInput: false
+				});
 			});
 			
 			isWriter(post.writer.nickname, function() {
 				template.title.attr("contenteditable", "true");
 				template.content.attr("contenteditable", "true");
+				template.tag.select2({
+					tags: []
+				});
 			});
 		}
 		

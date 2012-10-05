@@ -27,6 +27,18 @@ public class PostController {
 		return "redirect:/list";
 	}
 	
+	@RequestMapping("/modify")
+	public String modify(@ModelAttribute("loginUser") User user, Post post) {
+		Post originalPost = postService.get(post.getId());
+		originalPost.setContent(post.getContent());
+		originalPost.setTitle(post.getTitle());
+		originalPost.setTags(post.getTags());
+		
+		postService.create(user, originalPost);
+		
+		return "redirect:/list";
+	}
+	
 	@RequestMapping("/{id}")
 	@ResponseBody
 	public Post get(@PathVariable ObjectId id) {

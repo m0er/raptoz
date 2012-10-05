@@ -209,26 +209,7 @@
 									<b>Interests</b>
 								</li>
 								<li>
-									<input class="taglist" type="text" value="${user.tagPrint}"/>
-								</li>
-								<li>
-									<b>Recent activities</b>
-									<ul class="unstyled reply-list">
-										<%--
-										<c:forEach var="activity" items="${user.activities}">
-											<li>
-												<c:choose>
-													<c:when test="${activity.type eq 'POST' }">
-														<span class="label label-success">post</span>&nbsp;<str:truncateNicely lower="40" appendToEnd="...">${activity.contentString}</str:truncateNicely>
-													</c:when>
-													<c:when test="${activity.type eq 'REPLY' }">
-														<span class="label label-info">reply</span>&nbsp;<str:truncateNicely lower="40" appendToEnd="...">${activity.contentString}</str:truncateNicely>
-													</c:when>
-												</c:choose>
-											</li>
-										</c:forEach>
-										 --%>
-									</ul>
+									<input class="taglist" type="text" name="tags" value="${user.tagPrint}"/>
 								</li>
 							</ul>
 						</div>
@@ -267,6 +248,7 @@
 						    <h3 class="post-title">title</h3>
 						    <article class="post-content">
 					    	</article>
+					    	<input class="post-taglist" type="text" name="tags"/>
 					    </header>
 					    <article class="modal-body">
 					    	<div class="modal-reply">
