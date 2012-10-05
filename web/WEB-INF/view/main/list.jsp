@@ -152,10 +152,6 @@
 				Post
 			</li>
 			<li><a id="writePost" href="#writePostForm">Write post</a></li>
-			<li class="nav-header">
-				Poster
-			</li>
-			<li><a>Attach Poster</a></li>
 		</ul>
 		
 	    <form action="<c:url value="/post/write"/>" method="post" class="form-horizontal modal hide fade in" id="writePostForm">
@@ -178,7 +174,7 @@
 				<div class="control-group">
 					<label class="control-label" for="tag">Tag</label>
 					<div class="controls">
-						<input type="text" class="input-xlarge" id="tag" name="tag" style="width:285px;"/>
+						<input type="text" class="input-xlarge" id="tag" name="tags" style="width:285px;"/>
 					</div>
 				</div>
 			</fieldset>
@@ -189,18 +185,21 @@
 		</form>
 	</nav>
 	
-	<script id="entry-template" type="text/x-handlebars-template">
-		handlebars template content
-	</script>
-	
 	<div class="container" id="resultContainer">
 		<div class="row">
 			<section id="users" class="span4">
 				<c:forEach var="user" items="${search.users}">
 					<article class="row userinfo">
 						<div class="userface">
-							<a href="#">
-								<img alt="profile image" src="<c:url value="/img/66x66.gif"/>" alt=""/>
+							<a href="mypage/${user.id}">
+								<c:choose>
+									<c:when test="${user.encodeProfileImage != null}">
+										<img alt="${user.nickname}`s profile image" src="data:image/gif;base64,${user.encodeProfileImage}"/>
+									</c:when>
+									<c:otherwise>
+										<img alt="${user.nickname}`s profile image" src="<c:url value="/img/66x66.gif"/>"/>
+									</c:otherwise>
+								</c:choose>
 							</a>
 							<p class="username"><small>${user.nickname}</small></p>
 						</div>
@@ -310,6 +309,9 @@
             VIEW_PRESERVES_CONTEXT: true
         };
     </script>
+    <script id="entry-template" type="text/x-handlebars-template">
+		handlebars template content
+	</script>
     <script type="text/javascript" data-main="<c:url value="/js/raptoz-list"/>" src="<c:url value="/js/require-jquery.js"/>"></script>
 </body>
 </html>

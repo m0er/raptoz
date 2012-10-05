@@ -20,6 +20,9 @@ public class RaptozUtil {
 	}
 	
 	public static String getCsvTagValues(List<Tag> tags) {
+		if (tags == null)
+			return null;
+		
 		String result = "";
 		for (Tag tag : tags)
 			result += tag.getValue() + ",";
