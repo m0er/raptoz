@@ -17,7 +17,6 @@
 		
 		#users .select2-container,
 		#posts .select2-container {width: 100% !important;}
-		.select2-choices .select2-search-choice {padding-left: 5px !important;}
 		
 		#topNav .navbar-inner {border-radius: 0;}
 		
@@ -53,7 +52,7 @@
 		#posts .post footer .post-writer a:first-child:HOVER {text-decoration: none;}
 		
 		#posts .modal-post {top: 40%;}
-		#posts .modal-post .modal-header {height: 50px; padding: 15px; border: none;}
+		#posts .modal-post .modal-header {min-height: 50px; padding: 15px; border: none;}
 		#posts .modal-post .modal-header .post-content {float: left; margin: 10px 0; width: 100%;}
 		#posts .modal-post .profile-image {float: left; margin-right: 10px; width: 50px; height: 50px;}
 		#posts .modal-post .modal-body {clear: both; border-top: 1px solid #EEEEEE;}
@@ -244,7 +243,7 @@
 					</c:forEach>
 					<section class="modal hide modal-post" id="postModalTemplate">
 					    <header class="modal-header">
-						    <img src="<c:url value="/img/50x50.gif"/>" alt="questioner image" class="profile-image"/>
+						    <img class="profile-image" src="<c:url value="/img/50x50.gif"/>" alt="questioner image" />
 						    <h3 class="post-title">title</h3>
 						    <article class="post-content">
 					    	</article>
@@ -255,7 +254,14 @@
 						    	<c:if test="${sessionScope.loginUser ne null}">
 						    	<form action="<c:url value="/reply/add"/>" method="post">
 						    		<article class="reply reply-input">
-							    		<img src="/img/66x66.gif" alt="your image" class="profile-image"/>
+							    		<c:choose>
+											<c:when test="${sessionScope.loginUser.encodeProfileImage != null}">
+												<img class="profile-image" alt="your profile image" src="data:image/gif;base64,${user.encodeProfileImage}"/>
+											</c:when>
+											<c:otherwise>
+												<img class="profile-image" alt="your profile image" src="<c:url value="/img/66x66.gif"/>"/>
+											</c:otherwise>
+										</c:choose>
 							    		<textarea name="content" placeholder="Add your opinion..."></textarea>
 							    	</article>
 							    </form>
@@ -271,9 +277,16 @@
 				</div>
 				<article class="reply hide" id="postModalReplyTemplate">
 					<c:if test="${sessionScope.loginUser ne null}">
-					<button class="close reply-delete">x</button>
+						<button class="close reply-delete">x</button>
 					</c:if>
-		    		<img src="<c:url value="/img/50x50.gif"/>" alt="replyer image" class="profile-image"/>
+					<c:choose>
+						<c:when test="${sessionScope.loginUser.encodeProfileImage != null}">
+							<img class="profile-image" alt="${sessionScope.loginUser.nickname}`s profile image" src="data:image/gif;base64,${user.encodeProfileImage}"/>
+						</c:when>
+						<c:otherwise>
+							<img class="profile-image" alt="${sessionScope.loginUser.nickname}`s profile image" src="<c:url value="/img/66x66.gif"/>"/>
+						</c:otherwise>
+					</c:choose>
 		    		<p class="replyer-nickname"><b>nickname</b></p>
 		    		<p class="reply-content">reply test</p>
 		    	</article>

@@ -502,6 +502,11 @@ disabled look for already selected choices in the results dropdown
 .select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice .select2-search-choice-close {
     display: none;
 }
+
+/* x 버튼 없을 때 스타일 조정 */
+
+.select2-choices .select2-x-hide {padding-left: 5px !important;}
+
 /* end multiselect */
 
 .select2-result-selectable .select2-match,

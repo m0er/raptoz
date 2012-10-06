@@ -2085,7 +2085,7 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
             choice.find("div").replaceWith("<div>"+this.opts.escapeMarkup(formatted)+"</div>");
             
             if (!this.opts.tagRemoveButton) {
-            	choice.find(".select2-search-choice-close").remove();
+            	choice.addClass("select2-x-hide").find(".select2-search-choice-close").remove();
             } else {
             	choice.find(".select2-search-choice-close")
             	.bind("mousedown", killEvent)
