@@ -16,17 +16,20 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven conversion-service="conversionService"/>
 	
-	<!-- DomainClassConverter에서 conversionService 참조를 가지고 있어서 오류남. 
 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 		<property name="converters">
 			<set>
-				<bean class="org.springframework.data.repository.support.DomainClassConverter" c:service-ref="conversionService"/>
+				<!-- DomainClassConverter에서 conversionService 참조를 가지고 있어서 오류남.
+				<bean class="org.springframework.data.repository.support.DomainClassConverter">
+					<constructor-arg ref="conversionService"/>
+				</bean>
+				-->
+				<bean class="com.raptoz.util.ObjectIdToUserConverter"/>
 			</set>
 		</property>
-	</bean> 
-	-->
+	</bean>
 	
 	<mvc:default-servlet-handler/>
 	
