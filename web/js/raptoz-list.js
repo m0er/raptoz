@@ -18,7 +18,7 @@ require(['bootstrap/load',
 		var enter = 13;
 		
 		$("body").ezBgResize({
-			img: "/img/living.social.street1.jpg"
+			img: getBackgroundImageUrl()
 		});
 		
 		// Bootstrap에서 Modal 폼이 backdrop 뒤에 있는 현상 수정
@@ -122,8 +122,12 @@ require(['bootstrap/load',
 		
 		$("#bgChange").click(function(e) {
 			e.preventDefault();
-			$("#jq_ez_bg img").attr("src", "/img/paper.jpg");
+			$("#jq_ez_bg img").attr("src", getBackgroundImageUrl());
 		});
+		
+		function getBackgroundImageUrl() {
+			return "/img/living.social.street" + parseInt(Math.random() * 9 + 1) + ".jpg";
+		}
 		
 		$("#writePost").click(function (e) {
 			e.preventDefault();
