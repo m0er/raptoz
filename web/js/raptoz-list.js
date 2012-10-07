@@ -124,6 +124,15 @@ require(['bootstrap/load',
 			return "/img/living.social.street" + parseInt(Math.random() * 9 + 1) + ".jpg";
 		}
 		
+		$("#users .userinfo .send-message").each(function() {
+			$(this).popover({
+				title: $(this).parents("article").find(".username").text(),
+				content: function() {
+					return $("#sendMessageTemplate").clone().removeAttr("id").show().html();
+				}
+			});
+		});
+		
 		$("#writePost").click(function (e) {
 			e.preventDefault();
 			

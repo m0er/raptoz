@@ -27,7 +27,7 @@ public class PostService {
 		post.setWriter(writer);
 		post.setCreated(new Date());
 		postRepository.save(post);
-	}		
+	}
 
 	public Post get(ObjectId id) {
 		Post post = postRepository.findOne(id);

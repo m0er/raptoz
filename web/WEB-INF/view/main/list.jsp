@@ -36,10 +36,12 @@
 		#users .usertag {padding-top: 10px; margin-left: 2px;}
 		#users .usertag ul li ul li {display: inline;}
 		#users .usertag .taglist {margin-bottom: 5px;}
-		#users .userface {height: 85px; float: left; padding: 15px 5px; width: 90px; text-align: center; background-color: #FFF;}
+		#users .userface {height: 85px; float: left; padding: 15px 5px 5px; width: 90px; text-align: center; background-color: #FFF;}
 		#users .userface img {width: 66px; height: 66px;}
 		#users .usernamex {text-align: center;}
 		#users .usertag .reply-list li {display: block;}
+		#users footer {background-color: #F2F0F0; float: left; padding: 5px 0; margin: 0; width: 100%; text-align: right;}
+		#users footer a {margin-right: 10px;}
 		
 		#posts {margin-left: 0; width: 480px;}
 		#posts .row {margin-left: 0;}
@@ -224,8 +226,21 @@
 								</li>
 							</ul>
 						</div>
+						<footer>
+							<c:if test="${sessionScope.loginUser ne null and user.id ne sessionScope.loginUser.id}">
+								<button class="btn btn-small send-message">
+									<i class="icon-comment"></i>
+									메시지
+								</button>
+							</c:if>
+						</footer>
 					</article>
 				</c:forEach>
+				<section style="display: none;" id="sendMessageTemplate">
+					<form action="/message/send">
+						<textarea rows="" cols="" placeholder="메시지를 입력하세요." name="content"></textarea>
+					</form>
+				</section>
 			</section>
 			<section id="posts" class="span6">
 				<div class="row">
