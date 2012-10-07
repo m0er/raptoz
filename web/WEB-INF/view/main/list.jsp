@@ -19,6 +19,9 @@
 		#posts .select2-container {width: 100% !important;}
 		
 		#topNav .navbar-inner {border-radius: 0;}
+		#topNav .nav [class^="icon-"] {margin-right: 2px;}
+		
+		#inbox .notification {position: relative; top: -7px; left: -7px; padding: 1px 4px 2px;}
 		
 		#leftNav {margin-left: 50px;}
 		#leftNav, #leftNav .nav {background-color: #2C2C2C;}
@@ -72,7 +75,14 @@
 			<div class="container">
 				<a class="brand" href="<c:url value="/list"/>">Raptoz</a>
 				<form id="search" action="<c:url value="/list"/>" class="navbar-search pull-left" method="post">
-					<input type="text" class="search-query" name="term" placeholder="Search"/>
+					<div class="control-group">
+						<div class="controls">
+							<div class="input-append">
+								<input class="span2" name="term" type="text" placeholder="Search"/>
+								<span class="add-on"><i class="icon-search"></i></span>
+							</div>
+						</div>
+					</div>
 				</form>
 				<ul class="nav pull-right">
 					<c:choose>
@@ -81,8 +91,9 @@
 							<li><a data-toggle="modal" href="#signupForm">Sign up</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="<c:url value="/user/logout"/>">Logout</a></li>
+							<li id="inbox"><a href="#"><i class="icon-inbox"></i><span class="badge badge-important notification">10</span></a></li>
 							<li id="mypage" data-sessionuser-nickname="${sessionScope.loginUser.nickname}"><a href="<c:url value="/mypage/${sessionScope.loginUser.id}"/>">My Page</a></li>
+							<li><a href="<c:url value="/user/logout"/>">Logout</a></li>
 						</c:otherwise>
 					</c:choose>
 					<c:if test="${sessionScope.loginUser.email eq 'admin@raptoz.com'}">
