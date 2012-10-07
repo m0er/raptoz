@@ -120,11 +120,6 @@ require(['bootstrap/load',
 			tags: []
 		});
 		
-		$("#bgChange").click(function(e) {
-			e.preventDefault();
-			$("#jq_ez_bg img").attr("src", getBackgroundImageUrl());
-		});
-		
 		function getBackgroundImageUrl() {
 			return "/img/living.social.street" + parseInt(Math.random() * 9 + 1) + ".jpg";
 		}

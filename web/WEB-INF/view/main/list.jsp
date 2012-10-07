@@ -85,9 +85,10 @@
 							<li id="mypage" data-sessionuser-nickname="${sessionScope.loginUser.nickname}"><a href="<c:url value="/mypage/${sessionScope.loginUser.id}"/>">My Page</a></li>
 						</c:otherwise>
 					</c:choose>
-					<li id="bgChange"><a href="#">Background</a></li>
-					<li><a href="<c:url value="/test/dummy/create"/>">create dummy</a></li>
-					<li><a href="<c:url value="/test/dummy/delete"/>">delete dummy</a></li>
+					<c:if test="${sessionScope.loginUser.email eq 'admin@raptoz.com'}">
+						<li><a href="<c:url value="/test/dummy/create"/>">create dummy</a></li>
+						<li><a href="<c:url value="/test/dummy/delete"/>">delete dummy</a></li>
+					</c:if>
 				</ul>
 				<form action="<c:url value="/user/login"/>" method="post" class="form-horizontal modal hide fade in" id="loginForm">
 					<div class="modal-header">
