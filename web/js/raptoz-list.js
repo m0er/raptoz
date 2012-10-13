@@ -65,7 +65,7 @@ require(['bootstrap/load',
 				console.log(params);
 				
 				$.ajax({
-					url: "/reply/update",
+					url: PREFIX + "/reply/update",
 					data: params,
 					type: "POST"
 				}).done(function(reply) {
@@ -79,7 +79,7 @@ require(['bootstrap/load',
 			
 			console.log(replyId);
 			
-			var url = "/reply/delete/" + replyId;
+			var url = PREFIX + "/reply/delete/" + replyId;
 			$.get(url, function(data) {
 				$("#" + replyId).remove();
 			});
@@ -97,6 +97,15 @@ require(['bootstrap/load',
 			
 			var $section = $(e.target).parents(".modal-post");
 			window.location = "post/" + $section.attr("id").replace("postModal", "") + "/delete";
+		}).on("click", ".send-message-form [type=submit]", function(e) {
+			e.preventDefault();
+			
+			var $form = $(this).parent();
+			var url = $form.attr("action") + $form.attr("data-user-id");
+			
+			$.post(url, $form.serialize(), function(data) {
+				$(".userinfo[data-user-id=" + $form.attr("data-user-id") + "]").find(".send-message").popover("toggle");
+			});
 		});
 		
 		function getHiddenInput(name, value) {
@@ -121,14 +130,15 @@ require(['bootstrap/load',
 		});
 		
 		function getBackgroundImageUrl() {
-			return "/img/living.social.street" + parseInt(Math.random() * 9 + 1) + ".jpg";
+			return PREFIX + "/img/living.social.street" + parseInt(Math.random() * 9 + 1) + ".jpg";
 		}
 		
 		$("#users .userinfo .send-message").each(function() {
 			$(this).popover({
 				title: $(this).parents("article").find(".username").text(),
 				content: function() {
-					return $("#sendMessageTemplate").clone().removeAttr("id").show().html();
+					var userId = $(this).parents(".userinfo").attr("data-user-id");
+					return $("#sendMessageTemplate").clone().children("form").attr("data-user-id", userId).addClass("send-message-form").end().show().html();
 				}
 			});
 		});
@@ -138,7 +148,7 @@ require(['bootstrap/load',
 			
 			var target = $(e.target).attr("href");
 			
-			var url = '/user/islogin';
+			var url = PREFIX + '/user/islogin';
 			$.get(url, function(data) {
 				if (data) {
 					$(target).modal("show");
@@ -159,7 +169,7 @@ require(['bootstrap/load',
 				return;
 			}
 			
-			var url = "/post/" + postId;
+			var url = PREFIX + "/post/" + postId;
 			$.get(url, function(post) {
 				console.log(post);
 				
@@ -238,7 +248,7 @@ require(['bootstrap/load',
 		}
 		
 		function appendWriter(postId, template) {
-			var url = "/reply/" + postId;
+			var url = PREFIX + "/reply/" + postId;
 			$.get(url, function(data) {
 				
 				console.log(data);
@@ -268,7 +278,7 @@ require(['bootstrap/load',
 		}
 		
 		function getProfileImageIfExists(target) {
-			return target.encodeProfileImage == "" ? "/img/50x50.gif" : "data:image/gif;base64," + target.encodeProfileImage;
+			return target.encodeProfileImage == "" ? PREFIX + "/img/50x50.gif" : "data:image/gif;base64," + target.encodeProfileImage;
 		}
 		
 		$("#posts .row, .post").positioning();

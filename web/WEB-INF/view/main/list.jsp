@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/selector/select2.css"/>"/>
 	<style type="text/css">
 		body {padding-top: 70px;}
+		textarea {resize: none;}
 		
 		#users .select2-container,
 		#posts .select2-container {width: 100% !important;}
@@ -28,8 +29,6 @@
 		#leftNav .nav li {color: #FFF;}
 		#leftNav .nav li a {color: #999; text-shadow: none;}
 		#leftNav .nav li a:HOVER {color: #FFF; background-color: #2C2C2C;}
-		
-		#writePostForm textarea {resize: none;}
 		
 		#users {min-width: 430px;}
 		#users article {border: 1px solid black; margin-left: 0px; margin-bottom: 10px; box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4); background-color: #FFF; width: 418px;}
@@ -64,7 +63,7 @@
 		#posts .modal-post footer {margin-top: 0;}
 		#posts .modal-post .modal-reply {text-align: left; background-color: #FFF;}
 		#posts .modal-post .modal-reply .reply {height: 50px; margin-bottom: 10px;}
-		#posts .modal-post .modal-reply .reply textarea {border: 1px solid; font-size: 1em; height: 32px; padding: 8px; resize: none; width: 437px; border-color: #DDDDDD #E1DFDF #D1CDCD;}
+		#posts .modal-post .modal-reply .reply textarea {border: 1px solid; font-size: 1em; height: 32px; padding: 8px; width: 437px; border-color: #DDDDDD #E1DFDF #D1CDCD;}
 		#posts .modal-post .modal-reply .reply:last-child {margin-bottom: 0;}
 		#posts .modal-post .modal-reply .replyer-nickname {margin-bottom: 0;} 
 		
@@ -93,13 +92,24 @@
 							<li><a data-toggle="modal" href="#signupForm">Sign up</a></li>
 						</c:when>
 						<c:otherwise>
-							<li id="inbox"><a href="#"><i class="icon-inbox"></i><span class="badge badge-important notification">10</span></a></li>
-							<li id="mypage" data-sessionuser-nickname="${sessionScope.loginUser.nickname}"><a href="<c:url value="/mypage/${sessionScope.loginUser.id}"/>">My Page</a></li>
-							<li><a href="<c:url value="/user/logout"/>">Logout</a></li>
+							<li id="inbox">
+								<a href="#">
+									<i class="icon-inbox"></i>
+									<c:if test="${not empty notificationCount and notificationCount > 0}">
+										<span class="badge badge-important notification">${notificationCount}</span>
+									</c:if>
+								</a>
+							</li>
+							<li id="mypage" data-sessionuser-nickname="${sessionScope.loginUser.nickname}">
+								<a href="<c:url value="/mypage/${sessionScope.loginUser.id}"/>">My Page</a>
+							</li>
+							<li>
+								<a href="<c:url value="/user/logout"/>">Logout</a>
+							</li>
 						</c:otherwise>
 					</c:choose>
 					<c:if test="${sessionScope.loginUser.email eq 'admin@raptoz.com'}">
-						<li><a href="<c:url value="/test/dummy/create"/>">create dummy</a></li>
+						<li><a href="<c:url value="/test/dummy/create"/>">creeate dummy</a></li>
 						<li><a href="<c:url value="/test/dummy/delete"/>">delete dummy</a></li>
 					</c:if>
 				</ul>
@@ -202,11 +212,11 @@
 		<div class="row">
 			<section id="users" class="span4">
 				<c:forEach var="user" items="${search.users}">
-					<article class="row userinfo">
+					<article class="row userinfo" data-user-id="${user.id}">
 						<div class="userface">
 							<a href="mypage/${user.id}">
 								<c:choose>
-									<c:when test="${user.encodeProfileImage != null}">
+									<c:when test="${not empty user.encodeProfileImage}">
 										<img alt="${user.nickname}`s profile image" src="data:image/gif;base64,${user.encodeProfileImage}"/>
 									</c:when>
 									<c:otherwise>
@@ -237,8 +247,9 @@
 					</article>
 				</c:forEach>
 				<section style="display: none;" id="sendMessageTemplate">
-					<form action="/message/send">
+					<form action="<c:url value="/message/send/"/>" method="post">
 						<textarea rows="" cols="" placeholder="메시지를 입력하세요." name="content"></textarea>
+						<input class="btn btn-primary" type="submit" value="send"/>
 					</form>
 				</section>
 			</section>
@@ -282,8 +293,8 @@
 						    	<form action="<c:url value="/reply/add"/>" method="post">
 						    		<article class="reply reply-input">
 							    		<c:choose>
-											<c:when test="${sessionScope.loginUser.encodeProfileImage != null}">
-												<img class="profile-image" alt="your profile image" src="data:image/gif;base64,${user.encodeProfileImage}"/>
+											<c:when test="${not empty sessionScope.loginUser.encodeProfileImage}">
+												<img class="profile-image" alt="your profile image" src="data:image/gif;base64,${sessionScope.loginUser.encodeProfileImage}"/>
 											</c:when>
 											<c:otherwise>
 												<img class="profile-image" alt="your profile image" src="<c:url value="/img/66x66.gif"/>"/>
@@ -307,11 +318,11 @@
 						<button class="close reply-delete">x</button>
 					</c:if>
 					<c:choose>
-						<c:when test="${sessionScope.loginUser.encodeProfileImage != null}">
+						<c:when test="${not empty sessionScope.loginUser.encodeProfileImage}">
 							<img class="profile-image" alt="${sessionScope.loginUser.nickname}`s profile image" src="data:image/gif;base64,${user.encodeProfileImage}"/>
 						</c:when>
 						<c:otherwise>
-							<img class="profile-image" alt="${sessionScope.loginUser.nickname}`s profile image" src="<c:url value="/img/66x66.gif"/>"/>
+							<img class="profile-image" alt="anonymous profile image" src="<c:url value="/img/66x66.gif"/>"/>
 						</c:otherwise>
 					</c:choose>
 		    		<p class="replyer-nickname"><b>nickname</b></p>
@@ -330,6 +341,8 @@
             CP_DEFAULT_CACHEABLE: true,
             VIEW_PRESERVES_CONTEXT: true
         };
+        
+        var PREFIX = '<c:url value="/"/>';
     </script>
     <script id="entry-template" type="text/x-handlebars-template">
 		handlebars template content

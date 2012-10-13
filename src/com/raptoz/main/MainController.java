@@ -8,6 +8,7 @@ import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 
+import com.raptoz.message.MessageService;
 import com.raptoz.search.*;
 import com.raptoz.user.*;
 
@@ -17,6 +18,7 @@ public class MainController {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired SearchService searchService;
+	@Autowired MessageService messageService;
 	
 	@RequestMapping("/index")
 	public String index() {
@@ -28,7 +30,7 @@ public class MainController {
 		User loginUser = (User) session.getAttribute("loginUser");
 		if (loginUser != null) {
 			logger.info("user in session: " + loginUser.toString());
-			model.addAttribute("user", loginUser);
+			model.addAttribute("notificationCount", messageService.count(loginUser.getId()));
 		}
 		
 		Search search = searchService.recent();

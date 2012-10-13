@@ -36,7 +36,7 @@ public class ObjectIdToUserConverter implements ConditionalGenericConverter {
 		
 		Annotation pathVariable = targetType.getAnnotation(PathVariable.class);
 		
-		if (pathVariable != null && ((PathVariable) targetType.getAnnotation(PathVariable.class)).value().equals("id"))
+		if (pathVariable != null && ((PathVariable) targetType.getAnnotation(PathVariable.class)).value().toLowerCase().contains("id"))
 			return true;
 		
 		return false;
