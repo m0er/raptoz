@@ -3,11 +3,15 @@ package com.raptoz.user;
 import java.util.*;
 
 import org.bson.types.ObjectId;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.raptoz.spring.jackson.ObjectIdSerializer;
 import com.raptoz.tag.Tag;
 import com.raptoz.util.RaptozUtil;
 
+@JsonAutoDetect
 @Document
 public class User {
 	private ObjectId id;
@@ -30,7 +34,8 @@ public class User {
 		this.nickname = nickname;
 		this.encodeProfileImage = encodeProfileImage;
 	}
-
+	
+	@JsonSerialize(using=ObjectIdSerializer.class)
 	public ObjectId getId() {
 		return id;
 	}

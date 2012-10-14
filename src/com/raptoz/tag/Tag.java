@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Tag {
 	private ObjectId id;
+	private String text;
 	private String value;
 	private Long count = 1L;
 	
@@ -29,7 +30,12 @@ public class Tag {
 	}
 
 	public void setValue(String value) {
+		this.text = value;
 		this.value = value;
+	}
+	
+	public String getText() {
+		return text;
 	}
 
 	public Long getCount() {

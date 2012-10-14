@@ -16,6 +16,8 @@
 		body {padding-top: 70px;}
 		textarea {resize: none;}
 		
+		#signupForm .select2-input {width: 272px !important;}
+		
 		#users .select2-container,
 		#posts .select2-container {width: 100% !important;}
 		
@@ -136,7 +138,7 @@
 						<button class="btn" data-dismiss="modal">Cancel</button>
 					</div>
 				</form>
-				<form action="<c:url value="/user/signup"/>" enctype="multipart/form-data" method="post" class="form-horizontal modal hide fade in" id="signupForm">
+				<form class="form-horizontal modal hide fade in" id="signupForm" action="<c:url value="/user/signup"/>" enctype="multipart/form-data" method="post">
 					<div class="modal-header">
 						<h3>Sign up</h3>
 					</div>
@@ -159,6 +161,12 @@
 								<input type="file" class="input-file" name="profileImage" id="profileImage"/>
 							</div>
 						</div>
+						<div class="control-group">
+							<label class="control-label" for="tag">Interests</label>
+							<div class="controls">
+								<input type="text" id="tag" name="tags" style="width:285px;" placeholder="Input your interests"/>
+							</div>
+						</div>
 					</fieldset>
 					<div class="modal-footer">
 						<button class="btn btn-primary" type="submit">Sign up</button>
@@ -177,7 +185,7 @@
 			<li><a id="writePost" href="#writePostForm">Write post</a></li>
 		</ul>
 		
-	    <form action="<c:url value="/post/write"/>" method="post" class="form-horizontal modal hide fade in" id="writePostForm">
+	    <form class="form-horizontal modal hide fade in" id="writePostForm" action="<c:url value="/post/write"/>" method="post">
 			<div class="modal-header">
 				<h3>Write post</h3>
 			</div>

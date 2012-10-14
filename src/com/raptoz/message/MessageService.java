@@ -1,5 +1,7 @@
 package com.raptoz.message;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -18,6 +20,10 @@ public class MessageService {
 
 	public long count(ObjectId id) {
 		return mongoTemplate.count(Query.query(Criteria.where("to.id").is(id).andOperator(Criteria.where("read").is(false))), Message.class);
+	}
+	
+	public List<Message> getByReceiverId(ObjectId id) {
+		return messageRepository.findByToId(id);
 	}
 	
 }

@@ -126,8 +126,33 @@ require(['bootstrap/load',
 		});
 		
 		$("#tag").select2({
-			tags: []
+			tags: [],
+			placeholder: "Input your interests",
+			minimumInputLength: 1,
+			ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+				url: PREFIX + "tag/search",
+				dataType: 'json',
+				data: function (term, page) {
+					return {
+						 term: term, // search term
+						 limit: 10
+					};
+				},
+				results: function (data, page) {
+					console.log(data);
+					return {results: data};
+				},
+			},
+			formatResult: movieFormatResult, // omitted for brevity, see the source of this page
+			formatSelection: movieFormatSelection,
 		});
+		
+		function movieFormatResult(data) {
+			return data.value;
+		}
+		function movieFormatSelection(data) {
+			return data.value;
+		} 
 		
 		function getBackgroundImageUrl() {
 			return PREFIX + "/img/living.social.street" + parseInt(Math.random() * 9 + 1) + ".jpg";

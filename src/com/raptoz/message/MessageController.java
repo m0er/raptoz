@@ -1,9 +1,11 @@
 package com.raptoz.message;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +18,14 @@ import com.raptoz.user.User;
 @RequestMapping("/message")
 @SessionAttributes("loginUser")
 public class MessageController {
+	@SuppressWarnings("unused")
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired private MessageService messageService;
 	
-	@RequestMapping("/send/{receiverId}")
+	@RequestMapping("/send/{userId}")
 	@ResponseBody
-	public String send(@ModelAttribute("loginUser") User from, @PathVariable("receiverId") User to, Message message, HttpSession session) {
+	public String send(@ModelAttribute("loginUser") User from, @PathVariable("userId") User to, Message message, HttpSession session) {
 		message.setSent(new Date());
 		message.setFrom(from);
 		message.setTo(to);
@@ -30,6 +33,12 @@ public class MessageController {
 		messageService.send(message);
 		
 		return "success";
+	}
+	
+	@RequestMapping("/list/{receiverId}")
+	@ResponseBody
+	public List<Message> list(@PathVariable("receiverId") ObjectId receiverId) {
+		return messageService.getByReceiverId(receiverId);
 	}
 	
 }

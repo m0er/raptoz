@@ -2367,11 +2367,15 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
         dropdownCssClass: "",
         formatResult: function(result, container, query) {
             var markup=[];
-            markMatch(result.text, query.term, markup);
+            var text = result.text ? result.text : result.value;
+            markMatch(text, query.term, markup);
             return markup.join("");
         },
         formatSelection: function (data, container) {
-            return data ? data.text : undefined;
+        	if (data != null) {
+        		return data.text ? data.text : data.value;
+        	}
+        	return undefined;
         },
         formatResultCssClass: function(data) {return undefined;},
         formatNoMatches: function () { return "No matches found"; },
@@ -2382,7 +2386,7 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumSelectionSize: 0,
-        id: function (e) { return e.id; },
+        id: function (e) { return /*e.id;*/ e.value ? e.value : e.text; },
         matcher: function(term, text) {
             return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
         },
