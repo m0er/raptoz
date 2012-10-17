@@ -1301,7 +1301,14 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
         selectHighlighted: function () {
             var index=this.highlight(),
                 highlighted=this.results.find(".select2-highlighted").not(".select2-disabled"),
-                data = highlighted.closest('.select2-result-selectable').data("select2-data");
+                data = highlighted.closest('.select2-result-selectable').data("select2-data"),
+                input = $(".select2-input").val();
+            
+            if (index == -1 && data == null && input != '') {
+            	data = new Object();
+            	data.value = input;
+            }
+            
             if (data) {
                 highlighted.addClass("select2-disabled");
                 this.highlight(index);
