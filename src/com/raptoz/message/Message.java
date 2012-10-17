@@ -1,5 +1,7 @@
 package com.raptoz.message;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.raptoz.user.User;
@@ -11,6 +13,7 @@ public class Message {
 	private User to;
 	private Date sent;
 	private Date received;
+	private String sentString;
 	
 	public Message() {
 	}
@@ -53,8 +56,14 @@ public class Message {
 
 	public void setSent(Date sent) {
 		this.sent = sent;
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+		this.sentString = df.format(new Date());
 	}
-
+	
+	public String getSentString() {
+		return sentString;
+	}
+	
 	public Date getReceived() {
 		return received;
 	}

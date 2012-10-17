@@ -1,5 +1,7 @@
 package com.raptoz.main;
 
+import java.util.List;
+
 import javax.servlet.http.*;
 
 import org.slf4j.*;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 
+import com.raptoz.message.Message;
 import com.raptoz.message.MessageService;
 import com.raptoz.search.*;
 import com.raptoz.user.*;
@@ -30,7 +33,9 @@ public class MainController {
 		User loginUser = (User) session.getAttribute("loginUser");
 		if (loginUser != null) {
 			logger.info("user in session: " + loginUser.toString());
-			model.addAttribute("notificationCount", messageService.count(loginUser.getId()));
+			List<Message> notifications = messageService.getByReceiverId(loginUser.getId());
+			model.addAttribute("notifications", notifications);
+			model.addAttribute("notificationCount", notifications.size());
 		}
 		
 		Search search = searchService.recent();

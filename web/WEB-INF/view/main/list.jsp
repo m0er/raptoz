@@ -14,6 +14,9 @@
 	<style type="text/css">
 		body {padding-top: 70px;}
 		textarea {resize: none;}
+		.popover {z-index: 1030;}
+		.visible {visibility: visible;}
+		.not.visible {visibility: hidden;}
 		
 		#signupForm .select2-input {width: 272px !important;}
 		
@@ -22,8 +25,8 @@
 		
 		#topNav .navbar-inner {border-radius: 0;}
 		#topNav .nav [class^="icon-"] {margin-right: 2px;}
-		
-		#inbox .notification {position: relative; top: -7px; left: -7px; padding: 1px 4px 2px;}
+		#topNav #inbox {margin: 10px 15px; cursor: pointer;}
+		#topNav #inbox .notification {position: relative; float: right; top: -7px; right: 7px; padding: 1px 4px 2px;}
 		
 		#leftNav {margin-left: 50px;}
 		#leftNav, #leftNav .nav {background-color: #2C2C2C;}
@@ -94,12 +97,10 @@
 						</c:when>
 						<c:otherwise>
 							<li id="inbox">
-								<a href="#">
-									<i class="icon-inbox"></i>
-									<c:if test="${not empty notificationCount and notificationCount > 0}">
-										<span class="badge badge-important notification">${notificationCount}</span>
-									</c:if>
-								</a>
+								<i class="icon-inbox"></i>
+								<c:if test="${not empty notificationCount and notificationCount > 0}">
+									<span class="badge badge-important notification">${notificationCount}</span>
+								</c:if>
 							</li>
 							<li id="mypage" data-sessionuser-nickname="${sessionScope.loginUser.nickname}">
 								<a href="<c:url value="/mypage/${sessionScope.loginUser.id}"/>">My Page</a>
@@ -107,6 +108,32 @@
 							<li>
 								<a href="<c:url value="/user/logout"/>">Logout</a>
 							</li>
+							<section class="popover fade bottom not visible" id="notification" style="display: block;">
+								<div class="arrow"></div>
+								<div class="popover-inner">
+									<h3 class="popover-title">Notification</h3>
+									<div class="popover-content">
+										<c:forEach items="${notifications}" var="notification">
+											<article>
+												<c:choose>
+													<c:when test="${not empty notification.from.encodeProfileImage}">
+														<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="data:image/gif;base64,${notification.from.encodeProfileImage}"/>
+													</c:when>
+													<c:otherwise>
+														<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="<c:url value="/img/66x66.gif"/>"/>
+													</c:otherwise>
+												</c:choose>
+												<p class="notification-content">${notification.content}</p>
+												<abbr class="notification-timeago" title="${notification.sentString}"></abbr>
+											</article>
+										</c:forEach>
+									</div>
+								</div>
+							</section>
+							<section id="notificationTemplate" style="display: none;">
+								<img class="notification-profile-image" alt="profile image" src="data:image/gif;base64,"/>
+								<p class="notification-content"></p>
+							</section>
 						</c:otherwise>
 					</c:choose>
 					<c:if test="${sessionScope.loginUser.email eq 'admin@raptoz.com'}">
@@ -215,7 +242,7 @@
 		</form>
 	</nav>
 	
-	<div class="container" id="resultContainer">
+	<div class="container" id="resultContainer" style="visibility: hidden;">
 		<div class="row">
 			<section id="users" class="span4">
 				<c:forEach var="user" items="${search.users}">

@@ -37,6 +37,8 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
 			var $contents = this.slice(1, this.length);
 			
 			pinterestPositioning($row, $contents, opts);
+			
+			$(opts.wrapper).css("visibility", "visible");
 		}
 	};
 	
@@ -57,7 +59,8 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
 		x: "10 0",
 		y: "0 10",
 		type: "pinterest",
-		contents: []
+		contents: [],
+		wrapper: ""
 	};
 })(jQuery);
 });

@@ -7,11 +7,12 @@ require.config({
     }
 });
 
-require(['bootstrap/load', 
+require(['bootstrap/load',
          'plugin/jquery.form',
          'plugin/jquery.ez-bg-resize', 
          'plugin/jquery-raptoz-positioning', 
          'plugin/select2',
+         'plugin/jquery.timeago',
          'template/handlebars'], function() {
 	
 	$(document).ready(function() {
@@ -147,6 +148,21 @@ require(['bootstrap/load',
 		
 		function getBackgroundImageUrl() {
 			return PREFIX + "/img/living.social.street" + parseInt(Math.random() * 9 + 1) + ".jpg";
+		}
+		
+		if ($("#inbox").size() > 0) {
+			$("#notification").position({
+				of: "#inbox",
+				at: "bottom",
+				my: "top",
+				collision: "none"
+			}).removeClass("not visible");
+			
+			$("#inbox").click(function(e) {
+				$("#notification").toggleClass("in");
+			});
+			
+			$(".notification-timeago").timeago();
 		}
 		
 		$("#users .userinfo .send-message").each(function() {
@@ -297,7 +313,9 @@ require(['bootstrap/load',
 			return target.encodeProfileImage == "" ? PREFIX + "/img/50x50.gif" : "data:image/gif;base64," + target.encodeProfileImage;
 		}
 		
-		$("#posts .row, .post").positioning();
+		$("#posts .row, .post").positioning({
+			wrapper: "#resultContainer"
+		});
 		
 		//console.log("handlebar contents: " + $("#entry-template").html());
 	});
