@@ -9,7 +9,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Raptoz List Page</title>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/overcast/jquery-ui.css"/>">
-	<link rel="stylesheet" type="text/css" href="<c:url value="/css/jquery.tagit.css"/>"/>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.css"/>"/>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/selector/select2.css"/>"/>
 	<style type="text/css">
