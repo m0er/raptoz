@@ -142,17 +142,8 @@ require(['bootstrap/load',
 					console.log(data);
 					return {results: data};
 				},
-			},
-			formatResult: movieFormatResult, // omitted for brevity, see the source of this page
-			formatSelection: movieFormatSelection,
+			}
 		});
-		
-		function movieFormatResult(data) {
-			return data.value;
-		}
-		function movieFormatSelection(data) {
-			return data.value;
-		} 
 		
 		function getBackgroundImageUrl() {
 			return PREFIX + "/img/living.social.street" + parseInt(Math.random() * 9 + 1) + ".jpg";
