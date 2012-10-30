@@ -5,17 +5,16 @@ import static org.springframework.data.mongodb.core.query.Query.*;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.*;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service("tagService")
 public class TagService {
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
 	@Autowired private TagRepository tagRepository;
 	@Autowired private MongoTemplate mongoTemplate;
 	
@@ -30,14 +29,14 @@ public class TagService {
 		
 		Tag found = tagRepository.findByValue(value);
 		
-		logger.info(tag.getValue() + " count: " + found.getCount());
+		log.info(tag.getValue() + " count: " + found.getCount());
 		
 		return found;
 	}
 
 	public void upsert(List<Tag> tags) {
 		if (tags == null)  {
-			logger.debug("TagService.upsert(List<Tag>) :: " + "태그 리스트가 null 입니다");
+			log.debug("TagService.upsert(List<Tag>) :: " + "태그 리스트가 null 입니다");
 			return;
 		}
 		

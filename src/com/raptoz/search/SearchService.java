@@ -2,8 +2,8 @@ package com.raptoz.search;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,9 @@ import com.raptoz.post.PostService;
 import com.raptoz.user.User;
 import com.raptoz.user.UserService;
 
+@Slf4j
 @Service("searchService")
 public class SearchService {
-	private Logger logger = LoggerFactory.getLogger(getClass());
-
 	@Autowired private PostService postService;
 	@Autowired private UserService userService;
 	
@@ -28,7 +27,7 @@ public class SearchService {
 		
 		search.setUsers(users);
 		
-		logger.info("search " + term + ":\n" + search.toString());
+		log.info("search " + term + ":\n" + search.toString());
 		
 		return search;
 	}
@@ -41,7 +40,7 @@ public class SearchService {
 		
 		search.setUsers(users);
 		
-		logger.info("search recent" + ":\n" + search.toString());
+		log.info("search recent" + ":\n" + search.toString());
 		
 		return search;
 	}

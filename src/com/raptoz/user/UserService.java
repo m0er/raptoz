@@ -3,10 +3,10 @@ package com.raptoz.user;
 import java.util.Date;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.catalina.util.Base64;
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.domain.Sort.Direction;
@@ -15,10 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.raptoz.util.RaptozUtil;
 
+@Slf4j
 @Service("userService")
 public class UserService {
-	private Logger logger = LoggerFactory.getLogger(UserService.class);
-	
 	@Autowired private UserRepository userRepository;
 	
 	public void add(User user, MultipartFile profileImage) {
@@ -35,11 +34,11 @@ public class UserService {
 		User found = userRepository.findOneByEmailAndPassword(user.getEmail(), user.getPassword());
 		
 		if (found != null) {
-			logger.info("로그인 성공!: " + found.toString());
+			log.info("로그인 성공!: " + found.toString());
 			User loginUser = userRepository.findOneSimpleById(found.getId());
 			return loginUser;
 		} else {
-			logger.info("사용자를 찾을 수 없습니다: " + user.toString());
+			log.info("사용자를 찾을 수 없습니다: " + user.toString());
 			return null;
 		}
 	}

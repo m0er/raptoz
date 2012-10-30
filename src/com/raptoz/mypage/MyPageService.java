@@ -2,10 +2,10 @@ package com.raptoz.mypage;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.catalina.util.Base64;
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
@@ -16,10 +16,9 @@ import com.raptoz.user.User;
 import com.raptoz.user.UserRepository;
 import com.raptoz.util.RaptozUtil;
 
+@Slf4j
 @Service("mypageService")
 public class MyPageService {
-	Logger logger = LoggerFactory.getLogger(getClass());
-	
 	@Autowired UserRepository userRepository;
 	@Autowired MongoTemplate mongoTemplate;
 	
@@ -35,12 +34,12 @@ public class MyPageService {
 		
 		if (password != null) {
 			if (userRepository.findOneByEmailAndPassword(email, password) == null) {
-				logger.info("failed identify password");
+				log.info("failed identify password");
 				return null;
 			}
 			
 			if (newPwd.trim().length() == 0 || confirmPwd.trim().length() == 0 || !isEqual(newPwd, confirmPwd)) {
-				logger.info("failed apply new password");
+				log.info("failed apply new password");
 				return null;
 			}
 			userRepository.save(remakeUser(userId, email, newPwd, nickname, imgUrl));
@@ -48,7 +47,7 @@ public class MyPageService {
 			userRepository.save(remakeUser(userId, email, user.getPassword(), nickname, imgUrl));	
 		}
 		
-		logger.info("update success");
+		log.info("update success");
 		
 		return user;
 	}

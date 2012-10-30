@@ -1,8 +1,8 @@
 package com.raptoz.post;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import com.raptoz.tag.TagService;
 import com.raptoz.user.User;
 
+@Slf4j
 @Controller
 @RequestMapping("/post")
 @SessionAttributes("loginUser")
 public class PostController {
-	private Logger logger = LoggerFactory.getLogger(getClass());
-	
 	@Autowired private PostService postService;
 	@Autowired private TagService tagService;
 	
@@ -42,14 +41,14 @@ public class PostController {
 	@RequestMapping("/{id}")
 	@ResponseBody
 	public Post get(@PathVariable ObjectId id) {
-		logger.info("Post Id:" + id);
+		log.info("Post Id:" + id);
 		return postService.increaseViewCount(id);
 	}
 	
 	@RequestMapping("/{id}/delete")
 	public String delete(@PathVariable ObjectId id, @RequestHeader("referer") String referer) {
-		logger.info("Post Id:" + id);
-		logger.info("referer:" + referer);
+		log.info("Post Id:" + id);
+		log.info("referer:" + referer);
 		
 		postService.deleteById(id);
 		return "redirect:" + referer;

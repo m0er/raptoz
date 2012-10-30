@@ -5,11 +5,11 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.bson.types.ObjectId;
 import org.junit.*;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -23,12 +23,10 @@ import com.raptoz.tag.TagRepository;
 import com.raptoz.user.User;
 import com.raptoz.user.UserRepository;
 
-
+@Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class PostRepositoryTest {
-	Logger logger = LoggerFactory.getLogger(getClass());
-	
 	@Autowired MongoTemplate mongoTemplate;
 	@Autowired TagRepository tagRepository;
 	@Autowired PostRepository postRepository;
@@ -81,7 +79,7 @@ public class PostRepositoryTest {
 		assertThat(postRepository.count(), is(before + 3));
 		assertThat(postRepository.findOne(post1.getId()).getTags(), hasItems(tag1, tag2, tag3));
 		
-		logger.info(postRepository.findAll().toString());
+		log.info(postRepository.findAll().toString());
 		
 		// update post
 		post1.setContent("asdf");
@@ -106,7 +104,7 @@ public class PostRepositoryTest {
 		List<Reply> foundReplyList = replyRepository.findByIdIn(replyIdList);
 		assertThat(foundReplyList, hasItems(reply1, reply2, reply3));
 		
-		logger.info(replyRepository.findAll().toString());
+		log.info(replyRepository.findAll().toString());
 	}
 	
 	@Test

@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.domain.Sort.Direction;
@@ -18,8 +16,6 @@ import com.raptoz.user.User;
 
 @Service("postService")
 public class PostService {
-	Logger logger = LoggerFactory.getLogger(getClass());
-	
 	@Autowired private PostRepository postRepository;
 	@Autowired private MongoTemplate mongoTemplate;
 	

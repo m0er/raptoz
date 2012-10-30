@@ -3,10 +3,10 @@ package com.raptoz.mypage;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.catalina.util.Base64;
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,19 +19,18 @@ import com.raptoz.user.User;
 import com.raptoz.user.UserService;
 import com.raptoz.util.RaptozUtil;
 
+@Slf4j
 @Controller
 @RequestMapping("/mypage")
 @SessionAttributes("loginUser")
 public class MyPageController {
-	Logger logger = LoggerFactory.getLogger(getClass());
-	
 	@Autowired MyPageService mypageService;
 	@Autowired UserService userService;
 	@Autowired TagService tagService;
 	
 	@RequestMapping("/{id}")
 	public String mypage(@PathVariable("id") ObjectId id, Model model) {
-		logger.info("사용자 아이디: " + id);
+		log.info("사용자 아이디: " + id);
 		User user = userService.getById(id);
 		
 		model.addAttribute("user", user);
@@ -41,7 +40,7 @@ public class MyPageController {
 
 	@RequestMapping(value="/{userId}/update", method=RequestMethod.POST)
 	public String updateUser(@PathVariable ObjectId userId, PersonalInfo personalInfo, Model model) {
-		logger.info("updateUser() called");
+		log.info("updateUser() called");
 		User user = mypageService.update(userId, personalInfo);
 		if (user != null) {
 			return "redirect:/mypage/" + user.getId();
@@ -52,7 +51,7 @@ public class MyPageController {
 	@RequestMapping("/{userId}/tag/add")
 	@ResponseBody
 	public Tag insertTag(@PathVariable("userId") ObjectId userId, Tag tag) {
-		logger.info("추가할 태그: " + tag);
+		log.info("추가할 태그: " + tag);
 		Tag insertedTag = tagService.upsert(tag);
 		
 		User user = userService.getById(userId);

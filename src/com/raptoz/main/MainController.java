@@ -2,24 +2,25 @@ package com.raptoz.main;
 
 import java.util.List;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpSession;
 
-import org.slf4j.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
-import org.springframework.ui.*;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.raptoz.message.Message;
 import com.raptoz.message.MessageService;
-import com.raptoz.search.*;
-import com.raptoz.user.*;
+import com.raptoz.search.Search;
+import com.raptoz.search.SearchService;
+import com.raptoz.user.User;
 
+@Slf4j
 @Controller
 @SessionAttributes("loginUser")
 public class MainController {
-	private Logger logger = LoggerFactory.getLogger(getClass());
-	
 	@Autowired SearchService searchService;
 	@Autowired MessageService messageService;
 	
@@ -32,7 +33,7 @@ public class MainController {
 	public String list(HttpSession session, Model model) {
 		User loginUser = (User) session.getAttribute("loginUser");
 		if (loginUser != null) {
-			logger.info("user in session: " + loginUser.toString());
+			log.info("user in session: " + loginUser.toString());
 			List<Message> notifications = messageService.getByReceiverId(loginUser.getId());
 			model.addAttribute("notifications", notifications);
 			model.addAttribute("notificationCount", notifications.size());

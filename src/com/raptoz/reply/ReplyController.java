@@ -2,9 +2,9 @@ package com.raptoz.reply;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +13,11 @@ import com.raptoz.post.Post;
 import com.raptoz.post.PostService;
 import com.raptoz.user.User;
 
+@Slf4j
 @Controller
 @RequestMapping("/reply")
 @SessionAttributes("loginUser")
 public class ReplyController {
-	private Logger logger = LoggerFactory.getLogger(getClass());
-	
 	@Autowired ReplyService replyService;
 	@Autowired PostService postService;
 	
@@ -27,7 +26,7 @@ public class ReplyController {
 	public Reply add(Reply reply, @ModelAttribute("loginUser") User user) {
 		reply = replyService.add(user, reply);
 		
-		logger.info("reply added: " + reply.toString());
+		log.info("reply added: " + reply.toString());
 		
 		updatePost(reply);
 		
@@ -39,7 +38,7 @@ public class ReplyController {
 	public Reply update(Reply reply) {
 		Reply origin = replyService.get(reply.getId());
 		
-		logger.info("original reply: " + origin.toString());
+		log.info("original reply: " + origin.toString());
 		
 		origin.setContent(reply.getContent());
 		replyService.update(origin);
