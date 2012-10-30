@@ -35,7 +35,7 @@
 							<li><a data-toggle="modal" href="#signupForm">Sign up</a></li>
 						</c:when>
 						<c:otherwise>
-							<li id="inbox">
+							<li id="inbox" data-read-url="<c:url value="/message/read"/>">
 								<i class="icon-inbox"></i>
 								<c:if test="${not empty notificationCount and notificationCount > 0}">
 									<span class="badge badge-important notification">${notificationCount}</span>
@@ -51,20 +51,28 @@
 								<div class="arrow"></div>
 								<div class="popover-inner">
 									<h3 class="popover-title">Notification</h3>
-									<div class="popover-content">
+									<div class="popover-content row">
 										<c:forEach items="${notifications}" var="notification">
-											<article>
-												<c:choose>
-													<c:when test="${not empty notification.from.encodeProfileImage}">
-														<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="data:image/gif;base64,${notification.from.encodeProfileImage}"/>
-													</c:when>
-													<c:otherwise>
-														<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="<c:url value="/img/66x66.gif"/>"/>
-													</c:otherwise>
-												</c:choose>
-												<p class="notification-content">${notification.content}</p>
-												<abbr class="notification-timeago" title="${notification.sentString}"></abbr>
-											</article>
+										<article class="span4">
+											<div class="row">
+												<div class="span1">
+													<a class="thumbnail" href="#">
+														<c:choose>
+															<c:when test="${not empty notification.from.encodeProfileImage}">
+																<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="data:image/gif;base64,${notification.from.encodeProfileImage}"/>
+															</c:when>
+															<c:otherwise>
+																<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="<c:url value="/img/66x66.gif"/>"/>
+															</c:otherwise>
+														</c:choose>
+													</a>
+												</div>
+												<div class="span3">
+													<p class="notification-content">${notification.content}</p>
+													<abbr class="notification-timeago" title="${notification.sentString}"></abbr>
+												</div>
+											</div>
+										</article>
 										</c:forEach>
 									</div>
 								</div>

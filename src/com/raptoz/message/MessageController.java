@@ -3,8 +3,6 @@ package com.raptoz.message;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +23,7 @@ public class MessageController {
 	
 	@RequestMapping("/send/{userId}")
 	@ResponseBody
-	public String send(@ModelAttribute("loginUser") User from, @PathVariable("userId") User to, Message message, HttpSession session) {
+	public String send(@ModelAttribute("loginUser") User from, @PathVariable("userId") User to, Message message) {
 		message.setSent(new Date());
 		message.setFrom(from);
 		message.setTo(to);
@@ -39,6 +37,18 @@ public class MessageController {
 	@ResponseBody
 	public List<Message> list(@PathVariable("receiverId") ObjectId receiverId) {
 		return messageService.getByReceiverId(receiverId);
+	}
+	
+	/**
+	 * TODO: 메시지의 ObjectId 리스트를 받아서 처리하게끔 수정하자
+	 * @param from
+	 * @return
+	 */
+	@RequestMapping("/read")
+	@ResponseBody
+	public String read(@ModelAttribute("loginUser") User from) {
+		messageService.readAll(from.getId());
+		return "success";
 	}
 	
 }

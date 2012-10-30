@@ -167,6 +167,12 @@ require(['bootstrap/load',
 			
 			$("#inbox").click(function(e) {
 				$("#notification").toggleClass("in");
+				
+				var $inbox = $(this);
+				
+				$.get($inbox.attr("data-read-url"), function(data) {
+					$inbox.find(".badge").css("visibility", "hidden");
+				});
 			});
 			
 			$(".notification-timeago").timeago();

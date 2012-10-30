@@ -5,6 +5,17 @@ textarea {resize: none;}
 .popover {z-index: 1030;}
 .visible {visibility: visible;}
 .not.visible {visibility: hidden;}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+.clearfix {
+}
 
 #signupForm .select2-input {width: 272px !important;}
 
@@ -13,8 +24,13 @@ textarea {resize: none;}
 
 #topNav .navbar-inner {border-radius: 0;}
 #topNav .nav [class^="icon-"] {margin-right: 2px;}
-#topNav #inbox {margin: 10px 15px; cursor: pointer;}
+#topNav #inbox {padding: 10px 15px; cursor: pointer;}
 #topNav #inbox .notification {position: relative; float: right; top: -7px; right: 7px; padding: 1px 4px 2px;}
+#topNav #notification {width: 300px !important; margin: 0;}
+#topNav #notification [class*=span] {margin: 0}
+#topNav #notification .popover-content article:nth-child(n+2) {margin-top: 5px; border-top: 1px solid #EEE;}
+#topNav #notification .popover-content .row {margin-left: 8px;}
+#topNav #notification .popover-content .notification-content {margin-left: 10px;}
 
 #leftNav {margin-left: 50px;}
 #leftNav, #leftNav .nav {background-color: #2C2C2C;}
