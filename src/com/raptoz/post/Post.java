@@ -2,6 +2,9 @@ package com.raptoz.post;
 
 import java.util.*;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,7 +12,9 @@ import com.raptoz.tag.Tag;
 import com.raptoz.user.User;
 import com.raptoz.util.RaptozUtil;
 
+@Data
 @Document
+@NoArgsConstructor
 public class Post {
 	private ObjectId id;
 	private String title;
@@ -23,79 +28,16 @@ public class Post {
 	private String tagPrint;
 	private List<ObjectId> replyIds;
 	
-	public Post() {
-	}
-	
 	public Post(String title, String content, User writer) {
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
 	}
-
-	public ObjectId getId() {
-		return id;
-	}
 	
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
-	
-	public String getTitle() {
-		return title;
-	}
-	
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	
-	public Date getCreated() {
-		return created;
-	}
-
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public User getWriter() {
-		return writer;
-	}
-
-	public void setWriter(User writer) {
-		this.writer = writer;
-	}
-
-	public Long getViewCount() {
-		return viewCount;
-	}
-
-	public void setViewCount(Long viewCount) {
-		this.viewCount = viewCount;
-	}
-
-	public List<Tag> getTags() {
-		return tags;
-	}
-	
-	public void setTags(List<Tag> tags) {
-		this.tags = tags;
-	}
-
 	public List<ObjectId> getReplyIds() {
 		if (replyIds == null)
 			replyIds = new ArrayList<ObjectId>();
 		return replyIds;
-	}
-
-	public void setReplyIds(List<ObjectId> replyIds) {
-		this.replyIds = replyIds;
 	}
 	
 	public String getTagPrint() {

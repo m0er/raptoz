@@ -2,17 +2,18 @@ package com.raptoz.user;
 
 import java.util.*;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.bson.types.ObjectId;
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.raptoz.spring.jackson.ObjectIdSerializer;
 import com.raptoz.tag.Tag;
 import com.raptoz.util.RaptozUtil;
 
-@JsonAutoDetect
+@Data
 @Document
+@NoArgsConstructor
 public class User {
 	private ObjectId id;
 	private Date joined;
@@ -25,9 +26,6 @@ public class User {
 	@SuppressWarnings("unused")
 	private String tagPrint;
 	
-	public User() {
-	}
-	
 	public User(String email, String password, String nickname, String encodeProfileImage) {
 		this.email = email;
 		this.password = password;
@@ -35,59 +33,6 @@ public class User {
 		this.encodeProfileImage = encodeProfileImage;
 	}
 	
-	@JsonSerialize(using=ObjectIdSerializer.class)
-	public ObjectId getId() {
-		return id;
-	}
-
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
-
-	public Date getJoined() {
-		return joined;
-	}
-
-	public void setJoined(Date joined) {
-		this.joined = joined;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-	
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public String getNickname() {
-		return nickname;
-	}
-	
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-	
-	public String getEncodeProfileImage() {
-		return encodeProfileImage;
-	}
-
-	public void setEncodeProfileImage(String encodeProfileImage) {
-		this.encodeProfileImage = encodeProfileImage;
-	}
-
-	public List<Tag> getTags() {
-		return tags;
-	}
-
 	public void setTags(List<Tag> tags) {
 		if (tags == null)
 			tags = new ArrayList<>();
