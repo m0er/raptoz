@@ -1203,7 +1203,10 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
             	    return;
                 }
             }
-
+            
+            if (search.val() == null)
+            	return;
+            
             if (search.val().length < opts.minimumInputLength && checkFormatter(opts.formatInputTooShort, "formatInputTooShort")) {
                 render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
                 return;
@@ -2185,7 +2188,10 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
             	sideBorderPadding = getSideBorderPadding(this.search);
 
             minimumWidth = measureTextWidth(this.search) + 10;
-
+            
+            if (this.search.size() == 0)
+            	return;
+            
             left = this.search.offset().left;
 
             maxWidth = this.selection.width();
