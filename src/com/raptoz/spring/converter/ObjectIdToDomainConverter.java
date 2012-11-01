@@ -8,31 +8,36 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.ConditionalGenericConverter;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.raptoz.user.User;
 import com.raptoz.user.UserRepository;
 
-public class ObjectIdToUserConverter implements ConditionalGenericConverter {
+public class ObjectIdToDomainConverter implements ConditionalGenericConverter {
 	@Autowired UserRepository userRepository;
+	@Autowired MongoTemplate mongoTemplate;
 	
 	@Override
 	public Set<ConvertiblePair> getConvertibleTypes() {
-		return Collections.singleton(new ConvertiblePair(String.class, User.class));
+		return Collections.singleton(new ConvertiblePair(String.class, Object.class));
 	}
 
 	@Override
 	public Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType) {
-		return userRepository.findOne(ObjectId.massageToObjectId(source));
+		ObjectId id = ObjectId.massageToObjectId(source);
+		return mongoTemplate.findOne(Query.query(Criteria.where("id").is(id)), targetType.getType());
 	}
 
 	@Override
 	public boolean matches(TypeDescriptor sourceType, TypeDescriptor targetType) {
 		Annotation pathVariable = targetType.getAnnotation(PathVariable.class);
 		
-		if (pathVariable != null && targetType.getType().isAnnotationPresent(Document.class))
+		if (pathVariable != null && targetType.getType().isAnnotationPresent(Document.class)) {
 			return true;
+		}
 		
 		return false;
 	}

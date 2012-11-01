@@ -36,7 +36,7 @@
 					<constructor-arg ref="conversionService"/>
 				</bean>
 				-->
-				<bean class="com.raptoz.spring.converter.ObjectIdToUserConverter"/>
+				<bean class="com.raptoz.spring.converter.ObjectIdToDomainConverter"/>
 			</set>
 		</property>
 	</bean>

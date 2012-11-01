@@ -16,12 +16,12 @@ import com.raptoz.user.User;
 public class MessageController {
 	@Autowired private MessageService messageService;
 	
-	@RequestMapping("/send/{userId}")
+	@RequestMapping("/send/{toUser}")
 	@ResponseBody
-	public String send(@ModelAttribute("loginUser") User from, @PathVariable("userId") User to, Message message) {
+	public String send(@ModelAttribute("loginUser") User from, @PathVariable User toUser, Message message) {
 		message.setSent(new Date());
 		message.setFrom(from);
-		message.setTo(to);
+		message.setTo(toUser);
 		
 		messageService.send(message);
 		
