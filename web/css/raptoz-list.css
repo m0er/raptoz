@@ -5,19 +5,10 @@ textarea {resize: none;}
 .popover {z-index: 1030;}
 .visible {visibility: visible;}
 .not.visible {visibility: hidden;}
-.clearfix:after {
-    clear: both;
-    content: ".";
-    display: block;
-    font-size: 0;
-    height: 0;
-    line-height: 0;
-    visibility: hidden;
-}
-.clearfix {
-}
 
-#signupForm .select2-input {width: 272px !important;}
+/* Select2 placeholder fix */
+#signupForm .select2-input,
+#writePostForm .select2-input {width: 272px !important;}
 
 #users .select2-container,
 #posts .select2-container {width: 100% !important;}
@@ -28,6 +19,7 @@ textarea {resize: none;}
 #topNav #inbox .notification {position: relative; float: right; top: -7px; right: 7px; padding: 1px 4px 2px;}
 #topNav #notification {width: 300px !important; margin: 0;}
 #topNav #notification [class*=span] {margin: 0}
+#topNav #notification abbr[title] {font-size: 0.8em;}
 #topNav #notification .popover-content article:nth-child(n+2) {margin-top: 5px; border-top: 1px solid #EEE;}
 #topNav #notification .popover-content .row {margin-left: 8px;}
 #topNav #notification .popover-content .notification-content {margin-left: 10px;}

@@ -126,7 +126,7 @@ require(['bootstrap/load',
 			tagInput: false
 		});
 		
-		$("#tag").select2({
+		$("#signupTag, #writePostTag").select2({
 			tags: [],
 			placeholder: "Input your interests",
 			minimumInputLength: 1,

@@ -69,7 +69,7 @@
 												</div>
 												<div class="span3">
 													<p class="notification-content">${notification.content}</p>
-													<abbr class="notification-timeago" title="${notification.sentString}"></abbr>
+													<abbr class="notification-timeago pull-right" title="${notification.sentString}"></abbr>
 												</div>
 											</div>
 										</article>
@@ -137,7 +137,7 @@
 						<div class="control-group">
 							<label class="control-label" for="tag">Interests</label>
 							<div class="controls">
-								<input type="text" id="tag" name="tags" style="width:285px;" placeholder="Input your interests"/>
+								<input type="text" id="signupTag" name="tags" style="width:285px;" placeholder="Input your interests"/>
 							</div>
 						</div>
 					</fieldset>
@@ -178,7 +178,7 @@
 				<div class="control-group">
 					<label class="control-label" for="tag">Tag</label>
 					<div class="controls">
-						<input type="text" class="input-xlarge" id="tag" name="tags" style="width:285px;"/>
+						<input type="text" class="input-xlarge" id="writePostTag" name="tags" style="width:285px;"/>
 					</div>
 				</div>
 			</fieldset>
