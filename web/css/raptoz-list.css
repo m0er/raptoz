@@ -22,7 +22,8 @@ textarea {resize: none;}
 #topNav #notification abbr[title] {font-size: 0.8em;}
 #topNav #notification .popover-content article:nth-child(n+2) {margin-top: 5px; border-top: 1px solid #EEE;}
 #topNav #notification .popover-content .row {margin-left: 8px;}
-#topNav #notification .popover-content .notification-content {margin-left: 10px;}
+#topNav #notification .popover-content .row .span3 {height: 60px;}
+#topNav #notification .popover-content .notification-content {margin-left: 10px; height: 3em;}
 
 #leftNav {margin-left: 50px;}
 #leftNav, #leftNav .nav {background-color: #2C2C2C;}
