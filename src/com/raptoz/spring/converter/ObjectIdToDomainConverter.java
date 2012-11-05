@@ -14,11 +14,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.raptoz.user.UserRepository;
-
 public class ObjectIdToDomainConverter implements ConditionalGenericConverter {
-	@Autowired UserRepository userRepository;
-	@Autowired MongoTemplate mongoTemplate;
+	@Autowired private MongoTemplate mongoTemplate;
 	
 	@Override
 	public Set<ConvertiblePair> getConvertibleTypes() {
