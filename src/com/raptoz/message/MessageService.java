@@ -1,5 +1,6 @@
 package com.raptoz.message;
 
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MessageService {
-	@Autowired MessageRepository messageRepository;
-	@Autowired MongoTemplate mongoTemplate;
+	@Autowired private MessageRepository messageRepository;
+	@Autowired private MongoTemplate mongoTemplate;
 	
 	public void send(Message message) {
 		messageRepository.save(message);
@@ -26,7 +27,10 @@ public class MessageService {
 	}
 
 	public void readAll(ObjectId id) {
-		mongoTemplate.updateMulti(Query.query(Criteria.where("to.id").is(id).andOperator(Criteria.where("read").is(false))), Update.update("read", true), Message.class);
+		mongoTemplate.updateMulti(
+				Query.query(Criteria.where("to.id").is(id).andOperator(Criteria.where("read").is(false))),
+				Update.update("read", true).set("received", new Date()),
+				Message.class);
 	}
 	
 }

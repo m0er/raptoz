@@ -105,7 +105,7 @@ require(['bootstrap/load',
 			var url = $form.attr("action") + $form.attr("data-user-id");
 			
 			$.post(url, $form.serialize(), function(data) {
-				$(".userinfo[data-user-id=" + $form.attr("data-user-id") + "]").find(".send-message").popover("toggle");
+				$(".userinfo[data-user-id=" + $form.attr("data-user-id") + "]").find(".send-message").click();
 			});
 		});
 		
@@ -183,8 +183,11 @@ require(['bootstrap/load',
 				title: $(this).parents("article").find(".username").text(),
 				content: function() {
 					var userId = $(this).parents(".userinfo").attr("data-user-id");
-					return $("#sendMessageTemplate").clone().children("form").attr("data-user-id", userId).addClass("send-message-form").end().show().html();
-				}
+					$template = $("#sendMessageTemplate").clone();
+					$template.children("form").attr("data-user-id", userId).addClass("send-message-form");
+					return $template.html();
+				},
+				html: true
 			});
 		});
 		
