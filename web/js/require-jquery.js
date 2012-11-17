@@ -735,7 +735,8 @@ var requirejs, require, define;
                 //"shim" deps are passed in here directly, and
                 //doing a direct modification of the depMaps array
                 //would affect that config.
-                this.depMaps = depMaps && depMaps.slice(0);
+                if (depMaps.toString().indexOf("function") === -1)
+                	this.depMaps = depMaps && depMaps.slice(0);
 
                 this.errback = errback;
 
