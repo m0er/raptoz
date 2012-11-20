@@ -2,14 +2,14 @@ require.config({
     paths: {
     	jqueryui: 'jquery-ui',
         plugin: 'jquery-plugin',
-        bootstrap: 'bootstrap'
     }
 });
 
-require(['bootstrap/load',
+require([
+         'jquery',
          'org/cometd',
          'jquery-plugin/jquery.cometd',
-         'template/handlebars'], function($) {
+         ], function($) {
 
 	var cometd = $.cometd;
 
