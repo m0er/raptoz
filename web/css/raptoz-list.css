@@ -56,7 +56,6 @@ textarea {resize: none;}
 #posts .post footer .post-writer {float: left; background-color: #F2F0F0; width: 100%; padding: 7px 10px; margin: 0 -10px;}
 #posts .post footer .post-writer a:first-child:HOVER {text-decoration: none;}
 
-#posts .modal-post {top: 40%;}
 #posts .modal-post .modal-header {min-height: 50px; padding: 15px; border: none;}
 #posts .modal-post .modal-header .post-content {float: left; margin: 10px 0; width: 100%;}
 #posts .modal-post .profile-image {float: left; margin-right: 10px; width: 50px; height: 50px;}
