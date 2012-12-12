@@ -146,17 +146,12 @@
 		Raptoz@2012
 	</footer>
 	 -->
-	<script type="text/javascript" >
-        ENV = {
-            CP_DEFAULT_CACHEABLE: true,
-            VIEW_PRESERVES_CONTEXT: true
-        };
-        
-        var PREFIX = '<c:url value="/"/>';
-    </script>
     <script id="entry-template" type="text/x-handlebars-template">
 		handlebars template content
 	</script>
+	<script type="text/javascript" >
+        var PREFIX = '<c:url value="/"/>';
+    </script>
     <script type="text/javascript" data-main="<c:url value="/js/raptoz-list"/>" src="<c:url value="/js/require-jquery.js"/>"></script>
 </body>
 </html>

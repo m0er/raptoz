@@ -106,11 +106,6 @@
 	</form>
 	
 	<script type="text/javascript" >
-        ENV = {
-            CP_DEFAULT_CACHEABLE: true,
-            VIEW_PRESERVES_CONTEXT: true
-        };
-        
         var PREFIX = '<c:url value="/"/>';
     </script>
 	<script type="text/javascript" data-main="<c:url value="/js/raptoz-mypage"/>" src="<c:url value="/js/require-jquery.js"/>"></script>

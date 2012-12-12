@@ -3,26 +3,22 @@ require.config({
         jqueryui: 'jquery-ui',
         plugin: 'jquery-plugin',
         bootstrap: 'bootstrap',
-        selector : 'selector'
+        selector : 'selector',
+        common: 'common'
     }
 });
 
 require(['bootstrap/load',
          'plugin/jquery.form',
-         'plugin/jquery.ez-bg-resize', 
          'plugin/jquery-raptoz-positioning', 
          'plugin/select2',
-         'template/handlebars'], function() {
+         'template/handlebars',
+         'common/raptoz-nav'], function() {
 	
 	$(document).ready(function() {
 		
 		$("body").ezBgResize({
 			img: getBackgroundImageUrl()
-		});
-		
-		$("#bgChange").click(function(e) {
-			e.preventDefault();
-			$("#jq_ez_bg img").attr("src", "/img/paper.jpg");
 		});
 		
 		$("#profileImage").change(function() {

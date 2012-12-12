@@ -3,28 +3,20 @@ require.config({
     	jqueryui: 'jquery-ui',
         plugin: 'jquery-plugin',
         bootstrap: 'bootstrap',
-        template: 'template'
+        template: 'template',
+        common: 'common'
     }
 });
 
 require(['bootstrap/load',
          'plugin/jquery.form',
-         'plugin/jquery.ez-bg-resize', 
          'plugin/jquery-raptoz-positioning', 
          'plugin/select2',
-         'plugin/jquery.timeago',
-         'template/handlebars'], function() {
+         'template/handlebars',
+         'common/raptoz-nav'], function() {
 	
 	$(document).ready(function() {
 		var enter = 13;
-		
-		$("body").ezBgResize({
-			img: getBackgroundImageUrl()
-		});
-		
-		// Bootstrap에서 Modal 폼이 backdrop 뒤에 있는 현상 수정
-		// 참고: http://jsfiddle.net/ATeaH/8/
-		$('.modal').appendTo($('body'));
 		
 		$(document).on("keypress", ".reply-input", function(e) {
 			if (e.keyCode == enter) {
@@ -146,38 +138,6 @@ require(['bootstrap/load',
 			}
 		});
 		
-		function getBackgroundImageUrl() {
-			var url = "";
-			if (parseInt(Math.random() * 2) == 1) {
-				url = "/img/living.social.street" + parseInt(Math.random() * 9 + 1);
-			} else {
-				url = "/img/twitter-cover" + parseInt(Math.random() * 9 + 1);
-			}
-			
-			return PREFIX + url + ".jpg";
-		}
-		
-		if ($("#inbox").size() > 0) {
-			$("#notification").position({
-				of: "#inbox",
-				at: "bottom",
-				my: "top",
-				collision: "none"
-			}).removeClass("not visible");
-			
-			$("#inbox").click(function(e) {
-				$("#notification").toggleClass("in");
-				
-				var $inbox = $(this);
-				
-				$.get($inbox.attr("data-read-url"), function(data) {
-					$inbox.find(".badge").css("visibility", "hidden");
-				});
-			});
-			
-			$(".notification-timeago").timeago();
-		}
-		
 		$("#users .userinfo .send-message").each(function() {
 			$(this).popover({
 				title: $(this).parents("article").find(".username").text(),
@@ -233,13 +193,6 @@ require(['bootstrap/load',
 		
 		$(".post footer a").click(function(e) {
 			e.stopPropagation();
-			return true;
-		});
-		
-		$("#search").submit(function() {
-			var term = $(this).children("input").val();
-			$(this).attr("action", $(this).attr("action") + "/" + term);
-			
 			return true;
 		});
 		
