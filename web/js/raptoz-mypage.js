@@ -7,10 +7,17 @@ require.config({
     }
 });
 
-require(['bootstrap/load', 'plugin/jquery.form', 'plugin/jquery.ez-bg-resize', 'plugin/select2'], function() {
+require(['bootstrap/load',
+         'plugin/jquery.form',
+         'plugin/jquery.ez-bg-resize', 
+         'plugin/jquery-raptoz-positioning', 
+         'plugin/select2',
+         'template/handlebars'], function() {
+	
 	$(document).ready(function() {
+		
 		$("body").ezBgResize({
-			img: "/img/living.social.street1.jpg"
+			img: getBackgroundImageUrl()
 		});
 		
 		$("#bgChange").click(function(e) {
@@ -73,4 +80,15 @@ require(['bootstrap/load', 'plugin/jquery.form', 'plugin/jquery.ez-bg-resize', '
 		
 		$("#tags").select2({tags:null});
 	});
+	
+	function getBackgroundImageUrl() {
+		var url = "";
+		if (parseInt(Math.random() * 2) == 1) {
+			url = "/img/living.social.street" + parseInt(Math.random() * 9 + 1);
+		} else {
+			url = "/img/twitter-cover" + parseInt(Math.random() * 9 + 1);
+		}
+		
+		return PREFIX + url + ".jpg";
+	}
 });
