@@ -45,6 +45,11 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
 	function pinterestPositioning($row, $contents, opts) {
 		$contents.eq(0).position({of: $row, at: "left top", collision: "none", my: "left top"});
 		
+		// 원하는 컬럼 수 보다 엘리먼트가 적을 때
+		if ($contents.size() < opts.column) {
+			opts.column = $contents.size();
+		}
+		
 		// 기준이 되는 컨텐츠 부터 배치
 		for (var i = 0; i < opts.column; i++)
 			$contents.eq(i + 1).position({of: $contents.eq(i), at: "right top", collision: "none", my: "left top", offset: opts.x});
