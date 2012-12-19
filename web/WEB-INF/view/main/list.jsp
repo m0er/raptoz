@@ -3,6 +3,7 @@
 <%@ taglib prefix="str" uri="http://jakarta.apache.org/taglibs/string-1.1" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="nav" tagdir="/WEB-INF/tags/nav" %>
+<%@ taglib prefix="template" tagdir="/WEB-INF/tags/template" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,6 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/overcast/jquery-ui.css"/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.css"/>"/>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/selector/select2.css"/>"/>
+	<link rel="stylesheet" type="text/css" href="<c:url value="/css/raptoz-base.css"/>"/>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/raptoz-list.css"/>"/>
 </head>
 <body>
@@ -89,58 +91,11 @@
 							</footer>
 						</article>
 					</c:forEach>
-					<section class="modal hide modal-post" id="postModalTemplate">
-					    <header class="modal-header">
-						    <img class="profile-image" src="<c:url value="/img/50x50.gif"/>" alt="questioner image" />
-						    <h3 class="post-title">title</h3>
-						    <article class="post-content">
-					    	</article>
-					    	<input class="post-taglist" type="text" name="tags"/>
-					    </header>
-					    <article class="modal-body">
-					    	<div class="modal-reply">
-						    	<c:if test="${sessionScope.loginUser ne null}">
-						    	<form action="<c:url value="/reply/add"/>" method="post">
-						    		<article class="reply reply-input">
-							    		<c:choose>
-											<c:when test="${not empty sessionScope.loginUser.encodeProfileImage}">
-												<img class="profile-image" alt="your profile image" src="data:image/gif;base64,${sessionScope.loginUser.encodeProfileImage}"/>
-											</c:when>
-											<c:otherwise>
-												<img class="profile-image" alt="your profile image" src="<c:url value="/img/66x66.gif"/>"/>
-											</c:otherwise>
-										</c:choose>
-							    		<textarea name="content" placeholder="Add your opinion..."></textarea>
-							    	</article>
-							    </form>
-						    	</c:if>
-					    	</div>
-				    	</article>
-					    <footer class="modal-footer">
-					    	<button class="btn btn-primary post-modify" type="submit">Modify</button>
-					    	<button class="btn btn-danger post-delete" type="submit">Delete</button>
-							<button class="btn" data-dismiss="modal">Cancel</button>
-					    </footer>
-				    </section>
-				</div>
-				<article class="reply hide" id="postModalReplyTemplate">
-					<c:if test="${sessionScope.loginUser ne null}">
-						<button class="close reply-delete">x</button>
-					</c:if>
-					<c:choose>
-						<c:when test="${not empty sessionScope.loginUser.encodeProfileImage}">
-							<img class="profile-image" alt="${sessionScope.loginUser.nickname}`s profile image" src="data:image/gif;base64,${user.encodeProfileImage}"/>
-						</c:when>
-						<c:otherwise>
-							<img class="profile-image" alt="anonymous profile image" src="<c:url value="/img/66x66.gif"/>"/>
-						</c:otherwise>
-					</c:choose>
-		    		<p class="replyer-nickname"><b>nickname</b></p>
-		    		<p class="reply-content">reply test</p>
-		    	</article>
 			</section>
 		</div>
 	</div>
+	<template:post/>
+	<template:reply/>
 	<!-- 
 	<footer>
 		Raptoz@2012

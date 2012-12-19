@@ -7,10 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.util.Base64;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.raptoz.post.Post;
+import com.raptoz.post.PostRepository;
 import com.raptoz.tag.Tag;
 import com.raptoz.user.User;
 import com.raptoz.user.UserRepository;
@@ -19,10 +23,11 @@ import com.raptoz.util.RaptozUtil;
 @Slf4j
 @Service("mypageService")
 public class MyPageService {
-	@Autowired UserRepository userRepository;
-	@Autowired MongoTemplate mongoTemplate;
+	@Autowired private UserRepository userRepository;
+	@Autowired private PostRepository postRepository;
+	@Autowired private MongoTemplate mongoTemplate;
 	
-	public User update(ObjectId userId, PersonalInfo infos) {
+	public User update(ObjectId userId, MyPage infos) {
 		User user = userRepository.findOne(userId);
 		String email = user.getEmail();
 		String password = infos.getCurPwd();
@@ -91,5 +96,16 @@ public class MyPageService {
 		User user = new User(email, password, nickname, imgUrl);
 		
 		return user;
+	}
+
+	public MyPageDto getInfo(ObjectId id) {
+		User user = userRepository.findOneSimpleById(id);
+		List<Post> posts = postRepository.findByWriterId(id, new PageRequest(0, 100, Direction.DESC, "created"));
+		
+		MyPageDto myPageDto = new MyPageDto();
+		myPageDto.setPosts(posts);
+		myPageDto.setUser(user);
+		
+		return myPageDto;
 	}
 }

@@ -13,7 +13,8 @@ require(['bootstrap/load',
          'plugin/jquery-raptoz-positioning', 
          'plugin/select2',
          'template/handlebars',
-         'common/raptoz-nav'], function() {
+         'common/raptoz-nav',
+         'common/raptoz-post'], function() {
 	
 	$(document).ready(function() {
 		
@@ -34,7 +35,7 @@ require(['bootstrap/load',
 		var error = "control-group error";
 		
 		$("#curPwd").keyup(function() {
-			var id = $("#infos h1").attr("id");
+			var id = $("#mypageInfo").attr("data-user-id");
 			var pwd = $(this);
 			
 			$.ajax({
@@ -46,7 +47,7 @@ require(['bootstrap/load',
 		});
 		
 		$("#confirmPwd").keyup(function() {
-			var id = $("#infos h1").attr("id");
+			var id = $("#mypageInfo").attr("data-user-id");
 			var newPwd = $("#newPwd");
 			var confirmPwd = $(this);
 			
@@ -65,24 +66,19 @@ require(['bootstrap/load',
 			});
 		});
 		
-//		$(document).on("click", "a.close", function() {
-//			var userId = $("#myInfos").find("h1").attr("id");
-//			var tagId = $(this).parent().find(".tagit-label").attr("id");
-//			$.ajax({
-//				url : userId + "/tag/" + tagId + "/delete"
-//			});
-//			$(this).parent().remove();
-//		});
+		$("#posts .row, .post").positioning({
+			column: 4,
+			wrapper: "#resultContainer"
+		});
 		
-		$("#tags").select2({tags:null});
 	});
 	
 	function getBackgroundImageUrl() {
 		var url = "";
 		if (parseInt(Math.random() * 2) == 1) {
-			url = "/img/living.social.street" + parseInt(Math.random() * 9 + 1);
+			url = "img/living.social.street" + parseInt(Math.random() * 9 + 1);
 		} else {
-			url = "/img/twitter-cover" + parseInt(Math.random() * 9 + 1);
+			url = "img/twitter-cover" + parseInt(Math.random() * 9 + 1);
 		}
 		
 		return PREFIX + url + ".jpg";

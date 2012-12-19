@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PersonalInfo {
+public class MyPage {
 	private String email;
 	private String nickname;
 	private String curPwd;

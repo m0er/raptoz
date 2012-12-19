@@ -30,16 +30,16 @@ public class MyPageController {
 	
 	@RequestMapping("/{id}")
 	public String mypage(@PathVariable("id") ObjectId id, Model model) {
-		log.info("사용자 아이디: " + id);
-		User user = userService.getById(id);
+		log.info("MyPageController.mypage(): {}", id);
 		
-		model.addAttribute("user", user);
+		MyPageDto myPageDto = mypageService.getInfo(id);
+		model.addAttribute("dto", myPageDto);
 		
-		return "mypage/form";
+		return "mypage/index";
 	}
 
 	@RequestMapping(value="/{userId}/update", method=RequestMethod.POST)
-	public String updateUser(@PathVariable ObjectId userId, PersonalInfo personalInfo, Model model) {
+	public String updateUser(@PathVariable ObjectId userId, MyPage personalInfo, Model model) {
 		log.info("updateUser() called");
 		User user = mypageService.update(userId, personalInfo);
 		if (user != null) {
@@ -51,7 +51,7 @@ public class MyPageController {
 	@RequestMapping("/{userId}/tag/add")
 	@ResponseBody
 	public Tag insertTag(@PathVariable("userId") ObjectId userId, Tag tag) {
-		log.info("추가할 태그: " + tag);
+		log.info("추가할 태그: {}", tag);
 		Tag insertedTag = tagService.upsert(tag);
 		
 		User user = userService.getById(userId);

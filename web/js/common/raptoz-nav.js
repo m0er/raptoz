@@ -1,7 +1,8 @@
 define(['jquery',
         'jqueryui/load',
         'plugin/jquery.timeago',
-        'plugin/jquery.ez-bg-resize'], function ($) {
+        'plugin/jquery.ez-bg-resize',
+        'plugin/select2'], function ($) {
 	
 $(document).ready(function() {
 	
@@ -23,6 +24,45 @@ $(document).ready(function() {
 		$(this).attr("action", $(this).attr("action") + "/" + term);
 		
 		return true;
+	});
+	
+	$("#signupForm, #writePostForm").modal({
+		show: false
+	});
+	
+	$("#signupTag, #writePostTag").select2({
+		tags: [],
+		placeholder: "Input your interests",
+		minimumInputLength: 1,
+		ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+			url: PREFIX + "tag/search",
+			dataType: 'json',
+			data: function (term, page) {
+				return {
+					 term: term, // search term
+					 limit: 10
+				};
+			},
+			results: function (data, page) {
+				console.log(data);
+				return {results: data};
+			},
+		}
+	});
+	
+	$("#writePost").click(function (e) {
+		e.preventDefault();
+		
+		var target = $(e.target).attr("href");
+		
+		var url = PREFIX + 'user/islogin';
+		$.get(url, function(data) {
+			if (data) {
+				$(target).modal("show");
+			} else {
+				alert("로그인을 해주세요.");
+			}
+		});
 	});
 	
 	if ($("#inbox").size() > 0) {
@@ -50,9 +90,9 @@ $(document).ready(function() {
 function getBackgroundImageUrl() {
 	var url = "";
 	if (parseInt(Math.random() * 2) == 1) {
-		url = "/img/living.social.street" + parseInt(Math.random() * 9 + 1);
+		url = "img/living.social.street" + parseInt(Math.random() * 9 + 1);
 	} else {
-		url = "/img/twitter-cover" + parseInt(Math.random() * 9 + 1);
+		url = "img/twitter-cover" + parseInt(Math.random() * 9 + 1);
 	}
 	
 	return PREFIX + url + ".jpg";

@@ -33,7 +33,7 @@ public class MainController {
 	public String list(HttpSession session, Model model) {
 		User loginUser = (User) session.getAttribute("loginUser");
 		if (loginUser != null) {
-			log.info("user in session: " + loginUser.toString());
+			log.info("user in session: {}", loginUser.toString());
 			List<Message> notifications = messageService.getByReceiverId(loginUser.getId());
 			model.addAttribute("notifications", notifications);
 			model.addAttribute("notificationCount", notifications.size());

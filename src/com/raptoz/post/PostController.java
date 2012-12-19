@@ -27,8 +27,9 @@ public class PostController {
 	}
 	
 	@RequestMapping("/modify")
-	public String modify(@ModelAttribute("loginUser") User user, Post post) {
-		Post originalPost = postService.get(post.getId());
+	public String modify(@ModelAttribute("loginUser") User user, Post post, String originalPostId) {
+		ObjectId id = new ObjectId(originalPostId);
+		Post originalPost = postService.get(id);
 		originalPost.setContent(post.getContent());
 		originalPost.setTitle(post.getTitle());
 		originalPost.setTags(post.getTags());
