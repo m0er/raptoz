@@ -91,6 +91,7 @@
 							</footer>
 						</article>
 					</c:forEach>
+				</div>
 			</section>
 		</div>
 	</div>

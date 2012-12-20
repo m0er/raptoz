@@ -10,7 +10,7 @@ require.config({
 
 require(['bootstrap/load',
          'plugin/jquery.form',
-         'plugin/jquery-raptoz-positioning', 
+         'plugin/jquery-raptoz-positioning',
          'template/handlebars',
          'common/raptoz-nav',
          'common/raptoz-post'], function() {

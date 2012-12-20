@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="nav" tagdir="/WEB-INF/tags/nav" %>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/template" %>
+<%@ taglib prefix="str" uri="http://jakarta.apache.org/taglibs/string-1.1" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
