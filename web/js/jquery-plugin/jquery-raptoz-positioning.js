@@ -45,27 +45,40 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
 	function pinterestPositioning($row, $contents, opts) {
 		$contents.eq(0).position({of: $row, at: "left top", collision: "none", my: "left top"});
 		
+		var heights = new Array();
 		// 기준이 되는 컨텐츠 부터 배치
 		for (var i = 0; i < opts.column; i++) {
-			$contents.eq(i + 1).position({
+			var height = $contents.eq(i + 1).position({
 				of: $contents.eq(i), 
 				at: "right top", 
 				collision: "none", 
 				my: "left top", 
 				offset: opts.x
-			});
+			}).outerHeight();
+			
+			heights[i] = height;
 		}
 		
 		// 나머지 컨텐츠를 기준 컨텐츠 밑으로 정렬시킴
 		for (var i = 0, j = opts.column; i < $contents.size() - opts.column; i++, j++) {
-			$contents.eq(j).position({
+			var height = $contents.eq(j).position({
 				of: $contents.eq(i), 
 				at: "bottom", 
 				collision: "none", 
 				my: "top", 
 				offset: opts.y
-			});
+			}).outerHeight();
+			
+			heights[j % opts.column] += height;
 		}
+		
+		var maxHeight = 0;
+		for (var i in heights) {
+			if (maxHeight < heights[i]) {
+				maxHeight = heights[i];
+			}
+		}
+		$("<div class='dummy-height'>").outerHeight(maxHeight).appendTo($row);
 	}
 	
 	$.fn.positioning.defaults = {
