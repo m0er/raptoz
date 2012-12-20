@@ -19,15 +19,15 @@ public class PostController {
 	@Autowired private TagService tagService;
 	
 	@RequestMapping("/write")
-	public String create(@ModelAttribute("loginUser") User user, Post post) {
+	public String create(@ModelAttribute("loginUser") User user, Post post, @RequestHeader("referer") String referer) {
 		postService.create(user, post);
 		tagService.upsert(post.getTags());
 		
-		return "redirect:/list";
+		return "redirect:" + referer;
 	}
 	
 	@RequestMapping("/modify")
-	public String modify(@ModelAttribute("loginUser") User user, Post post, String originalPostId) {
+	public String modify(@ModelAttribute("loginUser") User user, Post post, String originalPostId, @RequestHeader("referer") String referer) {
 		ObjectId id = new ObjectId(originalPostId);
 		Post originalPost = postService.get(id);
 		originalPost.setContent(post.getContent());
@@ -36,7 +36,7 @@ public class PostController {
 		
 		postService.create(user, originalPost);
 		
-		return "redirect:/list";
+		return "redirect:" + referer;
 	}
 	
 	@RequestMapping("/{id}")
