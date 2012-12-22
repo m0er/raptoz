@@ -84,7 +84,14 @@
 								</p>
 								<p class="post-writer">
 									<a href="<c:url value="/mypage/${post.writer.id}"/>">
-										<img src="<c:url value="/img/66x66.gif"/>" alt="${user.nickname}`s profile image" width="30" height="30"/>
+										<c:choose>
+											<c:when test="${not empty post.writer.encodeProfileImage}">
+												<img alt="${post.writer.nickname}`s profile image" src="data:image/gif;base64,${post.writer.encodeProfileImage}" width="30" height="30"/>
+											</c:when>
+											<c:otherwise>
+												<img alt="${post.writer.nickname}`s profile image" src="<c:url value="/img/66x66.gif"/>" width="30" height="30"/>
+											</c:otherwise>
+										</c:choose>
 									</a>
 									<a href="<c:url value="/mypage/${post.writer.id}"/>"><b>${post.writer.nickname}</b></a> attach to <a href="#"><b>toz</b></a>
 								</p>
