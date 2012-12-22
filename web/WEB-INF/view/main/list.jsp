@@ -84,7 +84,7 @@
 								</p>
 								<p class="post-writer">
 									<a href="<c:url value="/mypage/${post.writer.id}"/>">
-										<img alt="profile image" src="<c:url value="/img/66x66.gif"/>" alt="" width="30" height="30"/>
+										<img src="<c:url value="/img/66x66.gif"/>" alt="${user.nickname}`s profile image" width="30" height="30"/>
 									</a>
 									<a href="<c:url value="/mypage/${post.writer.id}"/>"><b>${post.writer.nickname}</b></a> attach to <a href="#"><b>toz</b></a>
 								</p>
