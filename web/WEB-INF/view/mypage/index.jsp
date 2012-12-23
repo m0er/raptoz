@@ -22,14 +22,14 @@
 	
 	<div class="container" id="resultContainer" style="visibility: hidden;">
 		<div class="row" id="mypageInfo" data-user-id="${dto.user.id}">
-			<form action="" class="well span7">
+			<form action="" class="well span7" id="profileForm">
 				<a class="profile-image">
 				<c:choose>
 					<c:when test="${not empty dto.user.encodeProfileImage}">
 						<img alt="${dto.user.nickname}`s profile image" src="data:image/gif;base64,${dto.user.encodeProfileImage}"/>
 					</c:when>
 					<c:otherwise>
-						<img alt="${dto.user.nickname}`s profile image" src="<c:url value="/img/66x66.gif"/>"/>
+						<img alt="${dto.user.nickname}`s profile image" src="" data-src="holder.js/66x66/social"/>
 					</c:otherwise>
 				</c:choose>
 				</a>
@@ -38,7 +38,7 @@
 					<label>Interests</label>
 					<input id="tags" class="taglist" type="text" name="tags" value="${dto.user.tagPrint}"/>
 					<c:if test="${dto.user.id eq sessionScope.loginUser.id}">
-						<button type="submit" class="btn">Edit Profile</button>
+						<a class="btn edit-profile-btn" href="<c:url value="/mypage/${dto.user.id}/form"/>">Edit Profile</a>
 					</c:if>
 				</fieldset>
 			</form>
@@ -69,7 +69,7 @@
 								</p>
 								<p class="post-writer">
 									<a href="<c:url value="/mypage/${post.writer.id}"/>">
-										<img alt="profile image" src="<c:url value="/img/66x66.gif"/>" alt="" width="30" height="30"/>
+										<img alt="profile image" src="" data-src="holder.js/30x30/social" alt="post writer's image" width="30" height="30"/>
 									</a>
 									<a href="<c:url value="/mypage/${post.writer.id}"/>"><b>${post.writer.nickname}</b></a> attach to <a href="#"><b>toz</b></a>
 								</p>
@@ -78,76 +78,8 @@
 					</c:forEach>
 				</div>
 			</section>
-			<%-- <table>
-				<tr>
-					<td class="profile">
-						<div>
-							<form id="imageForm" action="<c:url value="/mypage/${dto.user.id}/profileImage/update"/>" enctype="multipart/form-data" method="post">
-								<span class="btn btn-mini btn-primary fileinput-button">
-									<i class="icon-picture icon-white"></i>
-									<span>change</span>
-									<input type="file" class="input-file" name="profileImage" id="profileImage"/>
-								</span>
-							</form>
-						</div>
-					</td>
-					<td style="width:20px;"></td>
-					<td class="user-group">
-						<fieldset>
-							<div id="general" class="control-group">
-								<form action="<c:url value="/mypage/${dto.user.id}/update"/>" enctype="multipart/form-data" method="post">
-  		 							<label class="control-label">Email</label>
-	  								<input name="email" type="text" class="input-large" value="${dto.user.email}"> <br/>
-  					
-  									<label class="control-label">Nickname</label>
-	  								<input name="nickname" type="text" class="input-large" value="${dto.user.nickname}">
-									<button class="btn btn-small btn-primary">update setting</button> <br/>
-								</form>
-									
-								<label class="control-label">Password</label>
-								<a data-toggle="modal" href="#pwdForm"><button class="btn btn-small btn-primary" style="margin-top:4px;" >change password</button></a> <br/>
-								
-								<div style="margin-top:5px;">
-									<label class="control-label">Interests</label>
-									<input id="tags" class="taglist" type="text" name="tags" value="${dto.user.tagPrint}"/>
-								</div>
-    						</div>
-  						</fieldset>
-					</td>
-				</tr>
-  			</table> --%>
 		</div>
 	</div>
-	
-	<form action="<c:url value="/mypage/${dto.user.id}/update"/>" enctype="multipart/form-data" method="post" class="form-horizontal modal hide fade in" id="pwdForm">
-		<div class="modal-header">
-			<h3>Password</h3>
-		</div>
-		<fieldset class="modal-body">
-			<div class="control-group">
-				<label class="control-label" for="email">Current Password</label>
-				<div class="controls">
-					<input type="password" class="input-xlarge" id="curPwd" name="curPwd" placeholder="CurrentPassword"/>
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="password">New Password</label>
-				<div class="controls">
-					<input type="password" class="input-xlarge" id="newPwd" name="newPwd" placeholder="NewPassword"/>
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="password">Confirm</label>
-				<div class="controls">
-					<input type="password" class="input-xlarge" id="confirmPwd" name="confirmPwd" placeholder="Confirm"/>
-				</div>
-			</div>
-		</fieldset>
-		<div class="modal-footer">
-			<button class="btn btn-primary" type="submit">Ok</button>
-			<button class="btn" data-dismiss="modal">Cancel</button>
-		</div>
-	</form>
 	
 	<template:post/>
 	<template:reply/>

@@ -12,6 +12,7 @@ require(['bootstrap/load',
          'plugin/jquery.form',
          'plugin/jquery-raptoz-positioning',
          'template/handlebars',
+         'template/holder',
          'common/raptoz-nav',
          'common/raptoz-post'], function() {
 	

@@ -32,7 +32,7 @@
 										<img alt="${user.nickname}`s profile image" src="data:image/gif;base64,${user.encodeProfileImage}"/>
 									</c:when>
 									<c:otherwise>
-										<img alt="${user.nickname}`s profile image" src="<c:url value="/img/66x66.gif"/>"/>
+										<img alt="${user.nickname}`s profile image" src="" data-src="holder.js/66x66/social"/>
 									</c:otherwise>
 								</c:choose>
 							</a>
@@ -89,7 +89,7 @@
 												<img alt="${post.writer.nickname}`s profile image" src="data:image/gif;base64,${post.writer.encodeProfileImage}" width="30" height="30"/>
 											</c:when>
 											<c:otherwise>
-												<img alt="${post.writer.nickname}`s profile image" src="<c:url value="/img/66x66.gif"/>" width="30" height="30"/>
+												<img alt="${post.writer.nickname}`s profile image" src="" data-src="holder.js/30x30/social" width="30" height="30"/>
 											</c:otherwise>
 										</c:choose>
 									</a>

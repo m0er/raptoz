@@ -9,7 +9,7 @@
 			<img class="profile-image" alt="${sessionScope.loginUser.nickname}`s profile image" src="data:image/gif;base64,${user.encodeProfileImage}"/>
 		</c:when>
 		<c:otherwise>
-			<img class="profile-image" alt="anonymous profile image" src="<c:url value="/img/66x66.gif"/>"/>
+			<img class="profile-image" alt="anonymous profile image" src="" data-src="holder.js/50x50/social"/>
 		</c:otherwise>
 	</c:choose>
 	<p class="replyer-nickname"><b>nickname</b></p>

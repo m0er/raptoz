@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <section class="modal hide modal-post" id="postModalTemplate">
 	<header class="modal-header">
- 		<img class="profile-image" src="<c:url value="/img/50x50.gif"/>" alt="questioner image" />
+ 		<img class="profile-image" src="" data-src="holder.js/50x50/social" alt="questioner image" />
  		<h3 class="post-title">title</h3>
  		<article class="post-content">
 		</article>
@@ -18,7 +18,7 @@
 							<img class="profile-image" alt="your profile image" src="data:image/gif;base64,${sessionScope.loginUser.encodeProfileImage}"/>
 						</c:when>
 						<c:otherwise>
-							<img class="profile-image" alt="your profile image" src="<c:url value="/img/66x66.gif"/>"/>
+							<img class="profile-image" alt="your profile image" src="" data-src="holder.js/50x50/social"/>
 						</c:otherwise>
 					</c:choose>
 			    	<textarea name="content" placeholder="Add your opinion..."></textarea>
