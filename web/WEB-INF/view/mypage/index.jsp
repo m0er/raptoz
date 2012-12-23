@@ -26,10 +26,10 @@
 				<a class="profile-image">
 				<c:choose>
 					<c:when test="${not empty dto.user.encodeProfileImage}">
-						<img alt="${dto.user.nickname}`s profile image" src="data:image/gif;base64,${dto.user.encodeProfileImage}"/>
+						<img alt="${dto.user.nickname}`s profile image" src="data:image/gif;base64,${dto.user.encodeProfileImage}" width="160" height="160"/>
 					</c:when>
 					<c:otherwise>
-						<img alt="${dto.user.nickname}`s profile image" src="" data-src="holder.js/66x66/social"/>
+						<img alt="${dto.user.nickname}`s profile image" src="" data-src="holder.js/160x160/social" width="160" height="160"/>
 					</c:otherwise>
 				</c:choose>
 				</a>
@@ -69,7 +69,14 @@
 								</p>
 								<p class="post-writer">
 									<a href="<c:url value="/mypage/${post.writer.id}"/>">
-										<img alt="profile image" src="" data-src="holder.js/30x30/social" alt="post writer's image" width="30" height="30"/>
+										<c:choose>
+											<c:when test="${not empty post.writer.encodeProfileImage}">
+												<img alt="${post.writer.nickname}`s profile image" src="data:image/gif;base64,${post.writer.encodeProfileImage}" height="30" width="30"/>
+											</c:when>
+											<c:otherwise>
+												<img alt="${post.writer.nickname}`s profile image" src="" data-src="holder.js/30x30/social" height="30" width="30"/>
+											</c:otherwise>
+										</c:choose>
 									</a>
 									<a href="<c:url value="/mypage/${post.writer.id}"/>"><b>${post.writer.nickname}</b></a> attach to <a href="#"><b>toz</b></a>
 								</p>

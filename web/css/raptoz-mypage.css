@@ -9,7 +9,7 @@ textarea {resize: none;}
 /* Select2 placeholder fix */
 #mypageInfo .select2-container {width: 100% !important; margin-bottom: 10px;}
 
-#mypageInfo .profile-image {max-width: 140px; overflow: hidden; float: left; margin-right: 10px;}
+#mypageInfo .profile-image {max-width: 160px; overflow: hidden; float: left; margin-right: 10px;}
 #mypageInfo .profile-image img {height: 100%;}
 #mypageInfo .post-listing {width: 900px;}
 #mypageInfo form h1 {font-size: 30px;}
