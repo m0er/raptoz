@@ -1,5 +1,9 @@
 package com.raptoz.mypage;
 
+import java.util.List;
+
+import com.raptoz.tag.Tag;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +12,5 @@ import lombok.NoArgsConstructor;
 public class MyPage {
 	private String email;
 	private String nickname;
-	private String curPwd;
-	private String newPwd;
-	private String confirmPwd;
+	private List<Tag> tags;
 }

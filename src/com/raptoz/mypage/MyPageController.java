@@ -24,24 +24,35 @@ import com.raptoz.util.RaptozUtil;
 @RequestMapping("/mypage")
 @SessionAttributes("loginUser")
 public class MyPageController {
-	@Autowired MyPageService mypageService;
+	@Autowired MyPageService myPageService;
 	@Autowired UserService userService;
 	@Autowired TagService tagService;
 	
-	@RequestMapping("/{id}")
-	public String mypage(@PathVariable("id") ObjectId id, Model model) {
-		log.info("MyPageController.mypage(): {}", id);
+	@RequestMapping("/{userId}")
+	public String mypage(@PathVariable ObjectId userId, Model model) {
+		log.info("MyPageController.mypage(): {}", userId);
 		
-		MyPageDto myPageDto = mypageService.getInfo(id);
+		MyPageDto myPageDto = myPageService.getInfo(userId);
 		model.addAttribute("dto", myPageDto);
 		
 		return "mypage/index";
 	}
+	
+	@RequestMapping("/{userId}/form")
+	public String form(@PathVariable ObjectId userId, Model model) {
+		log.info("MyPageController.form(): {}", userId);
+		
+		MyPageDto myPageDto = myPageService.getInfo(userId);
+		model.addAttribute("dto", myPageDto);
+		
+		return "mypage/form";
+	}
 
 	@RequestMapping(value="/{userId}/update", method=RequestMethod.POST)
-	public String updateUser(@PathVariable ObjectId userId, MyPage personalInfo, Model model) {
-		log.info("updateUser() called");
-		User user = mypageService.update(userId, personalInfo);
+	public String updateUser(@PathVariable ObjectId userId, MyPage mypage, Model model) {
+		log.info("MyPageController.updateUser() called");
+		User user = myPageService.update(userId, mypage);
+		tagService.upsert(mypage.getTags());
 		if (user != null) {
 			return "redirect:/mypage/" + user.getId();
 		}
@@ -50,7 +61,7 @@ public class MyPageController {
 	
 	@RequestMapping("/{userId}/tag/add")
 	@ResponseBody
-	public Tag insertTag(@PathVariable("userId") ObjectId userId, Tag tag) {
+	public Tag insertTag(@PathVariable ObjectId userId, Tag tag) {
 		log.info("추가할 태그: {}", tag);
 		Tag insertedTag = tagService.upsert(tag);
 		
@@ -70,8 +81,8 @@ public class MyPageController {
 
 	@RequestMapping("/{userId}/tag/{tagId}/delete")
 	@ResponseBody
-	public boolean deleteTag(@PathVariable("userId") ObjectId userId, @PathVariable("tagId") ObjectId tagId) {
-		Tag tag = mypageService.removeTag(userId, tagId);
+	public boolean deleteTag(@PathVariable ObjectId userId, @PathVariable("tagId") ObjectId tagId) {
+		Tag tag = myPageService.removeTag(userId, tagId);
 		if (tag != null) {
 			tagService.delete(tag);
 			return true;
@@ -79,23 +90,27 @@ public class MyPageController {
 		return false;
 	}
 
-	@RequestMapping(value="/{id}/profileImage/update", method=RequestMethod.POST)
+	@RequestMapping(value="/{userId}/profileImage/update", method=RequestMethod.POST)
 	@ResponseBody
-	public String updateProfileImage(@PathVariable("id") ObjectId userId, @RequestParam("profileImage") MultipartFile profileImage) {
-		mypageService.updateProfileImage(userId, profileImage);
+	public String updateProfileImage(@PathVariable ObjectId userId, @RequestParam("profileImage") MultipartFile profileImage) {
+		myPageService.updateProfileImage(userId, profileImage);
 		return Base64.encode(RaptozUtil.getBytes(profileImage));
 	}
 	
-	@RequestMapping(value="/{id}/verify", method=RequestMethod.POST)
+	@RequestMapping(value="/{userId}/verify", method=RequestMethod.POST)
 	@ResponseBody
-	public boolean verifyPassword(@PathVariable("id") ObjectId userId, @RequestParam("pwd") String password) {
-		return mypageService.isVerify(userId, password);
+	public boolean verifyPassword(@PathVariable ObjectId userId, @RequestParam("password") String password) {
+		return myPageService.isVerify(userId, password);
 	}
 	
-	@RequestMapping(value="/{id}/verifyNP", method=RequestMethod.POST)
+	@RequestMapping(value="/{userId}/password/update", method=RequestMethod.POST)
 	@ResponseBody
-	public boolean verifyNewPassword(@PathVariable("id") ObjectId userId, 
-			@RequestParam("newPwd") String newPwd, @RequestParam("confirmPwd") String confirmPwd) {
-		return mypageService.isEqual(newPwd, confirmPwd);
+	public boolean updatePassword(@PathVariable ObjectId userId, @RequestParam String newPasswordAgain) {
+		User user = userService.getById(userId);
+		user.setPassword(newPasswordAgain);
+		
+		userService.updateUser(user);
+		return true;
 	}
+	
 }

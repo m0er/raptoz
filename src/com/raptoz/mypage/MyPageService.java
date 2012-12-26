@@ -27,30 +27,12 @@ public class MyPageService {
 	@Autowired private PostRepository postRepository;
 	@Autowired private MongoTemplate mongoTemplate;
 	
-	public User update(ObjectId userId, MyPage infos) {
+	public User update(ObjectId userId, MyPage mypage) {
 		User user = userRepository.findOne(userId);
-		String email = user.getEmail();
-		String password = infos.getCurPwd();
-		String newPwd = infos.getNewPwd();
-		String confirmPwd = infos.getConfirmPwd();
+		user.setNickname(mypage.getNickname());
+		user.setTags(mypage.getTags());
 		
-		String nickname = infos.getNickname();
-		String imgUrl = user.getEncodeProfileImage(); 
-		
-		if (password != null) {
-			if (userRepository.findOneByEmailAndPassword(email, password) == null) {
-				log.info("failed identify password");
-				return null;
-			}
-			
-			if (newPwd.trim().length() == 0 || confirmPwd.trim().length() == 0 || !isEqual(newPwd, confirmPwd)) {
-				log.info("failed apply new password");
-				return null;
-			}
-			userRepository.save(remakeUser(userId, email, newPwd, nickname, imgUrl));
-		} else {
-			userRepository.save(remakeUser(userId, email, user.getPassword(), nickname, imgUrl));	
-		}
+		userRepository.save(user);
 		
 		log.info("update success");
 		
@@ -91,13 +73,6 @@ public class MyPageService {
 		return pwd1.trim().equals(pwd2.trim());
 	}
 	
-	private User remakeUser(ObjectId userId, String email, String password, String nickname, String imgUrl) {
-		userRepository.delete(userId);
-		User user = new User(email, password, nickname, imgUrl);
-		
-		return user;
-	}
-
 	public MyPageDto getInfo(ObjectId id) {
 		User user = userRepository.findOneSimpleById(id);
 		List<Post> posts = postRepository.findByWriterId(id, new PageRequest(0, 100, Direction.DESC, "created"));

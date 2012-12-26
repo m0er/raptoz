@@ -14,6 +14,11 @@ textarea {resize: none;}
 #mypageInfo .post-listing {width: 900px;}
 #mypageInfo form h1 {font-size: 30px;}
 
+#mypageInfo form .thumbnails .span3 {width: 160px;}
+#mypageInfo form .thumbnails li {margin-bottom: 0px;}
+#mypageInfo form #changeProfileImageButton {margin-left: 10px;}
+#mypageForm .input-tags.controls {width: 285px;}
+
 #posts {margin-left: 20px;}
 #posts .row {margin-left: 0; width: inherit;}
 #posts .row .span3 {width: 200px;}

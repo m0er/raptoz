@@ -775,11 +775,25 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
             } else {
                 if (!("query" in opts)) {
                     if ("ajax" in opts) {
+                    	if ("tags" in opts) {
+                    		opts.initSelection = function (element, callback) {
+                                var data = [];
+                                $(splitVal(element.val(), opts.separator)).each(function () {
+                                    var id = this, text = this, tags=opts.tags;
+                                    if ($.isFunction(tags)) tags=tags();
+                                    $(tags).each(function() { if (equal(this.id, id)) { text = this.text; return false; } });
+                                    data.push({id: id, text: text});
+                                });
+
+                                callback(data);
+                            };
+                    	}
                         ajaxUrl = opts.element.data("ajax-url");
                         if (ajaxUrl && ajaxUrl.length > 0) {
                             opts.ajax.url = ajaxUrl;
                         }
                         opts.query = ajax(opts.ajax);
+                        $("body").trigger("select2-ajax-ready");
                     } else if ("data" in opts) {
                         opts.query = local(opts.data);
                     } else if ("tags" in opts) {
@@ -1305,7 +1319,7 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
             var index=this.highlight(),
                 highlighted=this.results.find(".select2-highlighted").not(".select2-disabled"),
                 data = highlighted.closest('.select2-result-selectable').data("select2-data"),
-                input = $(".select2-input:visible").val();
+                input = this.container.find(".select2-input").val();
             
             if (index == -1 && data == null && input != '') {
             	data = new Object();
