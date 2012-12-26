@@ -1,8 +1,5 @@
 package com.raptoz.mypage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.catalina.util.Base64;
@@ -13,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.raptoz.tag.Tag;
 import com.raptoz.tag.TagService;
 import com.raptoz.user.User;
 import com.raptoz.user.UserService;
@@ -59,37 +55,6 @@ public class MyPageController {
 		return null;
 	}
 	
-	@RequestMapping("/{userId}/tag/add")
-	@ResponseBody
-	public Tag insertTag(@PathVariable ObjectId userId, Tag tag) {
-		log.info("추가할 태그: {}", tag);
-		Tag insertedTag = tagService.upsert(tag);
-		
-		User user = userService.getById(userId);
-		
-		List<Tag> tags = user.getTags();
-		
-		if (tags == null) {
-			tags = new ArrayList<>();
-		}
-		
-		tags.add(insertedTag);
-		user.setTags(tags);
-		userService.updateUser(user);
-		return insertedTag;
-	}
-
-	@RequestMapping("/{userId}/tag/{tagId}/delete")
-	@ResponseBody
-	public boolean deleteTag(@PathVariable ObjectId userId, @PathVariable("tagId") ObjectId tagId) {
-		Tag tag = myPageService.removeTag(userId, tagId);
-		if (tag != null) {
-			tagService.delete(tag);
-			return true;
-		}
-		return false;
-	}
-
 	@RequestMapping(value="/{userId}/profileImage/update", method=RequestMethod.POST)
 	@ResponseBody
 	public String updateProfileImage(@PathVariable ObjectId userId, @RequestParam("profileImage") MultipartFile profileImage) {

@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.raptoz.post.Post;
 import com.raptoz.post.PostRepository;
-import com.raptoz.tag.Tag;
 import com.raptoz.user.User;
 import com.raptoz.user.UserRepository;
 import com.raptoz.util.RaptozUtil;
@@ -32,33 +31,13 @@ public class MyPageService {
 		user.setNickname(mypage.getNickname());
 		user.setTags(mypage.getTags());
 		
-		userRepository.save(user);
+		User savedUser = userRepository.save(user);
 		
-		log.info("update success");
+		log.info("user updated");
 		
-		return user;
+		return savedUser;
 	}
 
-	public Tag removeTag(ObjectId userId, ObjectId tagId) {
-		User user = userRepository.findOne(userId);
-		List<Tag> tags = user.getTags();
-		for (int i = 0, len = tags.size(); i < len; i++) {
-			if (tagId.equals(tags.get(i).getId())) {
-				Tag tag = tags.remove(i);
-				user.setTags(tags);
-				userRepository.save(user);
-				return tag;
-			}
-		}
-		/*
-		 * ToDo
-		 * 
-		 * 반복 제어문 -> mongoTemplate으로 수정  
-		 * 
-		 */
-		return null;
-	}
-	
 	public void updateProfileImage(ObjectId userId, MultipartFile profileImage) {
 		User user = userRepository.findOne(userId);
 		user.setEncodeProfileImage(Base64.encode(RaptozUtil.getBytes(profileImage)));
@@ -67,10 +46,6 @@ public class MyPageService {
 	
 	public boolean isVerify(ObjectId userId, String password) {
 		return !(userRepository.findOneByIdAndPassword(userId, password) == null);
-	}
-	
-	public boolean isEqual(String pwd1, String pwd2) {
-		return pwd1.trim().equals(pwd2.trim());
 	}
 	
 	public MyPageDto getInfo(ObjectId id) {
