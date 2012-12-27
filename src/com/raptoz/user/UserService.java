@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.raptoz.security.Role;
 import com.raptoz.util.RaptozUtil;
 
 @Slf4j
@@ -22,6 +23,7 @@ public class UserService {
 	
 	public void add(User user, MultipartFile profileImage) {
 		user.setJoined(new Date());
+		user.setRole(Role.COMMUNITY);
 		
 		String email = user.getEmail();
 		user.setNickname(getNickname(email));

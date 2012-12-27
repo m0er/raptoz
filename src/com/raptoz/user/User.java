@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.raptoz.security.Role;
 import com.raptoz.tag.Tag;
 import com.raptoz.util.RaptozUtil;
 
@@ -21,6 +22,7 @@ public class User {
 	private String password;
 	private String nickname;
 	private String encodeProfileImage;
+	private Role role;
 	
 	private List<Tag> tags;
 	@SuppressWarnings("unused")

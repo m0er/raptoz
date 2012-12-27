@@ -17,11 +17,24 @@
 	
 	<context:property-placeholder location="classpath:/com/raptoz/config/raptoz.properties"/>
 	
-	<mongo:mongo id="mongo"/>
+	<mongo:db-factory dbname="raptoz"/>
+	
+	<bean id="mappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+	
+	<mongo:mapping-converter mapping-context-ref="mappingContext">
+		<mongo:custom-converters>
+			<mongo:converter>
+				<bean class="com.raptoz.spring.data.converter.RoleTypeReaderConverter"/>
+			</mongo:converter>
+			<mongo:converter>
+				<bean class="com.raptoz.spring.data.converter.RoleTypeWriteConverter"/>
+			</mongo:converter>
+		</mongo:custom-converters>
+	</mongo:mapping-converter>
 	
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg ref="mongo"/>
-		<constructor-arg value="raptoz"/>
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+		<constructor-arg name="mongoConverter" ref="mappingConverter"/>
 	</bean>
 	
 	<mongo:repositories base-package="com.raptoz"/>
