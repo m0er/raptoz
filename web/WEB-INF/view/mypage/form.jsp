@@ -69,44 +69,6 @@
 					</div>
 			    </fieldset>
 		    </form>
-			<%-- <table>
-				<tr>
-					<td class="profile">
-						<div>
-							<form id="imageForm" action="<c:url value="/mypage/${dto.user.id}/profileImage/update"/>" enctype="multipart/form-data" method="post">
-								<span class="btn btn-mini btn-primary fileinput-button">
-									<i class="icon-picture icon-white"></i>
-									<span>change</span>
-									<input type="file" class="input-file" name="profileImage" id="profileImage"/>
-								</span>
-							</form>
-						</div>
-					</td>
-					<td style="width:20px;"></td>
-					<td class="user-group">
-						<fieldset>
-							<div id="general" class="control-group">
-								<form action="<c:url value="/mypage/${dto.user.id}/update"/>" enctype="multipart/form-data" method="post">
-  		 							<label class="control-label">Email</label>
-	  								<input name="email" type="text" class="input-large" value="${dto.user.email}"> <br/>
-  					
-  									<label class="control-label">Nickname</label>
-	  								<input name="nickname" type="text" class="input-large" value="${dto.user.nickname}">
-									<button class="btn btn-small btn-primary">update setting</button> <br/>
-								</form>
-									
-								<label class="control-label">Password</label>
-								<a data-toggle="modal" href="#pwdForm"><button class="btn btn-small btn-primary" style="margin-top:4px;" >change password</button></a> <br/>
-								
-								<div style="margin-top:5px;">
-									<label class="control-label">Interests</label>
-									<input id="tags" class="taglist" type="text" name="tags" value="${dto.user.tagPrint}"/>
-								</div>
-    						</div>
-  						</fieldset>
-					</td>
-				</tr>
-  			</table> --%>
 		</div>
 	</div>
 	
