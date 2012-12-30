@@ -335,7 +335,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.0.6</version>
+			<version>1.0.9</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
@@ -433,6 +433,10 @@
 				<exclusion>
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-beans</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
