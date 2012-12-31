@@ -24,9 +24,9 @@
 		아래와 같이 MongoMappingContext 빈을 두고 컨버터는 <bean> 으로 등록시켜야됨. 
 		그리고 MongoTemplate 아규먼트도 팩토리와 컨버터로 바꿔줘야 함.
 	-->
-	<bean id="mappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+	<!-- <bean id="mappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/> -->
 	
-	<mongo:mapping-converter mapping-context-ref="mappingContext">
+	<!-- <mongo:mapping-converter mapping-context-ref="mappingContext">
 		<mongo:custom-converters>
 			<mongo:converter>
 				<bean class="com.raptoz.spring.data.converter.RoleTypeReaderConverter"/>
@@ -35,11 +35,11 @@
 				<bean class="com.raptoz.spring.data.converter.RoleTypeWriteConverter"/>
 			</mongo:converter>
 		</mongo:custom-converters>
-	</mongo:mapping-converter>
+	</mongo:mapping-converter> -->
 	
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
-		<constructor-arg name="mongoConverter" ref="mappingConverter"/>
+		<!-- <constructor-arg name="mongoConverter" ref="mappingConverter"/> -->
 	</bean>
 	
 	<mongo:repositories base-package="com.raptoz"/>

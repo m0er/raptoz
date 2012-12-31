@@ -25,6 +25,7 @@ public class User {
 	private Role role;
 	
 	private List<Tag> tags;
+	
 	@SuppressWarnings("unused")
 	private String tagPrint;
 	
@@ -50,6 +51,6 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", joined=" + joined + ", email=" + email
 				+ ", password=" + password + ", nickname=" + nickname
-				+ /* ", encodeProfileImage=" + encodeProfileImage + */ " ]";
+				+ ", role=" + role + " ]";
 	}
 }

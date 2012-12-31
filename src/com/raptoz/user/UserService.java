@@ -36,11 +36,11 @@ public class UserService {
 		User found = userRepository.findOneByEmailAndPassword(user.getEmail(), user.getPassword());
 		
 		if (found != null) {
-			log.info("로그인 성공!: " + found.toString());
+			log.info("로그인 성공!: {}", found.toString());
 			User loginUser = userRepository.findOneSimpleById(found.getId());
 			return loginUser;
 		} else {
-			log.info("사용자를 찾을 수 없습니다: " + user.toString());
+			log.info("사용자를 찾을 수 없습니다: {}", user.toString());
 			return null;
 		}
 	}
@@ -66,5 +66,13 @@ public class UserService {
 	public List<User> getRecent(final int limit) {
 		Pageable pageable = new PageRequest(0, limit, Direction.DESC, "joined");
 		return userRepository.findAllSimplePageable(pageable);
+	}
+
+	public User getByEmail(String email) {
+		return userRepository.findOneByEmail(email);
+	}
+
+	public List<User> getByRole(Role role) {
+		return userRepository.findSimpleByRole(role);
 	}
 }

@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+import com.raptoz.security.Role;
+
 public interface UserRepository extends MongoRepository<User, ObjectId> {
 
 	User findOneByEmailAndPassword(String email, String password);
@@ -26,5 +28,11 @@ public interface UserRepository extends MongoRepository<User, ObjectId> {
 	
 	@Query(value = "{}", fields = "{password: 0}")
 	List<User> findAllSimplePageable(Pageable pageable);
+	
+	@Query(value = "{}", fields = "{password: 0}")
+	User findOneByEmail(String email);
+	
+	@Query(value = "{ 'role' : ?0 }", fields = "{password: 0}")
+	List<User> findSimpleByRole(Role role);
 	
 }
