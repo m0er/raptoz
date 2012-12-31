@@ -1,11 +1,5 @@
 @CHARSET "UTF-8";
 
-body {padding-top: 70px;}
-textarea {resize: none;}
-.popover {z-index: 1030;}
-.visible {visibility: visible;}
-.not.visible {visibility: hidden;}
-
 /* Select2 placeholder fix */
 #mypageInfo .select2-container {width: 100% !important; margin-bottom: 10px;}
 
