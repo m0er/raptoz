@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import com.raptoz.spring.security.RaptozUserDetails;
 import com.raptoz.user.User;
 
+/**
+ * 스프링 시큐리티와 연동해 현재 사용자 정보를 가져오기 위해 사용한다.
+ * 
+ * @author mOer
+ *
+ */
 @Service
 public class SecurityService {
 	

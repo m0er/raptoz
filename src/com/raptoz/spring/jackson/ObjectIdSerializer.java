@@ -10,6 +10,12 @@ import org.codehaus.jackson.map.SerializerProvider;
 
 import com.raptoz.spring.annotation.ServletComponent;
 
+/**
+ * {@link org.bson.types.ObjectId}를 객체가 아닌 String 타입으로 변환하기 위한 시리얼라이저.
+ * 
+ * @author mOer
+ *
+ */
 @ServletComponent
 public class ObjectIdSerializer extends JsonSerializer<ObjectId> {
 	

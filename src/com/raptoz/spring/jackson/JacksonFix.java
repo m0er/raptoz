@@ -12,10 +12,16 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import com.raptoz.spring.annotation.ServletComponent;
 
+/**
+ * 디폴트로 등록되는 MappingJackson은 커스텀 ObjectMapper 객체를 등록하지 않는다. 따라서 수동으로 등록해줘야 함.  
+ * 
+ * @author mOer
+ *
+ */
 @ServletComponent
 public class JacksonFix {
 	@Autowired RequestMappingHandlerAdapter requestMappingHandlerAdapter;
-	@Autowired private CustomObjectMapper objectMapper;
+	@Autowired CustomObjectMapper objectMapper;
 
 	@PostConstruct
 	public void init() {

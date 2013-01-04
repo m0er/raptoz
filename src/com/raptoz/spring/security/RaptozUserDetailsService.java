@@ -5,6 +5,11 @@ import org.springframework.security.core.userdetails.*;
 
 import com.raptoz.user.UserRepository;
 
+/**
+ * 스프링 시큐리티에서 인증받기 위한 서비스.
+ * @author moer
+ *
+ */
 public class RaptozUserDetailsService implements UserDetailsService {
 	@Autowired private UserRepository userRepository;
 

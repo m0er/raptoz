@@ -6,6 +6,12 @@ import org.codehaus.jackson.map.ser.CustomSerializerFactory;
 
 import com.raptoz.spring.annotation.ServletComponent;
 
+/**
+ * MappingJackson에 커스텀 시리얼라이저(일종의 컨터버)를 등록하기 위해 사용한다.
+ * 
+ * @author mOer
+ *
+ */
 @ServletComponent
 public class CustomObjectMapper extends ObjectMapper {
 	

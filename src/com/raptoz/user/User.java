@@ -28,7 +28,7 @@ public class User {
 	private List<Tag> tags;
 	
 	public enum Status {
-		ACTIVE, INACTIVE, DEACTIVATED
+		ACTIVE, INACTIVE, DEACTIVATED, LOCKED
 	}
 	
 	@SuppressWarnings("unused")

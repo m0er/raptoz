@@ -22,7 +22,7 @@ public class UserService {
 	
 	public void add(User user, MultipartFile profileImage) {
 		user.setJoined(new Date());
-		user.setRoles(Arrays.asList(Role.COMMUNITY, Role.USER));
+		user.setRoles(Arrays.asList(Role.USER));
 		user.setStatus(User.Status.ACTIVE);
 		
 		String email = user.getEmail();

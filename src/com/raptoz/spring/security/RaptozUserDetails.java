@@ -12,6 +12,11 @@ import com.raptoz.security.Role;
 import com.raptoz.user.User;
 import com.raptoz.user.User.Status;
 
+/**
+ * 스프링 시큐리티에서 인증된 사용자의 principal을 나타낸다.
+ * @author mOer
+ *
+ */
 @Data
 @SuppressWarnings("serial")
 public class RaptozUserDetails implements UserDetails {
@@ -23,12 +28,7 @@ public class RaptozUserDetails implements UserDetails {
 		this.authorities = getGrantedAuthorities(getRoles(user.getRoles()));
 	}
 
-	/**
-	 * Converts a numerical role to an equivalent list of roles
-	 * @param role the numerical role
-	 * @return list of roles as as a list of {@link String}
-	 */
-	public List<String> getRoles(List<Role> roles) {
+	private List<String> getRoles(List<Role> roles) {
 		List<String> roleStrings = new ArrayList<String>();
 		
 		for (Role role : roles) {
@@ -38,12 +38,7 @@ public class RaptozUserDetails implements UserDetails {
 		return roleStrings;
 	}
 
-	/**
-	 * Wraps {@link String} roles to {@link SimpleGrantedAuthority} objects
-	 * @param roles {@link String} of roles
-	 * @return list of granted authorities
-	 */
-	public List<GrantedAuthority> getGrantedAuthorities(List<String> roles) {
+	private List<GrantedAuthority> getGrantedAuthorities(List<String> roles) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
 		for (String role : roles) {
@@ -70,7 +65,7 @@ public class RaptozUserDetails implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return user.getStatus() != Status.LOCKED;
 	}
 
 	@Override
