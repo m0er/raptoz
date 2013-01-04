@@ -49,7 +49,7 @@
 							</ul>
 						</div>
 						<footer>
-							<c:if test="${sessionScope.loginUser ne null and user.id ne sessionScope.loginUser.id}">
+							<c:if test="${currentUser ne null and user.id ne currentUser.id}">
 								<button class="btn btn-small send-message">
 									<i class="icon-comment"></i>
 									메시지

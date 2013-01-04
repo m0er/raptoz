@@ -11,10 +11,11 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value="/css/raptoz-login-form.css"/>"/>
 </head>
 <body>
+	<h1>${message}</h1>
 	<div class="container" id="resultContainer">
 		<form class="well form-horizontal" id="loginForm" action="<c:url value="/user/login"/>" method="post">
 		    <fieldset>
-			    <h2>Raptoz Sign in</h2>
+			    <h2><a href="<c:url value="/list"/>">Raptoz</a> Sign in</h2>
 			    <input type="hidden" name="redirectUrl" value="${redirectUrl}">
 			    <div class="control-group ${not empty emailIncorrectMessage ?  "error" : ""}">
 					<label class="control-label" for="inputEmail">Email</label>

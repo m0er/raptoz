@@ -1,15 +1,21 @@
 package com.raptoz.mypage;
 
+import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.catalina.util.Base64;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.raptoz.message.Message;
+import com.raptoz.message.MessageService;
+import com.raptoz.security.SecurityService;
 import com.raptoz.tag.TagService;
 import com.raptoz.user.User;
 import com.raptoz.user.UserService;
@@ -18,11 +24,26 @@ import com.raptoz.util.RaptozUtil;
 @Slf4j
 @Controller
 @RequestMapping("/mypage")
-@SessionAttributes("loginUser")
 public class MyPageController {
-	@Autowired MyPageService myPageService;
-	@Autowired UserService userService;
 	@Autowired TagService tagService;
+	@Autowired UserService userService;
+	@Autowired MyPageService myPageService;
+	@Autowired MessageService messageService;
+	@Autowired SecurityService securityService;
+	
+	@ModelAttribute("notifications")
+	public List<Message> notifications() {
+		if (securityService.isAuthenticated()) {
+			return messageService.getByReceiverId(securityService.getCurrentUser().getId());
+		}
+		
+		return null;
+	}
+	
+	@ModelAttribute("currentUser")
+	public User currentUser() {
+		return securityService.getCurrentUser();
+	}
 	
 	@RequestMapping("/{userId}")
 	public String mypage(@PathVariable ObjectId userId, Model model) {
@@ -34,8 +55,9 @@ public class MyPageController {
 		return "mypage/index";
 	}
 	
+	@PreAuthorize("#currentUser.id.toString() == #userId.toString()")
 	@RequestMapping("/{userId}/form")
-	public String form(@PathVariable ObjectId userId, Model model) {
+	public String form(@PathVariable ObjectId userId, @ModelAttribute("currentUser") User currentUser, Model model) {
 		log.info("MyPageController.form(): {}", userId);
 		
 		MyPageDto myPageDto = myPageService.getInfo(userId);

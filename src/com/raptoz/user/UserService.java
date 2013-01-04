@@ -1,7 +1,6 @@
 package com.raptoz.user;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +22,8 @@ public class UserService {
 	
 	public void add(User user, MultipartFile profileImage) {
 		user.setJoined(new Date());
-		user.setRole(Role.COMMUNITY);
+		user.setRoles(Arrays.asList(Role.COMMUNITY, Role.USER));
+		user.setStatus(User.Status.ACTIVE);
 		
 		String email = user.getEmail();
 		user.setNickname(getNickname(email));

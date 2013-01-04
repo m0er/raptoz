@@ -37,7 +37,7 @@
 					<h1>${dto.user.nickname}</h1>
 					<label>Interests</label>
 					<input id="tags" class="taglist" type="text" name="tags" value="${dto.user.tagPrint}"/>
-					<c:if test="${dto.user.id eq sessionScope.loginUser.id}">
+					<c:if test="${dto.user.id eq currentUser.id}">
 						<a class="btn edit-profile-btn" href="<c:url value="/mypage/${dto.user.id}/form"/>">Edit Profile</a>
 					</c:if>
 				</fieldset>

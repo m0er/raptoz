@@ -7,34 +7,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import com.raptoz.security.SecurityService;
 import com.raptoz.tag.TagService;
-import com.raptoz.user.User;
 
 @Slf4j
 @Controller
 @RequestMapping("/post")
-@SessionAttributes("loginUser")
 public class PostController {
-	@Autowired private PostService postService;
-	@Autowired private TagService tagService;
+	@Autowired TagService tagService;
+	@Autowired PostService postService;
+	@Autowired SecurityService securityService;
 	
 	@RequestMapping("/write")
-	public String create(@ModelAttribute("loginUser") User user, Post post, @RequestHeader("referer") String referer) {
-		postService.create(user, post);
+	public String create(Post post, @RequestHeader("referer") String referer) {
+		postService.create(securityService.getCurrentUser(), post);
 		tagService.upsert(post.getTags());
 		
 		return "redirect:" + referer;
 	}
 	
 	@RequestMapping("/modify")
-	public String modify(@ModelAttribute("loginUser") User user, Post post, String originalPostId, @RequestHeader("referer") String referer) {
+	public String modify(Post post, String originalPostId, @RequestHeader("referer") String referer) {
 		ObjectId id = new ObjectId(originalPostId);
 		Post originalPost = postService.get(id);
 		originalPost.setContent(post.getContent());
 		originalPost.setTitle(post.getTitle());
 		originalPost.setTags(post.getTags());
 		
-		postService.create(user, originalPost);
+		postService.create(securityService.getCurrentUser(), originalPost);
 		
 		return "redirect:" + referer;
 	}

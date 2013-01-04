@@ -7,9 +7,10 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
-import org.springframework.stereotype.Component;
 
-@Component
+import com.raptoz.spring.annotation.ServletComponent;
+
+@ServletComponent
 public class ObjectIdSerializer extends JsonSerializer<ObjectId> {
 	
     @Override

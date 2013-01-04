@@ -2,7 +2,7 @@ package com.raptoz.security;
 
 
 public enum Role {
-	ADMIN("admin", 1), COMMUNITY("community", 2);
+	ADMIN("ROLE_ADMIN", 1), USER("ROLE_USER", 2), COMMUNITY("ROLE_COMMUNITY", 3);
 	
 	private String name;
 	private int value;

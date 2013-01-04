@@ -50,21 +50,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	$("#writePost").click(function (e) {
-		e.preventDefault();
-		
-		var target = $(e.target).attr("href");
-		
-		var url = PREFIX + 'user/islogin';
-		$.get(url, function(data) {
-			if (data) {
-				$(target).modal("show");
-			} else {
-				alert("로그인을 해주세요.");
-			}
-		});
-	});
-	
 	if ($("#inbox").size() > 0) {
 		$("#notification").position({
 			of: "#inbox",

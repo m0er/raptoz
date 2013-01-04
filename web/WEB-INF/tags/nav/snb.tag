@@ -1,14 +1,16 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authorize access="hasRole('ROLE_USER')">
 <nav class="pull-left well" id="leftNav">
 	<ul class="nav nav-list">
 		<li class="nav-header">
 			Post
 		</li>
-		<li><a id="writePost" href="#writePostForm">Write post</a></li>
+		<li><a href="#writePostForm" role="button" data-toggle="modal">Write post</a></li>
 	</ul>
 	
-    <form class="form-horizontal modal hide fade in" id="writePostForm" action="<c:url value="/post/write"/>" method="post">
+    <form class="form-horizontal modal hide fade in" id="writePostForm" action="<c:url value="/post/write"/>" method="post" role="dialog" aria-labelledby="writePostForm" aria-hidden="true">
 		<div class="modal-header">
 			<h3>Write post</h3>
 		</div>
@@ -38,3 +40,4 @@
 		</div>
 	</form>
 </nav>
+</sec:authorize>

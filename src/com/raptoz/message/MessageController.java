@@ -8,19 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import com.raptoz.security.SecurityService;
 import com.raptoz.user.User;
 
 @Controller
 @RequestMapping("/message")
-@SessionAttributes("loginUser")
 public class MessageController {
-	@Autowired private MessageService messageService;
+	@Autowired MessageService messageService;
+	@Autowired SecurityService securityService;
 	
 	@RequestMapping("/send/{toUser}")
 	@ResponseBody
-	public String send(@ModelAttribute("loginUser") User from, @PathVariable User toUser, Message message) {
+	public String send(@PathVariable User toUser, Message message) {
 		message.setSent(new Date());
-		message.setFrom(from);
+		message.setFrom(securityService.getCurrentUser());
 		message.setTo(toUser);
 		
 		messageService.send(message);
@@ -41,8 +42,8 @@ public class MessageController {
 	 */
 	@RequestMapping("/read")
 	@ResponseBody
-	public String read(@ModelAttribute("loginUser") User from) {
-		messageService.readAll(from.getId());
+	public String read() {
+		messageService.readAll(securityService.getCurrentUser().getId());
 		return "success";
 	}
 	

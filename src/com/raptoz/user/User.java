@@ -22,9 +22,14 @@ public class User {
 	private String password;
 	private String nickname;
 	private String encodeProfileImage;
-	private Role role;
+	private List<Role> roles;
+	private Status status;
 	
 	private List<Tag> tags;
+	
+	public enum Status {
+		ACTIVE, INACTIVE, DEACTIVATED
+	}
 	
 	@SuppressWarnings("unused")
 	private String tagPrint;
@@ -51,6 +56,6 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", joined=" + joined + ", email=" + email
 				+ ", password=" + password + ", nickname=" + nickname
-				+ ", role=" + role + " ]";
+				+ ", roles=" + roles + " ]";
 	}
 }

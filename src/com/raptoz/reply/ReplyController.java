@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.*;
 
 import com.raptoz.post.Post;
 import com.raptoz.post.PostService;
-import com.raptoz.user.User;
+import com.raptoz.security.SecurityService;
 
 @Slf4j
 @Controller
 @RequestMapping("/reply")
-@SessionAttributes("loginUser")
 public class ReplyController {
-	@Autowired ReplyService replyService;
 	@Autowired PostService postService;
+	@Autowired ReplyService replyService;
+	@Autowired SecurityService securityService;
 	
 	@RequestMapping("/add")
 	@ResponseBody
-	public Reply add(Reply reply, @ModelAttribute("loginUser") User user) {
-		reply = replyService.add(user, reply);
+	public Reply add(Reply reply) {
+		reply = replyService.add(securityService.getCurrentUser(), reply);
 		
 		log.info("reply added: " + reply.toString());
 		

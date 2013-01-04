@@ -2,10 +2,6 @@ package com.raptoz.main;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
-import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +11,28 @@ import com.raptoz.message.Message;
 import com.raptoz.message.MessageService;
 import com.raptoz.search.Search;
 import com.raptoz.search.SearchService;
+import com.raptoz.security.SecurityService;
 import com.raptoz.user.User;
 
-@Slf4j
 @Controller
-@SessionAttributes("loginUser")
 public class MainController {
 	@Autowired SearchService searchService;
 	@Autowired MessageService messageService;
+	@Autowired SecurityService securityService;
+	
+	@ModelAttribute("notifications")
+	public List<Message> notifications() {
+		if (securityService.isAuthenticated()) {
+			return messageService.getByReceiverId(securityService.getCurrentUser().getId());
+		}
+		
+		return null;
+	}
+	
+	@ModelAttribute("currentUser")
+	public User currentUser() {
+		return securityService.getCurrentUser();
+	}
 	
 	@RequestMapping("/index")
 	public String index() {
@@ -30,15 +40,7 @@ public class MainController {
 	}
 	
 	@RequestMapping("/list")
-	public String list(HttpSession session, Model model) {
-		User loginUser = (User) session.getAttribute("loginUser");
-		if (loginUser != null) {
-			log.info("user in session: {}", loginUser.toString());
-			List<Message> notifications = messageService.getByReceiverId(loginUser.getId());
-			model.addAttribute("notifications", notifications);
-			model.addAttribute("notificationCount", notifications.size());
-		}
-		
+	public String list(Model model) {
 		Search search = searchService.recent();
 		model.addAttribute("search", search);
 		
