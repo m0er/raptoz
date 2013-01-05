@@ -56,6 +56,11 @@ define(['jquery', 'jqueryui/load'], function (jQuery) {
 				offset: opts.x
 			}).outerHeight();
 			
+			// 컨텐츠가 하나만 있는 경우
+			if (height == null) {
+				height = $contents.eq(0).outerHeight();
+			}
+			
 			heights[i] = height;
 		}
 		
