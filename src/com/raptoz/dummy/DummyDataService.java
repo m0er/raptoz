@@ -8,8 +8,10 @@ import org.springframework.stereotype.*;
 
 import com.raptoz.post.*;
 import com.raptoz.reply.*;
+import com.raptoz.security.Role;
 import com.raptoz.tag.*;
 import com.raptoz.user.*;
+import com.raptoz.user.User.Status;
 
 @Service("dummyDataService")
 public class DummyDataService {
@@ -30,6 +32,8 @@ public class DummyDataService {
 		// create admin account
 		User dummyAdmin = new User("admin@raptoz.com", "test", "admin", "");
 		dummyAdmin.setJoined(new Date());
+		dummyAdmin.setStatus(Status.ACTIVE);
+		dummyAdmin.setRoles(Arrays.asList(Role.ADMIN, Role.USER));
 		userRepository.save(dummyAdmin);
 		
 		// save dummy tags
@@ -40,6 +44,8 @@ public class DummyDataService {
 			User user = new User("user" + count + "@raptoz.com", "test", "user" + count, "");
 			calendar.setTimeInMillis(System.currentTimeMillis() + random.nextInt(10000));
 			user.setJoined(calendar.getTime());
+			user.setStatus(Status.ACTIVE);
+			user.setRoles(Arrays.asList(Role.USER));
 			
 			Collections.shuffle(dummyTags);
 			
