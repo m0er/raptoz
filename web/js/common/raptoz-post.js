@@ -67,7 +67,7 @@ define(['jquery',
 		
 		$writePostForm.find("#title").val($section.find(".post-title").text());
 		$writePostForm.find("#content").val($section.find(".post-content").text());
-		$writePostForm.find("#tag").val($section.find("input.post-taglist").val());
+		$writePostForm.find("[name=tags]").val($section.find("input.post-taglist").val());
 		$writePostForm.append(getHiddenInput("originalPostId", $section.attr("id").replace("postModal", "")));
 		$writePostForm.attr("action", $writePostForm.attr("action").replace("write", "modify")).submit();
 	}).on("click", ".post-delete", function(e) {
@@ -157,7 +157,23 @@ define(['jquery',
 			template.title.attr("contenteditable", "true");
 			template.content.attr("contenteditable", "true");
 			template.tag.select2({
-				tags: []
+				tags: [],
+				placeholder: "Input your interests",
+				minimumInputLength: 1,
+				ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+					url: PREFIX + "tag/search",
+					dataType: 'json',
+					data: function (term, page) {
+						return {
+							 term: term, // search term
+							 limit: 10
+						};
+					},
+					results: function (data, page) {
+						console.log(data);
+						return {results: data};
+					},
+				}
 			});
 		});
 	}
