@@ -19,6 +19,7 @@
 		<intercept-url pattern="/user/login" access="permitAll" />
 		<intercept-url pattern="/user/login/form" access="permitAll" />
 		<intercept-url pattern="/user/logout" access="permitAll" />
+		<intercept-url pattern="/tag/**" access="permitAll"/>
 		<intercept-url pattern="/post/*" access="permitAll"/>
 		<intercept-url pattern="/post/**" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/reply/*" access="permitAll"/>
@@ -27,6 +28,7 @@
 		<intercept-url pattern="/mypage/*" access="permitAll" />
 		<intercept-url pattern="/mypage/**" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/test/**" access="permitAll"/>
 		<intercept-url pattern="/**" access="denyAll" />
 		
 		<form-login login-page="/user/login/form"
