@@ -25,8 +25,8 @@ define(['jquery',
 				
 				var $replyTemplate = $("#postModalReplyTemplate").clone().removeClass("hide");
 				$replyTemplate.attr("id", reply.idString).find("b").text(reply.writer.nickname).end()
-					.children("img").attr("src", getProfileImageIfExists(reply.writer)).end()
 					.children(":last").text(reply.content).attr("contenteditable", "true");
+				setProfileImageIfExists($replyTemplate.children("img"), reply.writer);
 				
 				$form.before($replyTemplate).find("textarea").val("").blur();
 			});
@@ -139,8 +139,8 @@ define(['jquery',
 	}
 	
 	function writePostModal(post, template) {
-		template.title.text(post.title).end()
-			.children("img").attr("src", getProfileImageIfExists(post.writer));
+		template.title.text(post.title);
+		setProfileImageIfExists(template.header.children("img"), post.writer);
 		template.content.text(post.content);
 		template.tag.val(post.tagPrint);
 		
@@ -181,8 +181,8 @@ define(['jquery',
 			$.each(data, function(index, reply) {
 				var $replyTemplate = $("#postModalReplyTemplate").clone().removeClass("hide");
 				$replyTemplate.attr("id", reply.idString).find("b").text(reply.writer.nickname).end()
-					.children("img").attr("src", getProfileImageIfExists(reply.writer)).end()
 					.children(":last").text(reply.content);
+				setProfileImageIfExists($replyTemplate.children("img"), reply.writer);
 				
 				isNotWriter(reply.writer.nickname, function() {
 					$replyTemplate.children(".close").remove();
@@ -202,7 +202,9 @@ define(['jquery',
 		});
 	}
 	
-	function getProfileImageIfExists(target) {
-		return target.encodeProfileImage == "" ? PREFIX + "img/50x50.gif" : "data:image/gif;base64," + target.encodeProfileImage;
+	function setProfileImageIfExists($img, target) {
+		if (target.encodeProfileImage != "") {
+			$img.attr("src", "data:image/gif;base64," + target.encodeProfileImage);
+		}
 	}
 });
