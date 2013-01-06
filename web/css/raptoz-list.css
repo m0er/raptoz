@@ -9,5 +9,6 @@
 #users .userface img {width: 66px; height: 66px;}
 #users .usernamex {text-align: center;}
 #users .usertag .reply-list li {display: block;}
+#users .userinfo .send-message {margin-right: 10px;}
 #users footer {background-color: #F2F0F0; float: left; padding: 5px 0; margin: 0; width: 100%; text-align: right;}
 #users footer a {margin-right: 10px;}

@@ -20,11 +20,12 @@ textarea {resize: none;}
 #topNav #inbox .notification {position: relative; float: right; top: -7px; right: 7px; padding: 1px 4px 2px;}
 #topNav #notification {width: 300px !important; margin: 0;}
 #topNav #notification [class*=span] {margin: 0}
-#topNav #notification abbr[title] {font-size: 0.8em;}
-#topNav #notification .popover-content article:nth-child(n+2) {margin-top: 5px; border-top: 1px solid #EEE;}
+#topNav #notification abbr[title] {font-size: 0.8em; border-bottom: none; cursor: default;}
+#topNav #notification .thumbnail img {width: 50px; height: 50px;}
+#topNav #notification .popover-content article:nth-child(n+2) {margin-top: 5px; padding-top: 5px; border-top: 1px solid #EEE;}
 #topNav #notification .popover-content .row {margin-left: 8px;}
 #topNav #notification .popover-content .row .span3 {height: 60px;}
-#topNav #notification .popover-content .notification-content {margin-left: 10px; height: 3em;}
+#topNav #notification .popover-content .notification-content {margin-left: 10px; margin-bottom: 0; height: 3em;}
 
 /* SNB */
 #leftNav {margin-left: 50px;}

@@ -48,14 +48,14 @@
 								</li>
 							</ul>
 						</div>
-						<footer>
-							<c:if test="${currentUser ne null and user.id ne currentUser.id}">
-								<button class="btn btn-small send-message">
-									<i class="icon-comment"></i>
-									메시지
-								</button>
-							</c:if>
-						</footer>
+						<c:if test="${currentUser ne null and user.id ne currentUser.id}">
+							<footer>
+									<button class="btn btn-small send-message">
+										<i class="icon-comment"></i>
+										메시지
+									</button>
+							</footer>
+						</c:if>
 					</article>
 				</c:forEach>
 				<section style="display: none;" id="sendMessageTemplate">

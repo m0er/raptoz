@@ -1,5 +1,6 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <nav class="navbar navbar-fixed-top" id="topNav">
 	<div class="navbar-inner">
@@ -23,8 +24,8 @@
 				<sec:authorize access="hasRole('ROLE_USER')">
 					<li id="inbox" data-read-url="<c:url value="/message/read"/>">
 						<i class="icon-inbox"></i>
-						<c:if test="${not empty notificationCount and notificationCount > 0}">
-							<span class="badge badge-important notification">${notificationCount}</span>
+						<c:if test="${fn:length(notifications) > 0}">
+							<span class="badge badge-important notification">${fn:length(notifications)}</span>
 						</c:if>
 					</li>
 					<li id="mypage" data-sessionuser-nickname="${currentUser.nickname}">
@@ -48,7 +49,7 @@
 														<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="data:image/gif;base64,${notification.from.encodeProfileImage}"/>
 													</c:when>
 													<c:otherwise>
-														<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="" data-src="holder.js/66x66/social"/>
+														<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="" data-src="holder.js/50x50/social"/>
 													</c:otherwise>
 												</c:choose>
 											</a>
