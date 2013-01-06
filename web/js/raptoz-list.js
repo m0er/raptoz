@@ -18,6 +18,17 @@ require(['bootstrap/load',
 	
 	$(document).ready(function() {
 		
+		$(document).on("click", ".send-message-form [type=submit]", function(e) {
+			e.preventDefault();
+			
+			var $form = $(this).parent();
+			var url = $form.attr("action") + $form.attr("data-user-id");
+			
+			$.post(url, $form.serialize(), function(data) {
+				$(".userinfo[data-user-id=" + $form.attr("data-user-id") + "]").find(".send-message").popover("hide");
+			});
+		});
+		
 		$("body").ezBgResize({
 			img: getBackgroundImageUrl()
 		});

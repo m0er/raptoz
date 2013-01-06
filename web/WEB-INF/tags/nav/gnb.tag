@@ -48,7 +48,7 @@
 														<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="data:image/gif;base64,${notification.from.encodeProfileImage}"/>
 													</c:when>
 													<c:otherwise>
-														<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="<c:url value="/img/66x66.gif"/>"/>
+														<img class="notification-profile-image" alt="${notification.from.nickname}`s profile image" src="" data-src="holder.js/66x66/social"/>
 													</c:otherwise>
 												</c:choose>
 											</a>
