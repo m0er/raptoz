@@ -8,7 +8,7 @@ require.config({
     }
 });
 
-require(['bootstrap/load',
+require(['bootstrap/bootstrap',
          'plugin/jquery.form',
          'plugin/select2',
          'template/handlebars',

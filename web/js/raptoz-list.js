@@ -9,7 +9,7 @@ require.config({
     }
 });
 
-require(['bootstrap/load',
+require(['bootstrap/bootstrap',
          'plugin/jquerypp',
          'plugin/jquery.form',
          'plugin/jquery-raptoz-positioning',

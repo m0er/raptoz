@@ -1,4 +1,4 @@
-define(['jquery', 'jqueryui/load'], function (jQuery) {
+define(['jquery', 'jqueryui/jquery-ui'], function (jQuery) {
 /*
  Copyright 2012 Igor Vaynberg
 
