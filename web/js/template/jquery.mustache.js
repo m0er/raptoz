@@ -19,6 +19,7 @@ See http://github.com/defunkt/mustache for more info.
     module.exports = factory; // CommonJS
   } else if (typeof define === "function" && define.amd) {
     define(factory); // AMD
+    root.Mustache = factory;
   } else {
     root.Mustache = factory; // <script>
   }
