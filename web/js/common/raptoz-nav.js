@@ -2,7 +2,8 @@ define(['jquery',
         'jqueryui/load',
         'plugin/jquery.timeago',
         'plugin/jquery.ez-bg-resize',
-        'plugin/select2'], function ($) {
+        'plugin/select2',
+        'template/jquery.mustache'], function ($) {
 	
 $(document).ready(function() {
 	

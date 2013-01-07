@@ -11,7 +11,6 @@ require.config({
 require(['bootstrap/load',
          'plugin/jquery.form',
          'plugin/jquery-raptoz-positioning',
-         'template/handlebars',
          'template/holder',
          'common/raptoz-nav',
          'common/raptoz-post'], function() {
@@ -61,6 +60,5 @@ require(['bootstrap/load',
 			wrapper: "#resultContainer"
 		});
 		
-		//console.log("handlebar contents: " + $("#entry-template").html());
 	});
 });
