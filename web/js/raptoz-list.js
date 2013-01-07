@@ -4,16 +4,19 @@ require.config({
         plugin: 'jquery-plugin',
         bootstrap: 'bootstrap',
         template: 'template',
+        external: 'external',
         common: 'common'
     }
 });
 
 require(['bootstrap/load',
+         'plugin/jquerypp',
          'plugin/jquery.form',
          'plugin/jquery-raptoz-positioning',
          'template/holder',
          'common/raptoz-nav',
-         'common/raptoz-post'], function() {
+         'common/raptoz-post',
+         'external/underscore'], function() {
 	
 	$(document).ready(function() {
 		
