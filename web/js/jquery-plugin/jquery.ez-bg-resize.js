@@ -22,7 +22,7 @@ define(['jquery'], function (jQuery) {
 		// This is in preparation for accepting an slideshow of images.
 		if (!$.isArray(jqez.img)) {
 			var tmp_img = jqez.img;
-			jqez.img = [tmp_img]
+			jqez.img = [tmp_img];
 		}
 		
 		$("<img/>").load(function() {
