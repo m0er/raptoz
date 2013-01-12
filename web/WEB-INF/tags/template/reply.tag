@@ -1,17 +1,25 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<article class="reply hide" id="postModalReplyTemplate">
-	<c:if test="${currentUser ne null}">
-		<button class="close reply-delete">x</button>
-	</c:if>
-	<c:choose>
-		<c:when test="${not empty currentUser.encodeProfileImage}">
-			<img class="profile-image" alt="${currentUser.nickname}`s profile image" src="data:image/gif;base64,${user.encodeProfileImage}"/>
-		</c:when>
-		<c:otherwise>
-			<img class="profile-image" alt="anonymous profile image" src="" data-src="holder.js/50x50/social"/>
-		</c:otherwise>
-	</c:choose>
-	<p class="replyer-nickname"><b>nickname</b></p>
- 	<p class="reply-content">reply test</p>
- </article>
+<script id="postModalReplyTemplate" type="text/x-handlebars-template">
+{{#ifArray replies}}
+	{{#each replies}}
+		<article class="reply" id="{{idString}}">
+			{{#if contentWriter}}
+				<button class="close reply-delete">x</button>
+			{{/if}}
+			<img class="profile-image" alt="{{writer.nickname}}`s profile image" src="{{#if writer.encodeProfileImage}}data:image/gif;base64,{{writer.encodeProfileImage}}{{/if}}" data-src="holder.js/50x50/social"/>
+			<p class="replyer-nickname"><b>{{writer.nickname}}</b></p>
+ 			<p class="reply-content" {{#if contentWriter}}contenteditable="true"{{/if}}>{{content}}</p>
+		</article>
+	{{/each}}
+{{else}}
+	<article class="reply" id="{{idString}}">
+		{{#if contentWriter}}
+			<button class="close reply-delete">x</button>
+		{{/if}}
+		<img class="profile-image" alt="{{writer.nickname}}`s profile image" src="{{#if writer.encodeProfileImage}}data:image/gif;base64,{{writer.encodeProfileImage}}{{/if}}" data-src="holder.js/50x50/social"/>
+		<p class="replyer-nickname"><b>{{writer.nickname}}</b></p>
+	 	<p class="reply-content" {{#if contentWriter}}contenteditable="true"{{/if}}>{{content}}</p>
+	</article>
+{{/ifArray}}
+</script>

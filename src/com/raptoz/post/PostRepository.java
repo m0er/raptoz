@@ -11,5 +11,5 @@ public interface PostRepository extends MongoRepository<Post, ObjectId> {
 	List<Post> findByTagsValue(String value);
 
 	List<Post> findByWriterId(ObjectId id, Pageable pageable);
-
+	
 }

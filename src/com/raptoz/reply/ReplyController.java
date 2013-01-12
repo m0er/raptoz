@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.raptoz.post.Post;
 import com.raptoz.post.PostService;
 import com.raptoz.security.SecurityService;
+import com.raptoz.user.User;
 
 @Slf4j
 @Controller
@@ -65,7 +66,15 @@ public class ReplyController {
 	@RequestMapping("/{postId}")
 	@ResponseBody
 	public List<Reply> get(@PathVariable ObjectId postId) {
-		List<Reply> replyList = replyService.getByPostId(postId);
-		return replyList;
+		List<Reply> replies = replyService.getByPostId(postId);
+		User currentUser = securityService.getCurrentUser();
+		
+		for (Reply reply : replies) {
+			if (currentUser != null && currentUser.getId().equals(reply.getWriter().getId())) {
+				reply.setContentWriter(true);
+			}
+		}
+		
+		return replies;
 	}
 }

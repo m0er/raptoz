@@ -12,8 +12,8 @@ require(['bootstrap/bootstrap',
          'plugin/jquery.form',
          'plugin/jquery-raptoz-positioning', 
          'plugin/select2',
-         'template/handlebars',
          'template/holder',
+         'common/raptoz-handlebars',
          'common/raptoz-nav',
          'common/raptoz-post'], function() {
 	

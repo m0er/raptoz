@@ -48,11 +48,17 @@ public class PostService {
 		postRepository.delete(id);
 	}
 
-	public Post increaseViewCount(ObjectId id) {
+	public Post increaseViewCountThenRetrieve(ObjectId id, User currentUser) {
 		WriteResult writeResult = mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), new Update().inc("viewCount", 1L), Post.class);
 		
 		if (writeResult.getError() == null) {
-			return get(id);
+			Post post = get(id);
+			
+			if (currentUser != null && currentUser.getId().equals(post.getWriter().getId())) {
+				post.setContentWriter(true);
+			}
+			
+			return post;
 		}
 		
 		return null;

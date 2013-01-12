@@ -1,12 +1,14 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<section class="modal hide modal-post" id="postModalTemplate">
+<script id="postModalTemplate" type="text/x-handlebars-template">
+<section class="modal modal-post" id="postModal{{post.id}}">
 	<header class="modal-header">
- 		<img class="profile-image" src="" data-src="holder.js/50x50/social" alt="questioner image" />
- 		<h3 class="post-title">title</h3>
- 		<article class="post-content">
+ 		<img class="profile-image" src="{{#if post.writer.encodeProfileImage}}data:image/gif;base64,{{post.writer.encodeProfileImage}}{{/if}}" data-src="holder.js/50x50/social" alt="writer image" />
+ 		<h3 class="post-title" {{#if post.contentWriter}}contenteditable="true"{{/if}}>{{post.title}}</h3>
+ 		<article class="post-content" {{#if post.contentWriter}}contenteditable="true"{{/if}}>
+ 			{{post.content}}
 		</article>
-		<input class="post-taglist" type="text" name="tags"/>
+		<input class="post-taglist" type="text" name="tags" value="{{post.tagPrint}}"/>
 	</header>
 	<article class="modal-body">
 		<div class="modal-reply">
@@ -28,8 +30,11 @@
 	  	</div>
  	</article>
 	<footer class="modal-footer">
+	{{#if post.contentWriter}}
 		<button class="btn btn-primary post-modify" type="submit">Modify</button>
 		<button class="btn btn-danger post-delete" type="submit">Delete</button>
+	{{/if}}
 		<button class="btn" data-dismiss="modal">Cancel</button>
 	</footer>
 </section>
+</script>

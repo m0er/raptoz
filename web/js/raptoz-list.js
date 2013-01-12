@@ -14,6 +14,7 @@ require(['bootstrap/bootstrap',
          'plugin/jquery.form',
          'plugin/jquery-raptoz-positioning',
          'template/holder',
+         'common/raptoz-handlebars',
          'common/raptoz-nav',
          'common/raptoz-post',
          'external/underscore'], function() {

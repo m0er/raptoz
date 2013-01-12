@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import com.raptoz.reply.ReplyService;
 import com.raptoz.security.SecurityService;
 import com.raptoz.tag.TagService;
 
@@ -16,6 +17,7 @@ import com.raptoz.tag.TagService;
 public class PostController {
 	@Autowired TagService tagService;
 	@Autowired PostService postService;
+	@Autowired ReplyService replyService;
 	@Autowired SecurityService securityService;
 	
 	@RequestMapping("/write")
@@ -41,9 +43,14 @@ public class PostController {
 	
 	@RequestMapping("/{id}")
 	@ResponseBody
-	public Post get(@PathVariable ObjectId id) {
+	public PostAndRepliesDto get(@PathVariable ObjectId id) {
 		log.info("Post Id:" + id);
-		return postService.increaseViewCount(id);
+		
+		PostAndRepliesDto dto = new PostAndRepliesDto();
+		dto.setPost(postService.increaseViewCountThenRetrieve(id, securityService.getCurrentUser()));
+		dto.setReplies(replyService.getByPostId(id));
+		
+		return dto;
 	}
 	
 	@RequestMapping("/{id}/delete")

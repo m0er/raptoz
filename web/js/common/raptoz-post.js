@@ -1,5 +1,6 @@
 define(['jquery',
-        'plugin/select2'], function ($) {
+        'plugin/select2',
+        'template/handlebars'], function ($) {
 	
 	var enter = 13;
 	
@@ -23,12 +24,12 @@ define(['jquery',
 				
 				$postModal = $("#postModal" + reply.postId);
 				
-				var $replyTemplate = $("#postModalReplyTemplate").clone().removeClass("hide");
-				$replyTemplate.attr("id", reply.idString).find("b").text(reply.writer.nickname).end()
-					.children(":last").text(reply.content).attr("contenteditable", "true");
-				setProfileImageIfExists($replyTemplate.children("img"), reply.writer);
+				var template = Handlebars.compile($("#postModalReplyTemplate").html());
+				var $html = $(template(reply));
+				$form.before($html).find("textarea").val("").blur();
 				
-				$form.before($replyTemplate).find("textarea").val("").blur();
+				$replyCount = $("article[data-post-id=" + reply.postId + "]").find(".post-reply-count .number");
+				$replyCount.text(parseInt($replyCount.text()) + 1);
 			});
 		}
 	}).on("keypress", ".reply-content", function(e) {
@@ -102,16 +103,14 @@ define(['jquery',
 		}
 		
 		var url = PREFIX + "post/" + postId;
-		$.get(url, function(post) {
-			console.log(post);
+		$.get(url, function(postAndReplies) {
+			console.log(postAndReplies);
 			
-			var template = getPostModalTemplates(postId);
-			writePostModal(post, template);
-			appendWriter(postId, template);
+			var $html = getPostModalTemplate(postAndReplies);
+			$html.appendTo("#posts").modal("show").focus();
+			Holder.run();
 			
-			$("article[data-post-id=" + postId + "]").find(".post-view-count .number").text(post.viewCount);
-			
-			$("postModal" + postId).focus();
+			$("article[data-post-id=" + postAndReplies.post.id + "]").find(".post-view-count .number").text(postAndReplies.post.viewCount);
 		});
 	});
 	
@@ -120,43 +119,16 @@ define(['jquery',
 		return true;
 	});
 	
-	function getPostModalTemplates(postId) {
-		var template = new Object();
-		template.outer = $("#postModalTemplate").clone().attr("id", "postModal" + postId);
-		template.header = template.outer.children(".modal-header");
-		template.title = template.header.children("h3");
-		template.content = template.header.find("article");
-		template.tag = template.header.find(".post-taglist");
-		template.body = template.outer.children(".modal-body");
-		template.reply = template.body.children(".modal-reply");
-		template.footer = template.outer.children(".modal-footer");
-		
-		return template;
-	}
-	
 	function isExists($target) {
 		return $target.length != 0;
 	}
 	
-	function writePostModal(post, template) {
-		template.title.text(post.title);
-		setProfileImageIfExists(template.header.children("img"), post.writer);
-		template.content.text(post.content);
-		template.tag.val(post.tagPrint);
+	function getPostModalTemplate(postAndReplies) {
+		var template = Handlebars.compile($("#postModalTemplate").html());
+		var $html = $(template(postAndReplies));
 		
-		isNotWriter(post.writer.nickname, function() {
-			template.footer.find("[type=submit]").remove();
-			template.tag.select2({
-				tags: [],
-				tagRemoveButton: false,
-				tagInput: false
-			});
-		});
-		
-		isWriter(post.writer.nickname, function() {
-			template.title.attr("contenteditable", "true");
-			template.content.attr("contenteditable", "true");
-			template.tag.select2({
+		if (postAndReplies.post.contentWriter) {
+			$html.find(".post-taglist").select2({
 				tags: [],
 				placeholder: "Input your interests",
 				minimumInputLength: 1,
@@ -175,52 +147,27 @@ define(['jquery',
 					},
 				}
 			});
-		});
-	}
-	
-	function isNotWriter(nickname, callback) {
-		if (nickname != $("#mypage").attr("data-sessionuser-nickname"))
-			callback.call();
-	}
-	
-	function isWriter(nickname, callback) {
-		if (nickname == $("#mypage").attr("data-sessionuser-nickname"))
-			callback.call();
-	}
-	
-	function appendWriter(postId, template) {
-		var url = PREFIX + "reply/" + postId;
-		$.get(url, function(data) {
-			
-			console.log(data);
-			
-			$.each(data, function(index, reply) {
-				var $replyTemplate = $("#postModalReplyTemplate").clone().removeClass("hide");
-				$replyTemplate.attr("id", reply.idString).find("b").text(reply.writer.nickname).end()
-					.children(":last").text(reply.content);
-				setProfileImageIfExists($replyTemplate.children("img"), reply.writer);
-				
-				isNotWriter(reply.writer.nickname, function() {
-					$replyTemplate.children(".close").remove();
-				});
-				
-				isWriter(reply.writer.nickname, function() {
-					$replyTemplate.find(".reply-content").attr("contenteditable", "true");
-				});
-				
-				var $form = template.reply.children("form");
-				if ($form.size() > 0)
-					$form.before($replyTemplate);
-				else
-					template.reply.append($replyTemplate);
+		} else {
+			$html.find(".post-taglist").select2({
+				tags: [],
+				tagRemoveButton: false,
+				tagInput: false
 			});
-			template.outer.appendTo("#posts").modal("show");
-		});
+		}
+		
+		addReplies(postAndReplies, $html);
+		
+		return $html;
 	}
 	
-	function setProfileImageIfExists($img, target) {
-		if (target.encodeProfileImage != "") {
-			$img.attr("src", "data:image/gif;base64," + target.encodeProfileImage);
+	function addReplies(postAndReplies, $html) {
+		var template = Handlebars.compile($("#postModalReplyTemplate").html());
+		var $replyHtml = $(template(postAndReplies));
+		var $form = $html.find("form");
+		if ($form.size() > 0) {
+			$form.before($replyHtml);
+		} else {
+			$html.find(".modal-reply").append($replyHtml);
 		}
 	}
 });
