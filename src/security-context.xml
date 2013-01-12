@@ -14,7 +14,7 @@
 		<intercept-url pattern="/js/**" access="permitAll"/>
 		<intercept-url pattern="/index" access="permitAll"/>
 		<intercept-url pattern="/list" access="permitAll"/>
-		<intercept-url pattern="/search/*" access="permitAll"/>
+		<intercept-url pattern="/list/*" access="permitAll"/>
 		<intercept-url pattern="/user/signup" access="permitAll" />
 		<intercept-url pattern="/user/login" access="permitAll" />
 		<intercept-url pattern="/user/login/form" access="permitAll" />
