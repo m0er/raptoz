@@ -6,7 +6,7 @@
 	<div class="navbar-inner">
 		<div class="container">
 			<a class="brand" href="<c:url value="/list"/>">Raptoz</a>
-			<form id="search" action="<c:url value="/list"/>" class="navbar-search pull-left" method="post">
+			<form id="search" action="<c:url value="/list"/>" class="navbar-search pull-left" method="get">
 				<div class="control-group">
 					<div class="controls">
 						<div class="input-append">

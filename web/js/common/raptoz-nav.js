@@ -2,8 +2,7 @@ define(['jquery',
         'jqueryui/jquery-ui',
         'plugin/jquery.timeago',
         'plugin/jquery.ez-bg-resize',
-        'plugin/select2',
-        'template/jquery.mustache'], function ($) {
+        'plugin/select2'], function ($) {
 	
 $(document).ready(function() {
 	
@@ -20,11 +19,11 @@ $(document).ready(function() {
 	// 참고: http://jsfiddle.net/ATeaH/8/
 	$('.modal').appendTo($('body'));
 	
-	$("#search").submit(function() {
-		var term = $(this).find("input").val();
-		$(this).attr("action", $(this).attr("action") + "/" + term);
+	$("#search").submit(function(e) {
+		e.preventDefault();
 		
-		return true;
+		var term = $(this).find("input").val();
+		location.href = $(this).attr("action") + "/" + term;
 	});
 	
 	$("#signupForm, #writePostForm").modal({
