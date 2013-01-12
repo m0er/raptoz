@@ -27,6 +27,11 @@ public class RaptozUserDetails implements UserDetails {
 		this.user = user;
 		this.authorities = getGrantedAuthorities(getRoles(user.getRoles()));
 	}
+	
+	public User getUser() {
+		user.setPassword(null);
+		return user;
+	}
 
 	private List<String> getRoles(List<Role> roles) {
 		List<String> roleStrings = new ArrayList<String>();
