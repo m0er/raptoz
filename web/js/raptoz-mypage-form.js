@@ -134,6 +134,12 @@ require(['bootstrap/bootstrap',
 		});
 	});
 	
+	$("#cancelButton").click(function(e) {
+		e.preventDefault();
+		
+		location.href = location.href.replace("/form", "");
+	});
+	
 	function getBackgroundImageUrl() {
 		var url = "";
 		if (parseInt(Math.random() * 2) == 1) {

@@ -33,7 +33,7 @@
 				    <div class="control-group">
 						<label class="control-label" for="changePasswordButton">Password</label>
 						<div class="controls">
-							<input type="button" data-toggle="modal" data-target="#passwordFormTemplate" id="changePasswordButton" class="button" value="Change Password">
+							<input type="button" data-toggle="modal" data-target="#passwordFormTemplate" id="changePasswordButton" class="btn" value="Change Password">
 						</div>
 					</div>
 				    <div class="control-group">
@@ -65,6 +65,7 @@
 				    <div class="control-group">
 						<div class="controls">
 						    <input type="submit" class="btn btn-primary" value="Submit">
+						    <input type="button" class="btn" value="Cancel" id="cancelButton">
 						</div>
 					</div>
 			    </fieldset>
