@@ -28,6 +28,8 @@ public class Post {
 	private String tagPrint;
 	private List<ObjectId> replyIds;
 	
+	private boolean contentWriter;
+	
 	public Post(String title, String content, User writer) {
 		this.title = title;
 		this.content = content;

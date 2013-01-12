@@ -23,6 +23,8 @@ public class Reply {
 	
 	private User writer;
 	
+	private boolean contentWriter;
+	
 	public Reply(String content, User writer) {
 		this.content = content;
 		this.writer = writer;
