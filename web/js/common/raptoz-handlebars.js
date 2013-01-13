@@ -5,5 +5,5 @@ define(['template/handlebars'], function () {
 		} else {
 			return options.inverse(this);
 		}
-	});
+	});	
 });

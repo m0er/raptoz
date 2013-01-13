@@ -1,6 +1,7 @@
 define(['jquery',
         'plugin/select2',
-        'template/handlebars'], function ($) {
+        'template/handlebars',
+        'common/raptoz-handlebars'], function ($) {
 	
 	var enter = 13;
 	
@@ -24,8 +25,7 @@ define(['jquery',
 				
 				$postModal = $("#postModal" + reply.postId);
 				
-				var template = Handlebars.compile($("#postModalReplyTemplate").html());
-				var $html = $(template(reply));
+				var $html = getHandlebarsParsingResult("#postModalReplyTemplate", reply);
 				$form.before($html).find("textarea").val("").blur();
 				
 				$replyCount = $("article[data-post-id=" + reply.postId + "]").find(".post-reply-count .number");
@@ -96,9 +96,8 @@ define(['jquery',
 		var postId = $target.hasClass(".post") ? $target.attr("data-post-id") : $target.parents(".post").attr("data-post-id");
 		var $post = $("#postModal" + postId);
 		
-		if (isExists($post)) {
-			$post.modal("show");
-			$post.focus();
+		if ($post.isExists()) {
+			$post.modal("show").focus();
 			return;
 		}
 		
@@ -119,13 +118,8 @@ define(['jquery',
 		return true;
 	});
 	
-	function isExists($target) {
-		return $target.length != 0;
-	}
-	
 	function getPostModalTemplate(postAndReplies) {
-		var template = Handlebars.compile($("#postModalTemplate").html());
-		var $html = $(template(postAndReplies));
+		var $html = getHandlebarsParsingResult("#postModalTemplate", postAndReplies);
 		
 		if (postAndReplies.post.contentWriter) {
 			$html.find(".post-taglist").select2({
@@ -161,8 +155,7 @@ define(['jquery',
 	}
 	
 	function addReplies(postAndReplies, $html) {
-		var template = Handlebars.compile($("#postModalReplyTemplate").html());
-		var $replyHtml = $(template(postAndReplies));
+		var $replyHtml = getHandlebarsParsingResult("#postModalReplyTemplate", postAndReplies);
 		var $form = $html.find("form");
 		if ($form.size() > 0) {
 			$form.before($replyHtml);

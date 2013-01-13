@@ -13,9 +13,7 @@ require(['bootstrap/bootstrap',
          'plugin/jquery-raptoz-positioning', 
          'plugin/select2',
          'template/holder',
-         'common/raptoz-handlebars',
-         'common/raptoz-nav',
-         'common/raptoz-post'], function() {
+         'common/raptoz-common'], function() {
 	
 	$(document).ready(function() {
 		

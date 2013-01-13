@@ -12,7 +12,7 @@ require(['bootstrap/bootstrap',
          'plugin/jquery.form',
          'plugin/select2',
          'template/handlebars',
-         'common/raptoz-nav'], function() {
+         'common/raptoz-common'], function() {
 	
 	$(document).ready(function() {
 		
