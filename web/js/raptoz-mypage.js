@@ -8,8 +8,7 @@ require.config({
     }
 });
 
-require(['bootstrap/bootstrap',
-         'plugin/jquery.form',
+require(['plugin/jquery.form',
          'plugin/jquery-raptoz-positioning', 
          'plugin/select2',
          'template/holder',

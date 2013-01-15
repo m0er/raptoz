@@ -9,13 +9,10 @@ require.config({
     }
 });
 
-require(['bootstrap/bootstrap',
-         'plugin/jquerypp',
-         'plugin/jquery.form',
+require(['plugin/jquery.form',
          'plugin/jquery-raptoz-positioning',
          'template/holder',
-         'common/raptoz-common',
-         'external/underscore'], function() {
+         'common/raptoz-common'], function() {
 	
 	$(document).ready(function() {
 		

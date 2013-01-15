@@ -1,4 +1,7 @@
 define(['jquery',
+        'plugin/jquerypp',
+        'bootstrap/bootstrap',
+        'external/underscore',
         'common/raptoz-nav',
         'common/raptoz-post',
         'common/raptoz-handlebars'], function ($) {
