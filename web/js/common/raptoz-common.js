@@ -4,7 +4,9 @@ define(['jquery',
         'external/underscore',
         'common/raptoz-nav',
         'common/raptoz-post',
-        'common/raptoz-handlebars'], function ($) {
+        'template/handlebars',
+        'common/raptoz-handlebars',
+        'external/ember'], function ($) {
 	
 	$.fn.reverse = [].reverse;
 	

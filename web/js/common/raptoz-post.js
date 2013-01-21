@@ -1,6 +1,5 @@
 define(['jquery',
         'plugin/select2',
-        'template/handlebars',
         'common/raptoz-handlebars'], function ($) {
 	
 	var enter = 13;
