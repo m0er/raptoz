@@ -1,8 +1,10 @@
-define(['jquery',
-        'jqueryui/jquery-ui',
-        'plugin/jquery.timeago',
-        'plugin/jquery.ez-bg-resize',
-        'plugin/select2'], function ($) {
+define('common/raptoz-nav', [
+	'jquery',
+	'jqueryui',
+	'jquery-plugin/jquery.timeago',
+	'jquery-plugin/jquery.ez-bg-resize',
+	'jquery-plugin/select2'
+	], function ($) {
 	
 $(document).ready(function() {
 	

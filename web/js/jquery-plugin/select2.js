@@ -1,4 +1,7 @@
-define(['jquery', 'jqueryui/jquery-ui'], function (jQuery) {
+define('jquery-plugin/select2', [
+	'jquery',
+	'jqueryui'
+	], function (jQuery) {
 /*
  Copyright 2012 Igor Vaynberg
 

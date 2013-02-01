@@ -9,6 +9,7 @@
 	<http pattern="/resources" security="none" />
 
 	<http auto-config="true" use-expressions="true" disable-url-rewriting="true">
+		<intercept-url pattern="/favicon.ico" access="permitAll"/>
 		<intercept-url pattern="/css/**" access="permitAll"/>
 		<intercept-url pattern="/img/**" access="permitAll"/>
 		<intercept-url pattern="/js/**" access="permitAll"/>

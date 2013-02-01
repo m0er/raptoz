@@ -1,6 +1,8 @@
-define(['jquery',
-        'plugin/select2',
-        'common/raptoz-handlebars'], function ($) {
+define('common/raptoz-post', [
+	'jquery',
+	'jquery-plugin/select2',
+	'handlebars',
+	'common/raptoz-handlebars'], function ($) {
 	
 	var enter = 13;
 	

@@ -1,4 +1,4 @@
-define(['template/handlebars'], function () {
+define('common/raptoz-handlebars', ['handlebars'], function () {
 	Handlebars.registerHelper('ifArray', function(conditional, options) {
 		if ($.isArray(conditional)) {
 			return options.fn(this);

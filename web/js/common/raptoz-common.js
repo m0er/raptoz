@@ -1,12 +1,4 @@
-define(['jquery',
-        'plugin/jquerypp',
-        'bootstrap/bootstrap',
-        'external/underscore',
-        'common/raptoz-nav',
-        'common/raptoz-post',
-        'template/handlebars',
-        'common/raptoz-handlebars',
-        'external/ember'], function ($) {
+define('common/raptoz-common', ['jquery'], function($) {
 	
 	$.fn.reverse = [].reverse;
 	

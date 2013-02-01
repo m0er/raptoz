@@ -1,17 +1,24 @@
 require.config({
+	baseUrl: PREFIX + 'js',
     paths: {
-    	jqueryui: 'jquery-ui',
-        plugin: 'jquery-plugin',
-        bootstrap: 'bootstrap',
-        template: 'template',
-        external: 'external',
-        common: 'common'
+    	form: 'jquery-plugin/jquery.form',
+    	jquerypp: 'jquery-plugin/jquerypp',
+    	jqueryui: 'jquery-ui/jquery-ui',
+    	positioning: 'jquery-plugin/jquery-raptoz-positioning',
+    	underscore: 'external/underscore',
+        bootstrap: 'bootstrap/bootstrap',
+        holder: 'template/holder',
+        handlebars: 'template/handlebars'
     }
 });
 
-require(['plugin/jquery.form',
-         'plugin/jquery-raptoz-positioning',
-         'template/holder',
+require(['jquerypp',
+         'bootstrap',
+         'underscore',
+         'positioning',
+         'holder',
+         'common/raptoz-nav',
+         'common/raptoz-post',
          'common/raptoz-common'], function() {
 	
 	$(document).ready(function() {
