@@ -10,5 +10,5 @@ define('common/raptoz-common', ['jquery'], function($) {
 });
 
 function getHandlebarsParsingResult(selector, context) {
-	return $(Handlebars.compile($(selector).html()).call(null, context));
+	return $(Handlebars.compile($(selector).html()).call(null, context).trim());
 }
