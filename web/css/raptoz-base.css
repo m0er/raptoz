@@ -29,10 +29,6 @@ textarea {resize: none;}
 
 /* SNB */
 #leftNav {margin-left: 50px;}
-#leftNav, #leftNav .nav {background-color: #2C2C2C;}
-#leftNav .nav li {color: #FFF;}
-#leftNav .nav li a {color: #999; text-shadow: none;}
-#leftNav .nav li a:HOVER {color: #FFF; background-color: #2C2C2C;}
 
 /* Pinterest style post listing */
 #posts {margin-left: 0; width: 480px;}
